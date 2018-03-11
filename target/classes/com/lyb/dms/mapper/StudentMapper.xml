@@ -1,0 +1,418 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lyb.dms.mapper.StudentMapper" >
+  <resultMap id="BaseResultMap" type="com.lyb.dms.domain.Student" >
+    <id column="student_id" property="studentId" jdbcType="INTEGER" />
+    <result column="student_num" property="studentNum" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="birth_date" property="birthDate" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="VARCHAR" />
+    <result column="location" property="location" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="student_class" property="studentClass" jdbcType="VARCHAR" />
+    <result column="major" property="major" jdbcType="VARCHAR" />
+    <result column="getup_time" property="getupTime" jdbcType="VARCHAR" />
+    <result column="sleep_time" property="sleepTime" jdbcType="VARCHAR" />
+    <result column="hobby" property="hobby" jdbcType="VARCHAR" />
+    <result column="habit" property="habit" jdbcType="VARCHAR" />
+    <result column="emergency_contact" property="emergencyContact" jdbcType="VARCHAR" />
+    <result column="emergency_phone" property="emergencyPhone" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    student_id, student_num, password, name, birth_date, sex, state, location, phone, 
+    student_class, major, getup_time, sleep_time, hobby, habit, emergency_contact, emergency_phone, 
+    remark
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.lyb.dms.domain.StudentExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from student
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from student
+    where student_id = #{studentId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from student
+    where student_id = #{studentId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.lyb.dms.domain.StudentExample" >
+    delete from student
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.lyb.dms.domain.Student" >
+    insert into student (student_id, student_num, password, 
+      name, birth_date, sex, 
+      state, location, phone, 
+      student_class, major, getup_time, 
+      sleep_time, hobby, habit, 
+      emergency_contact, emergency_phone, remark
+      )
+    values (#{studentId,jdbcType=INTEGER}, #{studentNum,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{birthDate,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, 
+      #{state,jdbcType=VARCHAR}, #{location,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
+      #{studentClass,jdbcType=VARCHAR}, #{major,jdbcType=VARCHAR}, #{getupTime,jdbcType=VARCHAR}, 
+      #{sleepTime,jdbcType=VARCHAR}, #{hobby,jdbcType=VARCHAR}, #{habit,jdbcType=VARCHAR}, 
+      #{emergencyContact,jdbcType=VARCHAR}, #{emergencyPhone,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.lyb.dms.domain.Student" >
+    insert into student
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="studentId != null" >
+        student_id,
+      </if>
+      <if test="studentNum != null" >
+        student_num,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="birthDate != null" >
+        birth_date,
+      </if>
+      <if test="sex != null" >
+        sex,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="location != null" >
+        location,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="studentClass != null" >
+        student_class,
+      </if>
+      <if test="major != null" >
+        major,
+      </if>
+      <if test="getupTime != null" >
+        getup_time,
+      </if>
+      <if test="sleepTime != null" >
+        sleep_time,
+      </if>
+      <if test="hobby != null" >
+        hobby,
+      </if>
+      <if test="habit != null" >
+        habit,
+      </if>
+      <if test="emergencyContact != null" >
+        emergency_contact,
+      </if>
+      <if test="emergencyPhone != null" >
+        emergency_phone,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="studentId != null" >
+        #{studentId,jdbcType=INTEGER},
+      </if>
+      <if test="studentNum != null" >
+        #{studentNum,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="birthDate != null" >
+        #{birthDate,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="location != null" >
+        #{location,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="studentClass != null" >
+        #{studentClass,jdbcType=VARCHAR},
+      </if>
+      <if test="major != null" >
+        #{major,jdbcType=VARCHAR},
+      </if>
+      <if test="getupTime != null" >
+        #{getupTime,jdbcType=VARCHAR},
+      </if>
+      <if test="sleepTime != null" >
+        #{sleepTime,jdbcType=VARCHAR},
+      </if>
+      <if test="hobby != null" >
+        #{hobby,jdbcType=VARCHAR},
+      </if>
+      <if test="habit != null" >
+        #{habit,jdbcType=VARCHAR},
+      </if>
+      <if test="emergencyContact != null" >
+        #{emergencyContact,jdbcType=VARCHAR},
+      </if>
+      <if test="emergencyPhone != null" >
+        #{emergencyPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.lyb.dms.domain.StudentExample" resultType="java.lang.Integer" >
+    select count(*) from student
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update student
+    <set >
+      <if test="record.studentId != null" >
+        student_id = #{record.studentId,jdbcType=INTEGER},
+      </if>
+      <if test="record.studentNum != null" >
+        student_num = #{record.studentNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.password != null" >
+        password = #{record.password,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.birthDate != null" >
+        birth_date = #{record.birthDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sex != null" >
+        sex = #{record.sex,jdbcType=VARCHAR},
+      </if>
+      <if test="record.state != null" >
+        state = #{record.state,jdbcType=VARCHAR},
+      </if>
+      <if test="record.location != null" >
+        location = #{record.location,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phone != null" >
+        phone = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.studentClass != null" >
+        student_class = #{record.studentClass,jdbcType=VARCHAR},
+      </if>
+      <if test="record.major != null" >
+        major = #{record.major,jdbcType=VARCHAR},
+      </if>
+      <if test="record.getupTime != null" >
+        getup_time = #{record.getupTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sleepTime != null" >
+        sleep_time = #{record.sleepTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hobby != null" >
+        hobby = #{record.hobby,jdbcType=VARCHAR},
+      </if>
+      <if test="record.habit != null" >
+        habit = #{record.habit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.emergencyContact != null" >
+        emergency_contact = #{record.emergencyContact,jdbcType=VARCHAR},
+      </if>
+      <if test="record.emergencyPhone != null" >
+        emergency_phone = #{record.emergencyPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update student
+    set student_id = #{record.studentId,jdbcType=INTEGER},
+      student_num = #{record.studentNum,jdbcType=VARCHAR},
+      password = #{record.password,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      birth_date = #{record.birthDate,jdbcType=VARCHAR},
+      sex = #{record.sex,jdbcType=VARCHAR},
+      state = #{record.state,jdbcType=VARCHAR},
+      location = #{record.location,jdbcType=VARCHAR},
+      phone = #{record.phone,jdbcType=VARCHAR},
+      student_class = #{record.studentClass,jdbcType=VARCHAR},
+      major = #{record.major,jdbcType=VARCHAR},
+      getup_time = #{record.getupTime,jdbcType=VARCHAR},
+      sleep_time = #{record.sleepTime,jdbcType=VARCHAR},
+      hobby = #{record.hobby,jdbcType=VARCHAR},
+      habit = #{record.habit,jdbcType=VARCHAR},
+      emergency_contact = #{record.emergencyContact,jdbcType=VARCHAR},
+      emergency_phone = #{record.emergencyPhone,jdbcType=VARCHAR},
+      remark = #{record.remark,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lyb.dms.domain.Student" >
+    update student
+    <set >
+      <if test="studentNum != null" >
+        student_num = #{studentNum,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="birthDate != null" >
+        birth_date = #{birthDate,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="location != null" >
+        location = #{location,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="studentClass != null" >
+        student_class = #{studentClass,jdbcType=VARCHAR},
+      </if>
+      <if test="major != null" >
+        major = #{major,jdbcType=VARCHAR},
+      </if>
+      <if test="getupTime != null" >
+        getup_time = #{getupTime,jdbcType=VARCHAR},
+      </if>
+      <if test="sleepTime != null" >
+        sleep_time = #{sleepTime,jdbcType=VARCHAR},
+      </if>
+      <if test="hobby != null" >
+        hobby = #{hobby,jdbcType=VARCHAR},
+      </if>
+      <if test="habit != null" >
+        habit = #{habit,jdbcType=VARCHAR},
+      </if>
+      <if test="emergencyContact != null" >
+        emergency_contact = #{emergencyContact,jdbcType=VARCHAR},
+      </if>
+      <if test="emergencyPhone != null" >
+        emergency_phone = #{emergencyPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where student_id = #{studentId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lyb.dms.domain.Student" >
+    update student
+    set student_num = #{studentNum,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      birth_date = #{birthDate,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=VARCHAR},
+      state = #{state,jdbcType=VARCHAR},
+      location = #{location,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      student_class = #{studentClass,jdbcType=VARCHAR},
+      major = #{major,jdbcType=VARCHAR},
+      getup_time = #{getupTime,jdbcType=VARCHAR},
+      sleep_time = #{sleepTime,jdbcType=VARCHAR},
+      hobby = #{hobby,jdbcType=VARCHAR},
+      habit = #{habit,jdbcType=VARCHAR},
+      emergency_contact = #{emergencyContact,jdbcType=VARCHAR},
+      emergency_phone = #{emergencyPhone,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR}
+    where student_id = #{studentId,jdbcType=INTEGER}
+  </update>
+</mapper>

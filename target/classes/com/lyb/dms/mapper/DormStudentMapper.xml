@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lyb.dms.mapper.DormStudentMapper" >
+  <resultMap id="BaseResultMap" type="com.lyb.dms.domain.DormStudent" >
+    <id column="ds_id" property="dsId" jdbcType="INTEGER" />
+    <result column="student_id" property="studentId" jdbcType="INTEGER" />
+    <result column="dorm_id" property="dormId" jdbcType="INTEGER" />
+    <result column="join_time" property="joinTime" jdbcType="VARCHAR" />
+    <result column="leave_time" property="leaveTime" jdbcType="VARCHAR" />
+    <result column="leave_reason" property="leaveReason" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ds_id, student_id, dorm_id, join_time, leave_time, leave_reason, create_time, remark
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.lyb.dms.domain.DormStudentExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from dorm_student
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from dorm_student
+    where ds_id = #{dsId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from dorm_student
+    where ds_id = #{dsId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.lyb.dms.domain.DormStudentExample" >
+    delete from dorm_student
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.lyb.dms.domain.DormStudent" >
+    insert into dorm_student (ds_id, student_id, dorm_id, 
+      join_time, leave_time, leave_reason, 
+      create_time, remark)
+    values (#{dsId,jdbcType=INTEGER}, #{studentId,jdbcType=INTEGER}, #{dormId,jdbcType=INTEGER}, 
+      #{joinTime,jdbcType=VARCHAR}, #{leaveTime,jdbcType=VARCHAR}, #{leaveReason,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lyb.dms.domain.DormStudent" >
+    insert into dorm_student
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="dsId != null" >
+        ds_id,
+      </if>
+      <if test="studentId != null" >
+        student_id,
+      </if>
+      <if test="dormId != null" >
+        dorm_id,
+      </if>
+      <if test="joinTime != null" >
+        join_time,
+      </if>
+      <if test="leaveTime != null" >
+        leave_time,
+      </if>
+      <if test="leaveReason != null" >
+        leave_reason,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="dsId != null" >
+        #{dsId,jdbcType=INTEGER},
+      </if>
+      <if test="studentId != null" >
+        #{studentId,jdbcType=INTEGER},
+      </if>
+      <if test="dormId != null" >
+        #{dormId,jdbcType=INTEGER},
+      </if>
+      <if test="joinTime != null" >
+        #{joinTime,jdbcType=VARCHAR},
+      </if>
+      <if test="leaveTime != null" >
+        #{leaveTime,jdbcType=VARCHAR},
+      </if>
+      <if test="leaveReason != null" >
+        #{leaveReason,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.lyb.dms.domain.DormStudentExample" resultType="java.lang.Integer" >
+    select count(*) from dorm_student
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update dorm_student
+    <set >
+      <if test="record.dsId != null" >
+        ds_id = #{record.dsId,jdbcType=INTEGER},
+      </if>
+      <if test="record.studentId != null" >
+        student_id = #{record.studentId,jdbcType=INTEGER},
+      </if>
+      <if test="record.dormId != null" >
+        dorm_id = #{record.dormId,jdbcType=INTEGER},
+      </if>
+      <if test="record.joinTime != null" >
+        join_time = #{record.joinTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.leaveTime != null" >
+        leave_time = #{record.leaveTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.leaveReason != null" >
+        leave_reason = #{record.leaveReason,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update dorm_student
+    set ds_id = #{record.dsId,jdbcType=INTEGER},
+      student_id = #{record.studentId,jdbcType=INTEGER},
+      dorm_id = #{record.dormId,jdbcType=INTEGER},
+      join_time = #{record.joinTime,jdbcType=VARCHAR},
+      leave_time = #{record.leaveTime,jdbcType=VARCHAR},
+      leave_reason = #{record.leaveReason,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=VARCHAR},
+      remark = #{record.remark,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lyb.dms.domain.DormStudent" >
+    update dorm_student
+    <set >
+      <if test="studentId != null" >
+        student_id = #{studentId,jdbcType=INTEGER},
+      </if>
+      <if test="dormId != null" >
+        dorm_id = #{dormId,jdbcType=INTEGER},
+      </if>
+      <if test="joinTime != null" >
+        join_time = #{joinTime,jdbcType=VARCHAR},
+      </if>
+      <if test="leaveTime != null" >
+        leave_time = #{leaveTime,jdbcType=VARCHAR},
+      </if>
+      <if test="leaveReason != null" >
+        leave_reason = #{leaveReason,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ds_id = #{dsId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lyb.dms.domain.DormStudent" >
+    update dorm_student
+    set student_id = #{studentId,jdbcType=INTEGER},
+      dorm_id = #{dormId,jdbcType=INTEGER},
+      join_time = #{joinTime,jdbcType=VARCHAR},
+      leave_time = #{leaveTime,jdbcType=VARCHAR},
+      leave_reason = #{leaveReason,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR}
+    where ds_id = #{dsId,jdbcType=INTEGER}
+  </update>
+</mapper>
