@@ -1,6 +1,7 @@
 package com.lyb.dms.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Update;
 
@@ -19,4 +20,6 @@ public interface IStudentService {
 	
 	
 	Student queryStudentByStudentNum(String StudentNum);
+	
+	Map<String, Object> studentLogin(String StudentNum,String password);
 }

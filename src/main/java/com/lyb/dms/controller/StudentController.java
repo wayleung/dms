@@ -163,4 +163,24 @@ public class StudentController {
 		}
 		return null;
 	}
+	
+	
+	
+	@RequestMapping(value="/queryMyInfoFromSession",method=RequestMethod.POST)
+	public String queryMyInfoById(HttpServletRequest request,HttpServletResponse response){
+		Integer id = (Integer) request.getSession().getAttribute("studentId");
+		if(id!=null){
+			Student student =  studentServiceImpl.queryStudentById(id);
+			Map<String, Student> dataMap =  new Hashtable<>();
+			dataMap.put("student", student);
+			JSONObject jsonObject = new JSONObject();
+			jsonObject.putAll(dataMap);
+			try {
+				response.getWriter().write(jsonObject.toString());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
 }

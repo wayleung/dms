@@ -21,10 +21,29 @@
             <param-value>true</param-value>  
         </init-param>  
     </filter>  
-    <filter-mapping>  
+
+    
+    
+    
+    
+    <filter>
+      <filter-name>LoginFilter</filter-name>
+      <filter-class>com.lyb.dms.filter.LoginFilter</filter-class>
+  </filter>
+  
+      <filter-mapping>  
         <filter-name>characterEncodingFilter</filter-name>  
         <url-pattern>/*</url-pattern>  
     </filter-mapping>
+  
+  <filter-mapping>
+      <filter-name>LoginFilter</filter-name>
+      <url-pattern>*.html</url-pattern>
+  </filter-mapping>
+  
+  
+  
+  
   
   <!-- 加载spring配置文件(spring_mybatis.xml)，spring配置文件与spring mvc配置文件是分开的 -->
   <listener>

@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.lyb.dms.domain.Dorm;
 import com.lyb.dms.domain.DormStudent;
 import com.lyb.dms.serviceImpl.DormServiceImpl;
 import com.lyb.dms.serviceImpl.DormStudentServiceImpl;
@@ -163,9 +164,9 @@ public class DormStudentController {
 			for (DormStudent dormStudent : volist) {
 				Integer studentId =  dormStudent.getStudentId();
 				
-			    String studenName = studentServiceImpl.queryStudentById(studentId).getName();
+			    String studentName = studentServiceImpl.queryStudentById(studentId).getName();
 			    
-			    String studenNum = studentServiceImpl.queryStudentById(studentId).getStudentNum();
+			    String studentNum = studentServiceImpl.queryStudentById(studentId).getStudentNum();
 			    
 			    
 			    String dormNum =  dormServiceImpl.queryDormById(dormId).getDormNum();
@@ -209,10 +210,10 @@ public class DormStudentController {
 			    if(StringUtils.isNotBlank(dormStudent.getRemark())){
 			    	dormStudentVO.setRemark(dormStudent.getRemark());
 			    }
-			    if(StringUtils.isNotBlank(studenName)){
-			    	dormStudentVO.setStudenName(studenName);
+			    if(StringUtils.isNotBlank(studentName)){
+			    	dormStudentVO.setStudentName(studentName);
 			    }
-			    dormStudentVO.setStudenNum(studenNum);
+			    dormStudentVO.setStudentNum(studentNum);
 			    
 			    dormStudentVO.setStudentId(studentId);
 			    
@@ -258,4 +259,19 @@ public class DormStudentController {
 		return null;
 	}
 	
+	
+	@RequestMapping(value="/makeHead",method=RequestMethod.POST)
+	public String makeHead(HttpServletRequest request,HttpServletResponse response){
+		String dorm_Id = request.getParameter("dormId");
+		String student_Id = request.getParameter("studentId");
+		if(StringUtils.isNotBlank(dorm_Id)&&StringUtils.isNotBlank(student_Id)){
+			
+			Dorm dorm = new Dorm();
+			dorm.setDormId(Integer.parseInt(dorm_Id));
+			dorm.setHeadId(Integer.parseInt(student_Id));
+			dormServiceImpl.updateDorm(dorm );
+		}
+	
+		return null;
+	}
 }

@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<title>宿舍管理系统</title>
+
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link href="font-awesome/css/font-awesome.css" rel="stylesheet">
+
+
+
+<link href="css/animate.css" rel="stylesheet">
+<link href="css/style.css" rel="stylesheet">
+<link href="lib/datepicker3.css" rel="stylesheet">
+
+
+<style>
+.nav>li.active {
+	border-left: 4px solid #d31145;
+	background: #293846;
+}
+
+.pg-input {
+	float: left;
+	height: 28px;
+	width: 60px;
+	font-size: 14px;
+	background-color: #FFFFFF;
+	background-image: none;
+	border: 1px solid #e5e6e7;
+	padding-left: 20px;
+	margin-left: 20px;
+}
+
+.pg-go-btn {
+	height: 28px;
+	border-radius: 0px;
+}
+
+.font16 {
+	font-size: 16px;
+}
+
+.green {
+	color: #18a689;
+}
+</style>
+
+</head>
+
+<body>
+	<div id="wrapper">
+		<include src="nav.html"></include>
+
+		<div id="page-wrapper" class="gray-bg dashbard-1">
+			<include src="headbar.html"></include>
+
+			<div class="row">
+
+				<div class="col-lg-12">
+					<div class="row wrapper border-bottom white-bg page-heading">
+						<div class="col-lg-10">
+							<h2>宿舍管理</h2>
+							<ol class="breadcrumb">
+								<li><a href="index.html">首页</a></li>
+								<li class="active"><strong>宿舍管理</strong></li>
+							</ol>
+						</div>
+						<div class="col-lg-2"></div>
+					</div>
+					<div class="wrapper wrapper-content animated fadeInRight">
+						<div class="row">
+
+							<div class="col-lg-12">
+								<div class="ibox float-e-margins">
+									<div class="ibox-title">
+										<h5>所有宿舍</h5>
+										<div class="ibox-tools">
+											<a class=""> <i class="fa fa-search green font16"></i>
+											</a> <a class="collapse-link"> <i
+												class="fa fa-chevron-up  font16"></i>
+											</a>
+										</div>
+										<!-- <span class="label label-primary pull-right">NEW<i class="fa fa-plus"></i></span>
+                            <button type="button" class="btn btn-md btn-primary"><i class="fa fa-plus"></i></button> -->
+									</div>
+
+									<div class="ibox-content" style="display: block;">
+										<div class="row">
+											<div class="col-sm-3">
+												<div class="input-group pull-right">
+													<span class="input-group-btn">
+														<button type="button" class="btn btn-sm btn-primary"
+															data-toggle="modal" data-target="#addModal">
+															<i class="fa fa-plus"></i>增加
+														</button>
+													</span>
+												</div>
+											</div>
+										</div>
+										<div class="table-responsive">
+											<div class="sk-spinner sk-spinner-fading-circle"
+												style="display: none">
+												<div class="sk-circle1 sk-circle"></div>
+												<div class="sk-circle2 sk-circle"></div>
+												<div class="sk-circle3 sk-circle"></div>
+												<div class="sk-circle4 sk-circle"></div>
+												<div class="sk-circle5 sk-circle"></div>
+												<div class="sk-circle6 sk-circle"></div>
+												<div class="sk-circle7 sk-circle"></div>
+												<div class="sk-circle8 sk-circle"></div>
+												<div class="sk-circle9 sk-circle"></div>
+												<div class="sk-circle10 sk-circle"></div>
+												<div class="sk-circle11 sk-circle"></div>
+												<div class="sk-circle12 sk-circle"></div>
+											</div>
+
+
+											<table class="table table-striped">
+												<thead>
+													<tr>
+														<th>宿舍号</th>
+														<th>宿舍类型</th>
+														<th>最大人数</th>
+														<th>电话</th>
+
+														<th>创建时间</th>
+														<th>评分</th>
+														<th>备注</th>
+														<th>操作</th>
+													</tr>
+												</thead>
+												<tbody id="result">
+													
+												</tbody>
+											</table>
+											<!-- <div class="pull-right">
+												<ul class="pagination">
+													<li><a href="#">上一页</a></li>
+													<li><a href="#">1</a></li>
+													<li><a href="#">/</a></li>
+													<li><a href="#">3</a></li>
+													<li><a href="#">下一页</a></li>
+
+													<li><input type="text" class="pg-input">
+													<li>
+													<li><button type="button"
+															class="btn btn-sm btn-primary pg-go-btn">转到</button></li>
+												</ul>
+											</div> -->
+										</div>
+
+									</div>
+								</div>
+							</div>
+
+						</div>
+					</div>
+
+					<include src="footer.html"></include>
+				</div>
+			</div>
+
+		</div>
+
+	</div>
+
+	<div class="modal inmodal" id="addModal" tabindex="-1" role="dialog"
+		aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content animated bounceInRight">
+				<!-- <button type="button" class="close" data-dismiss="modal">
+					<span aria-hidden="true">Ã</span><span class="sr-only">Close</span>
+				</button> -->
+				<div class="row">
+					<div class="col-lg-12">
+						<button type="button" class="close" data-dismiss="modal">
+							<!-- <span aria-hidden="true">x</span><span class="sr-only">Close</span> -->
+						</button>
+						<div class="ibox float-e-margins">
+							<div class="ibox-content">
+								<form id="add_form" method="post" class="form-horizontal">
+									<div class="form-group">
+										<label class="col-sm-2 control-label">宿舍号</label>
+
+                                    	<div class="col-sm-10">
+											<input type="text" class="form-control"
+												id="dormNum" name="dormNum">
+										</div>
+									</div>
+									
+									
+									<div class="form-group">
+										<label class="col-sm-2 control-label">宿舍类型</label>
+
+										<div class="col-sm-10">
+											<select class="form-control" id="type" name="type">
+                                        	<option value="男生宿舍">男生宿舍</option>
+                                        	<option value="女生宿舍">女生宿舍</option>
+                                        	<!-- <option value="0">delete</option> -->
+                                    		</select>
+										</div>
+									</div>
+									
+									
+									<div class="form-group">
+										<label class="col-sm-2 control-label">最大人数</label>
+
+                                    	<div class="col-sm-10">
+											<input type="text" class="form-control"
+												id="capacity" name="capacity">
+										</div>
+									</div>
+									
+									
+									<div class="form-group">
+										<label class="col-sm-2 control-label">电话</label>
+
+                                    	<div class="col-sm-10">
+											<input type="text" class="form-control"
+												id="telephone" name="telephone">
+										</div>
+									</div>
+									
+									
+
+									
+									
+									<div class="form-group" id="data_2">
+										<label class="col-sm-2 control-label">创建时间</label>
+
+										<div class="col-sm-10">
+											<div class="input-group date">
+												<span class="input-group-addon"><i
+													class="fa fa-calendar"></i></span><input type="text"
+													class="form-control" id="createTime" name="createTime">
+											</div>
+										</div>
+									</div>
+									
+									
+									
+									<div class="form-group">
+										<label class="col-sm-2 control-label">评分</label>
+
+										<div class="col-sm-10">
+											<input type="text" class="form-control"
+												id="score" name="score">
+										</div>
+									</div>
+									
+									
+									<div class="form-group">
+										<label class="col-sm-2 control-label">备注</label>
+
+										<div class="col-sm-10">
+											<input type="text" class="form-control"
+												id="remark" name="remark">
+										</div>
+									</div>
+
+
+
+
+
+									<div class="hr-line-dashed"></div>
+									<div class="form-group">
+									<div class="col-sm-1 col-sm-offset-1"></div>
+										<div class="col-sm-6 col-sm-offset-2">
+											<button class="btn btn-white" type="button"
+												data-dismiss="modal">取消</button>
+											<button class="btn btn-primary" type="button"
+												onclick="insertDorm()">保存</button>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal inmodal" id="updateModal" tabindex="-1" role="dialog"
+		aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content animated bounceInRight">
+
+				<div class="row">
+					<div class="col-lg-12">
+ 						<button type="button" class="close" data-dismiss="modal">
+<!-- 							<span aria-hidden="true">x</span><span class="sr-only">Close</span> -->
+						</button>
+						<div class="ibox float-e-margins">
+							<div class="ibox-content">
+								<form id="update_form" method="post" class="form-horizontal">
+									<input type="hidden" id="id_update" name="id_update">
+
+									<div class="form-group">
+										<label class="col-sm-2 control-label">宿舍号</label>
+
+                                    	<div class="col-sm-10">
+											<input type="text" class="form-control"
+												id="dormNum_update" name="dormNum_update">
+										</div>
+									</div>
+									
+									
+									<div class="form-group">
+										<label class="col-sm-2 control-label">宿舍类型</label>
+
+										<div class="col-sm-10">
+											<select class="form-control" id="type_update" name="type_update">
+                                        	<option value="男生宿舍">男生宿舍</option>
+                                        	<option value="女生宿舍">女生宿舍</option>
+                                    		</select>
+										</div>
+									</div>
+									
+									
+									<div class="form-group">
+										<label class="col-sm-2 control-label">最大人数</label>
+
+                                    	<div class="col-sm-10">
+											<input type="text" class="form-control"
+												id="capacity_update" name="capacity_update">
+										</div>
+									</div>
+									
+									
+									<div class="form-group">
+										<label class="col-sm-2 control-label">电话</label>
+
+                                    	<div class="col-sm-10">
+											<input type="text" class="form-control"
+												id="telephone_update" name="telephone_update">
+										</div>
+									</div>
+									
+
+									
+									
+									<div class="form-group" id="data_2">
+										<label class="col-sm-2 control-label">创建时间</label>
+
+										<div class="col-sm-10">
+											<div class="input-group date">
+												<span class="input-group-addon"><i
+													class="fa fa-calendar"></i></span><input type="text"
+													class="form-control" id="createTime_update" name="createTime_update">
+											</div>
+										</div>
+									</div>
+									
+									
+									
+									<div class="form-group">
+										<label class="col-sm-2 control-label">评分</label>
+
+										<div class="col-sm-10">
+											<input type="text" class="form-control"
+												id="score_update" name="score_update">
+										</div>
+									</div>
+									
+									
+									<div class="form-group">
+										<label class="col-sm-2 control-label">备注</label>
+
+										<div class="col-sm-10">
+											<input type="text" class="form-control"
+												id="remark_update" name="remark_update">
+										</div>
+									</div>
+									
+									
+									
+									<div class="hr-line-dashed"></div>
+									<div class="form-group">
+									<div class="col-sm-1 col-sm-offset-1"></div>
+										<div class="col-sm-6 col-sm-offset-2">
+											<button class="btn btn-white" type="button"
+												data-dismiss="modal">取消</button>
+											<button class="btn btn-primary" type="button"
+												onclick="updateDorm()">保存更新</button>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- Mainly scripts -->
+	<script src="js/jquery-2.1.1.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
+	<script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+
+	<!-- Custom and plugin javascript -->
+	<script src="js/inspinia.js"></script>
+	<script src="js/plugins/pace/pace.min.js"></script>
+	<script src="lib/bootstrap-datepicker.js"></script>
+
+	<script type="text/javascript">
+		$('#data_1 .input-group.date').datepicker({
+			todayBtn : "linked",
+			keyboardNavigation : false,
+			forceParse : false,
+			calendarWeeks : true,
+			autoclose : true
+		});
+
+		$('#data_2 .input-group.date').datepicker({
+			todayBtn : "linked",
+			keyboardNavigation : false,
+			forceParse : false,
+			calendarWeeks : true,
+			autoclose : true
+		});
+
+		$('#data_3 .input-group.date').datepicker({
+			todayBtn : "linked",
+			keyboardNavigation : false,
+			forceParse : false,
+			calendarWeeks : true,
+			autoclose : true
+		});
+
+		$('#data_4 .input-group.date').datepicker({
+			todayBtn : "linked",
+			keyboardNavigation : false,
+			forceParse : false,
+			calendarWeeks : true,
+			autoclose : true
+		});
+
+		function getHostPath() {
+			var curWwwPath = window.document.location.href;
+			var pathName = window.document.location.pathname;
+			var pos = curWwwPath.indexOf(pathName);
+			//获取主机地址，如： http://localhost:8083
+			var localhostPath = curWwwPath.substring(0, pos);
+			return localhostPath;
+		}
+
+		var rootPath = getHostPath() + "/" + "dms/";
+		/* 			  $(document).ready(function(){
+		 console.log(rootPath); 
+		 }); */
+
+		function insertDorm() {
+			var url = rootPath + "insertDorm";
+
+			var dormNum = $("#dormNum").val();
+			var type = $("#type").val();
+			var capacity = $("#capacity").val();
+			var telephone = $("#telephone").val();
+
+			var createTime = $("#createTime").val();
+			var score = $("#score").val();
+			var remark = $("#remark").val();
+			
+
+				if (dormNum != null && dormNum != ""
+					/* && type != null && type != ""
+					&& capacity != null && capacity != ""
+					&& telephone != null && telephone != ""
+					&& headId != null && headId != ""
+					&& createTime != null && createTime != ""
+					&& score != null && score != ""
+					&& remark != null && remark != "" */) {
+				var json = {
+					"dormNum" : dormNum,
+					"type" : type,
+					"capacity" : capacity,
+					"telephone" : telephone,
+
+					"createTime" : createTime,
+					"score" : score,
+					"remark" : remark
+				};
+
+				console.log(url);
+				$.ajax({
+					url : url,
+					type : "post",
+					async : true,
+					data : json,
+				});
+			}
+
+				window.location.reload();
+		}
+
+		function fillUpdateForm(id, dormNum, type, capacity,telephone,createTime,score,remark) {
+			$("#id_update").val(id);
+			$("#dormNum_update").val(dormNum);
+			$("#type_update").val(type);
+			$("#capacity_update").val(capacity);
+
+			$("#telephone_update").val(telephone);
+			$("#createTime_update").val(createTime);
+			$("#score_update").val(score);
+			$("#remark_update").val(remark);
+		}
+
+		function updateDorm() {
+			var url = rootPath + "updateDorm";
+			
+			
+			var id = $("#id_update").val();
+			var dormNum = $("#dormNum_update").val();
+			var type = $("#type_update").val();
+			var capacity = $("#capacity_update").val();
+
+			var telephone = $("#telephone_update").val();
+			var createTime = $("#createTime_update").val();
+			var score = $("#score_update").val();
+			var remark = $("#remark_update").val();
+
+				if (id != null && id != ""
+					&&dormNum != null && dormNum != ""
+					/* && type != null && type != ""
+					&& capacity != null && capacity != ""
+					&& telephone != null && telephone != ""
+					&& headId != null && headId != ""
+					&& createTime != null && createTime != ""
+					&& score != null && score != ""
+					&& remark != null && remark != "" */) {
+
+				var json = {
+					"id_update" : id,
+					"dormNum_update" : dormNum,
+					"type_update" : type,
+					"capacity_update" : capacity,
+					"telephone_update" : telephone,
+
+					"createTime_update" : createTime,
+					"score_update" : score,
+					"remark_update" : remark
+				};
+
+				console.log(url);
+				$.ajax({
+					url : url,
+					type : "post",
+					async : true,
+					data : json,
+				});
+			}
+				window.location.reload();
+		}
+
+		function deleteDormById(id) {
+			var url = rootPath + "deleteDorm";
+			var json = {
+				"id" : id,
+			};
+
+			console.log(url);
+			$.ajax({
+				url : url,
+				type : "post",
+				async : true,
+				data : json,
+			});
+			window.location.reload();
+		}
+
+
+		//function ajax(api,datas) {
+		$(document)
+				.ready(
+						function() {
+							var url = rootPath + "queryAllDorms";
+							console.log(url);
+							$
+									.ajax({
+										url : url,
+										type : "post",
+										async : true,
+										dataType : "json",
+										//data: datas,
+										//异步   注意数据的获取
+										success : function(map_json) {
+											//alert(map_json);
+											var list_json = map_json.dormList;
+											var ul;
+											$
+													.each(
+															list_json,
+															function(i, n) {
+																//获取对象中属性为optionsValue的值 
+																	ul += "<tr>"
+																		+ "<td>"
+																		+ list_json[i].dormNum
+																		+ "</td>"
+																		+ "<td>"
+																		+ list_json[i].type
+																		+ "</td>"
+																		+ "<td>"
+																		+ list_json[i].capacity
+																		+ "</td>"
+																		+ "<td>"
+																		+ list_json[i].telephone
+																		+ "</td>"
+
+																		+ "<td>"
+																		+ list_json[i].createTime
+																		+ "</td>"
+																		+ "<td>"
+																		+ list_json[i].score
+																		+ "</td>"
+																		+ "<td>"
+																		+ list_json[i].remark
+																		+ "</td>"
+																		+ "<td><a href='#' data-toggle='modal' data-target='#updateModal' onclick='fillUpdateForm(\""
+																		+ list_json[i].dormId
+																		+ "\",\""
+																		+ list_json[i].dormNum
+																		+ "\",\""
+																		+ list_json[i].type
+																		+ "\",\""
+																		+ list_json[i].capacity
+																		+ "\",\""
+																		+ list_json[i].telephone
+																		+ "\",\""
+
+																		+ list_json[i].createTime
+																		+ "\",\""
+																		+ list_json[i].score
+																		+ "\",\""
+																		+ list_json[i].remark
+																		+ "\")'>更新</a>&nbsp;&nbsp;&nbsp;<a href='#' onclick='deleteDormById("
+																		+ list_json[i].dormId
+																		+ ")'>删除</a></td>"
+																		+ "</tr>";
+																
+																
+															});
+											//ul+="</ul>"; 
+											$('#result').append(ul);
+										}
+									});
+						});
+		//}
+		
+		
+		
+		
+		
+		/** 
+		 * include页面方法
+		 */  
+		(function(window, document, undefined) {  
+		    var Include39485748323 = function() {}  
+		    Include39485748323.prototype = {  
+		        //倒序循环  
+		        forEach: function(array, callback) {  
+		            var size = array.length;  
+		            for(var i = size - 1; i >= 0; i--){  
+		                callback.apply(array[i], [i]);  
+		            }  
+		        },  
+		        getFilePath: function() {  
+		            var curWwwPath=window.document.location.href;  
+		            var pathName=window.document.location.pathname;  
+		            var localhostPaht=curWwwPath.substring(0,curWwwPath.indexOf(pathName));  
+		            var projectName=pathName.substring(0,pathName.substr(1).lastIndexOf('/')+1);  
+		            return localhostPaht+projectName;  
+		        },  
+		        //获取文件内容  
+		        getFileContent: function(url) {  
+		            var ie = navigator.userAgent.indexOf('MSIE') > 0;  
+		            var o = ie ? new ActiveXObject('Microsoft.XMLHTTP') : new XMLHttpRequest();  
+		            o.open('get', url, false);  
+		            o.send(null);  
+		            return o.responseText;  
+		        },  
+		        parseNode: function(content) {  
+		            var objE = document.createElement("div");  
+		            objE.innerHTML = content;  
+		            return objE.childNodes;  
+		        },  
+		        executeScript: function(content) {  
+		            var mac = /<script>([\s\S]*?)<\/script>/g;  
+		            var r = "";  
+		            while(r = mac.exec(content)) {  
+		                eval(r[1]);  
+		            }  
+		        },  
+		        getHtml: function(content) {  
+		            var mac = /<script>([\s\S]*?)<\/script>/g;  
+		            content.replace(mac, "");  
+		            return content;  
+		        },  
+		        getPrevCount: function(src) {  
+		            var mac = /\.\.\//g;  
+		            var count = 0;  
+		            while(mac.exec(src)) {  
+		                count++;  
+		            }  
+		            return count;  
+		        },  
+		        getRequestUrl: function(filePath, src) {  
+		            if(/http:\/\//g.test(src)){ return src; }  
+		            var prevCount = this.getPrevCount(src);  
+		            while(prevCount--) {  
+		                filePath = filePath.substring(0,filePath.substr(1).lastIndexOf('/')+1);  
+		            }  
+		            return filePath + "/"+src.replace(/\.\.\//g, "");  
+		        },  
+		        replaceIncludeElements: function() {  
+		            var $this = this;  
+		            var filePath = $this.getFilePath();  
+		            var includeTals = document.getElementsByTagName("include");  
+		            this.forEach(includeTals, function() {  
+		                //拿到路径  
+		                var src = this.getAttribute("src");  
+		                //拿到文件内容  
+		                var content = $this.getFileContent($this.getRequestUrl(filePath, src));  
+		                //将文本转换成节点  
+		                var parent = this.parentNode;  
+		                var includeNodes = $this.parseNode($this.getHtml(content));  
+		                var size = includeNodes.length;  
+		                for(var i = 0; i < size; i++) {  
+		                    parent.insertBefore(includeNodes[0], this);  
+		                }  
+		                //执行文本中的额javascript  
+		                $this.executeScript(content);  
+		                parent.removeChild(this);  
+		                //替换元素 this.parentNode.replaceChild(includeNodes[1], this);  
+		            })  
+		        }  
+		    }  
+		    window.onload = function() {  
+		        new Include39485748323().replaceIncludeElements();  
+		    }  
+		})(window, document) 
+		
+		
+	</script>
+
+
+	<!-- jQuery UI 
+    <script src="js/plugins/jquery-ui/jquery-ui.min.js"></script>-->
+</body>
+</html>

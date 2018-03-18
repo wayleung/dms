@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>宿舍管理系统</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
+
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
+</head>
+
+<body class="gray-bg">
+
+    <div class="middle-box text-center loginscreen animated fadeInDown">
+        <div>
+            <div style="height: 150px">
+
+       
+
+            </div>
+            <h3>欢迎进入宿舍管理系统</h3>
+            <p>请先登陆</p>
+            
+            
+              	
+                     <label> <input type="radio" checked="checked" value="admin" id="adminRadio" name="typeRadio">管理员</label>
+                     <label> <input type="radio" value="student" id="studentRadio" name="typeRadio">学生</label>
+                 
+            	
+            
+                <div class="form-group">
+                    <input type="text" class="form-control" id="account" placeholder="请输入账号或者学号" required="required">
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" id="password" placeholder="请输入密码" required="required">
+                </div>
+                <button type="button" onclick="login()" class="btn btn-primary block full-width m-b">登录</button>
+				
+				 <div class="form-group">
+                    <p id="msg" style="color: red;">
+                    	
+                    </p>
+                </div>
+
+
+          
+            <p class="m-t"> <small>framework base on Bootstrap 3 &copy; 2018</small> </p>
+        </div>
+    </div>
+
+    <!-- Mainly scripts -->
+    <script src="js/jquery-2.1.1.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    
+    <script type="text/javascript">
+	    function getHostPath() {
+			var curWwwPath = window.document.location.href;
+			var pathName = window.document.location.pathname;
+			var pos = curWwwPath.indexOf(pathName);
+			//获取主机地址，如： http://localhost:8083
+			var localhostPath = curWwwPath.substring(0, pos);
+			return localhostPath;
+		}
+	    
+	    var rootPath = getHostPath() + "/" + "dms/";
+	
+	    /*
+	     * 删除元素子节点以及内容
+	     */
+	    function deleteAll(id){
+	    	$('#'+id).empty();
+	    } 
+	     
+	     
+	    function addMsg(id,msg){
+	    	$('#'+id).text(msg);
+	    }
+	    
+	    $(document).ready(
+	    	    function radioOnchange(){
+	    	    	$('#adminRadio').change(function (){
+	    	    		$("#adminRadio").attr("checked","checked");
+	    	    		$("#studentRadio").attr("checked",false);
+	    	    	});
+	    	    	$('#studentRadio').change(function (){
+	    	    		$("#studentRadio").attr("checked","checked");
+	    	    		$("#adminRadio").attr("checked",false);
+	    	    	});
+	    	    }	
+	    );
+
+	    
+	    
+		
+		
+		
+	    function login(){
+	    	if($('#adminRadio').attr('checked')=='checked'){
+	    		var json = {
+	    				"account" : $('#account').val(),
+	    				"password" : $('#password').val()
+	    			};
+		    	$.ajax({
+					url : rootPath+'adminLogin',
+					type : "post",
+					async : false,
+					data : json,
+					success : function(data) {
+						var datas = jQuery.parseJSON(data);
+						console.log('1'+datas);
+						console.log(datas.msg);
+						console.log(datas.list);
+						console.log('2'+datas);
+						deleteAll('msg');
+						addMsg('msg',datas.msg);
+						if(datas.list!=null){
+							window.location.href = rootPath+'admin/index.html';
+						}
+					}
+				}); 
+	    	}else if($('#studentRadio').attr('checked')=='checked'){
+	    		var json = {
+	    				"studentNum" : $('#account').val(),
+	    				"password" : $('#password').val()
+	    			};
+		    	$.ajax({
+		    		url : rootPath+'studentLogin',
+					type : "post",
+					async : false,
+					data : json,
+					success : function(data) {
+						var datas = jQuery.parseJSON(data);
+						console.log('1'+datas);
+						console.log(datas.msg);
+						console.log(datas.list);
+						console.log('2'+datas);
+						console.log(datas);
+						deleteAll('msg');
+						addMsg('msg',datas.msg);
+						if(datas.list!=null){
+							window.location.href = rootPath+'student/index.html';
+						}
+					}
+				}); 
+	    	}
+	    }
+	    
+	    
+    </script>
+
+</body>
+
+</html>

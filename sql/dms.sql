@@ -10,10 +10,28 @@ Target Server Type    : MYSQL
 Target Server Version : 50626
 File Encoding         : 65001
 
-Date: 2018-03-11 15:32:42
+Date: 2018-03-18 16:05:49
 */
 
 SET FOREIGN_KEY_CHECKS=0;
+
+-- ----------------------------
+-- Table structure for admin
+-- ----------------------------
+DROP TABLE IF EXISTS `admin`;
+CREATE TABLE `admin` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `account` varchar(255) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `phone` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of admin
+-- ----------------------------
+INSERT INTO `admin` VALUES ('1', '123', '123', '111', '111');
 
 -- ----------------------------
 -- Table structure for dorm
@@ -30,14 +48,16 @@ CREATE TABLE `dorm` (
   `score` varchar(255) DEFAULT NULL COMMENT '宿舍评分',
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`dorm_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of dorm
 -- ----------------------------
-INSERT INTO `dorm` VALUES ('1', '613', '男生宿舍', '4', '123456', '1', '02/19/2018', '100', '好评宿舍');
-INSERT INTO `dorm` VALUES ('2', '614', '男生宿舍', '4', '123456', '6', '01/25/2018', '59', '差评宿舍');
-INSERT INTO `dorm` VALUES ('3', '1', '男生宿舍', '1', '1', '1', '02/19/2018', '1', '1');
+INSERT INTO `dorm` VALUES ('1', '613', '男生宿舍', '4', '123456', null, '02/19/2018', '100', '好评宿舍');
+INSERT INTO `dorm` VALUES ('2', '614', '男生宿舍', '4', '123456', null, '01/25/2018', '59', '差评宿舍');
+INSERT INTO `dorm` VALUES ('3', '1', '男生宿舍', '1', '1', null, '02/19/2018', '1', '1');
+INSERT INTO `dorm` VALUES ('4', '615', '男生宿舍', '1', '1', null, '03/14/2018', '1', '1');
+INSERT INTO `dorm` VALUES ('6', '1', '男生宿舍', '1', '1', null, '03/01/2018', '1', '1');
 
 -- ----------------------------
 -- Table structure for dorm_manager
@@ -53,12 +73,13 @@ CREATE TABLE `dorm_manager` (
   `phone` varchar(255) DEFAULT NULL,
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`dm_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of dorm_manager
 -- ----------------------------
 INSERT INTO `dorm_manager` VALUES ('1', '1', '1', '1', '1', '女', '1', '1');
+INSERT INTO `dorm_manager` VALUES ('3', '1111', '11111', '小明', '小明', '女', '小明', '小明');
 
 -- ----------------------------
 -- Table structure for dorm_student
@@ -74,13 +95,13 @@ CREATE TABLE `dorm_student` (
   `create_time` varchar(255) DEFAULT NULL COMMENT '学生分配宿舍关系创建时间',
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`ds_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of dorm_student
 -- ----------------------------
-INSERT INTO `dorm_student` VALUES ('2', '2', '1', '111', '11', '1', '1', '2');
 INSERT INTO `dorm_student` VALUES ('5', '10', '2', '888', null, null, null, '888');
+INSERT INTO `dorm_student` VALUES ('6', '11', '1', '1', null, null, null, '1');
 
 -- ----------------------------
 -- Table structure for student
@@ -106,11 +127,11 @@ CREATE TABLE `student` (
   `emergency_phone` varchar(255) DEFAULT NULL COMMENT '紧急联系人电话',
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`student_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of student
 -- ----------------------------
-INSERT INTO `student` VALUES ('1', '1405551201', '12345678', 'WayLeung', '1994-11-13', '女', '注册', '肇庆', '15521608979', '外包142班', '计算机科学与技术', '09:00', '00:30', '电影、音乐', '运动', 'WayLeung', '15521608979', '优秀学生');
-INSERT INTO `student` VALUES ('2', '1', '1', '1', '1', '男', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1');
-INSERT INTO `student` VALUES ('10', '888', '888', '88', '88', '男', '8', '', '', '', '', '', '', '', '', '', '', '');
+INSERT INTO `student` VALUES ('1', '1405551201', '12345678', 'WayLeung', '1994-11-13', '男', '注册', '肇庆', '15521608979', '外包142班', '计算机科学与技术', '09:00', '00:30', '电影、音乐', '运动', 'WayLeung', '15521608979', '优秀学生');
+INSERT INTO `student` VALUES ('10', '888', '888', '88', '88', '男', '8', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1');
+INSERT INTO `student` VALUES ('11', '1', '1', '1', '1', '男', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1');

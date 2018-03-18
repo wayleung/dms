@@ -5,9 +5,9 @@ public class DormStudentVO {
 
     private Integer studentId;
     
-    private String studenName;
+    private String studentName;
 
-    private String studenNum;
+    private String studentNum;
     
     private Integer dormId;
     
@@ -43,20 +43,20 @@ public class DormStudentVO {
 		this.studentId = studentId;
 	}
 
-	public String getStudenName() {
-		return studenName;
+	public String getStudentName() {
+		return studentName;
 	}
 
-	public void setStudenName(String studenName) {
-		this.studenName = studenName;
+	public void setStudentName(String studentName) {
+		this.studentName = studentName;
 	}
 
-	public String getStudenNum() {
-		return studenNum;
+	public String getStudentNum() {
+		return studentNum;
 	}
 
-	public void setStudenNum(String studenNum) {
-		this.studenNum = studenNum;
+	public void setStudentNum(String studentNum) {
+		this.studentNum = studentNum;
 	}
 
 	public Integer getDormId() {
@@ -133,8 +133,8 @@ public class DormStudentVO {
 
 	@Override
 	public String toString() {
-		return "DormStudentVO [dsId=" + dsId + ", studentId=" + studentId + ", studenName=" + studenName
-				+ ", studenNum=" + studenNum + ", dormId=" + dormId + ", dormNum=" + dormNum + ", capacity=" + capacity
+		return "DormStudentVO [dsId=" + dsId + ", studentId=" + studentId + ", studenName=" + studentName
+				+ ", studenNum=" + studentNum + ", dormId=" + dormId + ", dormNum=" + dormNum + ", capacity=" + capacity
 				+ ", joinTime=" + joinTime + ", leaveTime=" + leaveTime + ", leaveReason=" + leaveReason + ", headId="
 				+ headId + ", createTime=" + createTime + ", remark=" + remark + "]";
 	}
