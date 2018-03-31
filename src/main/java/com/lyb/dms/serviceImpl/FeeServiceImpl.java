@@ -1,5 +1,7 @@
 package com.lyb.dms.serviceImpl;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -22,7 +24,11 @@ public class FeeServiceImpl implements IFeeService {
 
 	@Override
 	public void insertFee(Fee fee) {
+		Date now = new Date();
+		SimpleDateFormat smf = new SimpleDateFormat("MM/dd/yyyy");
+		String date = smf.format(now);
 		// TODO Auto-generated method stub
+		fee.setCreateTime(date);
 		feeMapper.insertSelective(fee);
 	}
 
