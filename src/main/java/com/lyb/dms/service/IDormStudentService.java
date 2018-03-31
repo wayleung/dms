@@ -18,4 +18,10 @@ public interface IDormStudentService {
 	
 	
 	List<DormStudent> checkStatus(Integer dm_id);
+
+	DormStudent queryDormStudentByStudentId(Integer StudentId);
+
+	List<DormStudent> queryDormStudentByDormId(Integer dormId);
+
+	Integer queryCountNowByDormId(Integer dormId);
 }

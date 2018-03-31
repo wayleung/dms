@@ -14,5 +14,9 @@ public interface IDormService {
 	List<Dorm> queryAllDorms();
 	
 	Dorm queryDormById(Integer dorm_id);
+
+	Dorm queryDormByDormNum(String dorm_num);
+
+	Integer queryCapicityByDormId(Integer dormId);
 	
 }

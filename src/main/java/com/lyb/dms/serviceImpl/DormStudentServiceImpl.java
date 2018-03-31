@@ -50,6 +50,61 @@ public class DormStudentServiceImpl implements IDormStudentService {
 		// TODO Auto-generated method stub
 
 	}
+	
+	
+	@Override
+	public DormStudent queryDormStudentByStudentId(Integer StudentId){
+		DormStudentExample example = new DormStudentExample();
+		Criteria criteria = example.createCriteria();
+		criteria.andStudentIdEqualTo(StudentId);
+		List<DormStudent> list = dormStudentMapper.selectByExample(example);
+		// TODO Auto-generated method stub
+		if(list!=null&&list.size()>0){
+			return list.get(0);
+		}else{
+			return null;
+		}
+
+	}
+	
+	
+	
+	
+	
+	
+	@Override
+	public List<DormStudent> queryDormStudentByDormId(Integer dormId){
+		DormStudentExample example = new DormStudentExample();
+		Criteria criteria = example.createCriteria();
+		criteria.andDormIdEqualTo(dormId);
+		List<DormStudent> list = dormStudentMapper.selectByExample(example);
+		// TODO Auto-generated method stub
+		if(list!=null&&list.size()>0){
+			return list;
+		}else{
+			return null;
+		}
+
+	}
+	
+	
+	
+	@Override
+	public Integer queryCountNowByDormId(Integer dormId){
+		DormStudentExample example = new DormStudentExample();
+		Criteria criteria = example.createCriteria();
+		criteria.andDormIdEqualTo(dormId);
+		List<DormStudent> list = dormStudentMapper.selectByExample(example);
+		// TODO Auto-generated method stub
+		if(list!=null&&list.size()>0){
+			return list.size();
+		}else{
+			return 0;
+		}
+
+	}
+	
+	
 
 	@Override
 	public List<DormStudent> checkStatus(Integer dm_id) {

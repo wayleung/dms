@@ -81,7 +81,10 @@
 									<div class="ibox-title">
 										<h5>所有宿舍</h5>
 										<div class="ibox-tools">
-											<a class=""> <i class="fa fa-search green font16"></i>
+										
+										<div class="ibox-tools">
+											宿舍号
+											<input id="dormInput" type="text" /><a onclick="queryDormByDormNum()" class=""> <i class="fa fa-search green font16"></i>
 											</a> <a class="collapse-link"> <i
 												class="fa fa-chevron-up  font16"></i>
 											</a>
@@ -95,10 +98,10 @@
 											<div class="col-sm-3">
 												<div class="input-group pull-right">
 													<span class="input-group-btn">
-														<button type="button" class="btn btn-sm btn-primary"
+														<!-- <button type="button" class="btn btn-sm btn-primary"
 															data-toggle="modal" data-target="#addModal">
 															</i>自动分配
-														</button>
+														</button> -->
 													</span>
 												</div>
 											</div>
@@ -135,6 +138,8 @@
 														<th>操作</th>
 													</tr>
 												</thead>
+												
+												<p id="msg" style="color: red;"></p>
 												<tbody id="result">
 													
 												</tbody>
@@ -226,6 +231,8 @@
 										</div>
 									</div>
 									
+									
+									<p id="msg_distribute" style="color: red;"></p>
 									
 									
 									<div class="hr-line-dashed"></div>
@@ -361,9 +368,15 @@
 		 /*
 		  * 删除元素子节点以及内容
 		  */
-		 function deleteAll(id){
-		 	$('#'+id).empty();
-		 } 
+		    function deleteAll(id){
+		    	$('#'+id).empty();
+		    } 
+		     
+		     
+		    function addMsg(id,msg){
+		    	$('#'+id).text(msg);
+		    }
+		    
 		  
 		 
 		 
@@ -503,10 +516,21 @@
 					type : "post",
 					async : true,
 					data : json,
+					success : function(datas) {
+						var map_json = jQuery.parseJSON(datas);
+						//alert(map_json);
+						if(map_json.success==0){
+							deleteAll('msg_distribute');
+							addMsg('msg_distribute',map_json.msg_distribute);
+							}
+						else{
+							window.location.reload();
+						}
+						}
 				});
 			}
 
-				window.location.reload();
+				
 
 		}
 		
@@ -546,6 +570,88 @@
 			});
 			window.location.reload();
 		}
+		
+		
+		
+		function queryDormByDormNum(){
+			var dorm_num = $('#dormInput').val();
+			var url = rootPath + "queryDormByDormNum";
+			$
+			.ajax({
+				url : url,
+				type : "post",
+				async : true,
+				dataType : "json",
+				data: {'dorm_num':dorm_num},
+				//异步   注意数据的获取
+				success : function(map_json) {
+					console.log(map_json);
+					//alert(map_json);
+					var dorm = map_json.dorm;
+					if(dorm!=null){
+						deleteAll('result');
+						deleteAll('msg');
+						var ul;
+						
+											//获取对象中属性为optionsValue的值 
+												ul += "<tr>"
+													+ "<td>"
+													+ dorm.dormNum
+													+ "</td>"
+													+ "<td>"
+													+ dorm.type
+													+ "</td>"
+													+ "<td>"
+													+ dorm.capacity
+													+ "</td>"
+													+ "<td>"
+													+ dorm.telephone
+													+ "</td>"
+
+													+ "<td>"
+													+ dorm.createTime
+													+ "</td>"
+													+ "<td>"
+													+ dorm.score
+													+ "</td>"
+													+ "<td>"
+													+ dorm.remark
+													+ "</td>"
+													+ "<td><a href='#' data-toggle='modal' data-target='#updateModal' onclick='fillUpdateForm(\""
+													+ dorm.dormId
+													+ "\",\""
+													+ dorm.dormNum
+													+ "\",\""
+													+ dorm.type
+													+ "\",\""
+													+ dorm.capacity
+													+ "\",\""
+													+ dorm.telephone
+													+ "\",\""
+
+													+ dorm.createTime
+													+ "\",\""
+													+ dorm.score
+													+ "\",\""
+													+ dorm.remark
+													+ "\")'>更新</a>&nbsp;&nbsp;&nbsp;<a href='#' onclick='deleteDormById("
+													+ dorm.dormId
+													+ ")'>删除</a></td>"
+													+ "</tr>";
+											
+											
+									
+						//ul+="</ul>"; 
+						$('#result').append(ul);
+					}else{
+						deleteAll('result');
+						addMsg('msg',map_json.msg)
+					}
+					
+				}
+			});
+		}
+
 
 
 		//function ajax(api,datas) {

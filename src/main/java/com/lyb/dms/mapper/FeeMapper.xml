@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lyb.dms.mapper.FeeMapper" >
+  <resultMap id="BaseResultMap" type="com.lyb.dms.domain.Fee" >
+    <id column="f_id" property="fId" jdbcType="INTEGER" />
+    <result column="dorm_num" property="dormNum" jdbcType="VARCHAR" />
+    <result column="electricity_fee" property="electricityFee" jdbcType="VARCHAR" />
+    <result column="water_fee" property="waterFee" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="VARCHAR" />
+    <result column="pay_time" property="payTime" jdbcType="VARCHAR" />
+    <result column="end_time" property="endTime" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    f_id, dorm_num, electricity_fee, water_fee, create_time, pay_time, end_time, status, 
+    remark
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.lyb.dms.domain.FeeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from fee
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from fee
+    where f_id = #{fId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from fee
+    where f_id = #{fId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.lyb.dms.domain.FeeExample" >
+    delete from fee
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.lyb.dms.domain.Fee" >
+    insert into fee (f_id, dorm_num, electricity_fee, 
+      water_fee, create_time, pay_time, 
+      end_time, status, remark
+      )
+    values (#{fId,jdbcType=INTEGER}, #{dormNum,jdbcType=VARCHAR}, #{electricityFee,jdbcType=VARCHAR}, 
+      #{waterFee,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{payTime,jdbcType=VARCHAR}, 
+      #{endTime,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.lyb.dms.domain.Fee" >
+    insert into fee
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="fId != null" >
+        f_id,
+      </if>
+      <if test="dormNum != null" >
+        dorm_num,
+      </if>
+      <if test="electricityFee != null" >
+        electricity_fee,
+      </if>
+      <if test="waterFee != null" >
+        water_fee,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="payTime != null" >
+        pay_time,
+      </if>
+      <if test="endTime != null" >
+        end_time,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="fId != null" >
+        #{fId,jdbcType=INTEGER},
+      </if>
+      <if test="dormNum != null" >
+        #{dormNum,jdbcType=VARCHAR},
+      </if>
+      <if test="electricityFee != null" >
+        #{electricityFee,jdbcType=VARCHAR},
+      </if>
+      <if test="waterFee != null" >
+        #{waterFee,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="payTime != null" >
+        #{payTime,jdbcType=VARCHAR},
+      </if>
+      <if test="endTime != null" >
+        #{endTime,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.lyb.dms.domain.FeeExample" resultType="java.lang.Integer" >
+    select count(*) from fee
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update fee
+    <set >
+      <if test="record.fId != null" >
+        f_id = #{record.fId,jdbcType=INTEGER},
+      </if>
+      <if test="record.dormNum != null" >
+        dorm_num = #{record.dormNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.electricityFee != null" >
+        electricity_fee = #{record.electricityFee,jdbcType=VARCHAR},
+      </if>
+      <if test="record.waterFee != null" >
+        water_fee = #{record.waterFee,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.payTime != null" >
+        pay_time = #{record.payTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.endTime != null" >
+        end_time = #{record.endTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null" >
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update fee
+    set f_id = #{record.fId,jdbcType=INTEGER},
+      dorm_num = #{record.dormNum,jdbcType=VARCHAR},
+      electricity_fee = #{record.electricityFee,jdbcType=VARCHAR},
+      water_fee = #{record.waterFee,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=VARCHAR},
+      pay_time = #{record.payTime,jdbcType=VARCHAR},
+      end_time = #{record.endTime,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=VARCHAR},
+      remark = #{record.remark,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lyb.dms.domain.Fee" >
+    update fee
+    <set >
+      <if test="dormNum != null" >
+        dorm_num = #{dormNum,jdbcType=VARCHAR},
+      </if>
+      <if test="electricityFee != null" >
+        electricity_fee = #{electricityFee,jdbcType=VARCHAR},
+      </if>
+      <if test="waterFee != null" >
+        water_fee = #{waterFee,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="payTime != null" >
+        pay_time = #{payTime,jdbcType=VARCHAR},
+      </if>
+      <if test="endTime != null" >
+        end_time = #{endTime,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where f_id = #{fId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lyb.dms.domain.Fee" >
+    update fee
+    set dorm_num = #{dormNum,jdbcType=VARCHAR},
+      electricity_fee = #{electricityFee,jdbcType=VARCHAR},
+      water_fee = #{waterFee,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=VARCHAR},
+      pay_time = #{payTime,jdbcType=VARCHAR},
+      end_time = #{endTime,jdbcType=VARCHAR},
+      status = #{status,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR}
+    where f_id = #{fId,jdbcType=INTEGER}
+  </update>
+</mapper>

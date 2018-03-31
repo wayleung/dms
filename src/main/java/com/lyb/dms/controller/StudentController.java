@@ -65,7 +65,33 @@ public class StudentController {
 		student.setEmergencyContact(emergencyContact);
 		student.setEmergencyPhone(emergencyPhone);
 		student.setRemark(remark);
-		studentServiceImpl.insertStudent(student);
+		
+		if(studentServiceImpl.queryStudentByStudentNum(studentNum)!=null){
+			Map<String, Object> dataMap =  new Hashtable<>();
+			dataMap.put("msg_insert", "该学号已经存在！");
+			dataMap.put("success", "0");
+			JSONObject jsonObject = new JSONObject();
+			jsonObject.putAll(dataMap);
+			try {
+				response.getWriter().write(jsonObject.toString());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}else{
+			Map<String, Object> dataMap =  new Hashtable<>();
+			dataMap.put("msg_insert", "增加成功！");
+			dataMap.put("success", "1");
+			JSONObject jsonObject = new JSONObject();
+			jsonObject.putAll(dataMap);
+			try {
+				response.getWriter().write(jsonObject.toString());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			studentServiceImpl.insertStudent(student);
+		}
+		
+		
 		return null;
 	}
 	
@@ -163,6 +189,33 @@ public class StudentController {
 		}
 		return null;
 	}
+	
+	
+	
+	@RequestMapping(value="/queryStudentByStudentNum",method=RequestMethod.POST)
+	public String queryStudentByStudentNum(HttpServletRequest request,HttpServletResponse response){
+		String studentNum = request.getParameter("studentNum");
+		if(studentNum!=null){
+			Student student =  studentServiceImpl.queryStudentByStudentNum(studentNum);
+			Map<String, Object> dataMap =  new Hashtable<>();
+			if(student!=null){
+				dataMap.put("student", student);
+			}else{
+				dataMap.put("msg", "请输入正确学号！");
+			}
+
+			JSONObject jsonObject = new JSONObject();
+			jsonObject.putAll(dataMap);
+			try {
+				response.getWriter().write(jsonObject.toString());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
+	
+	
 	
 	
 	

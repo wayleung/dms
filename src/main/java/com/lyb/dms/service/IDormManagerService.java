@@ -14,4 +14,6 @@ public interface IDormManagerService {
 	List<DormManager> queryAllDormManagers();
 	
 	DormManager queryDormManagerById(Integer dm_id);
+
+	DormManager queryDormManagerByDmNum(String dm_num);
 }

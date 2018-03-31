@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.lyb.dms.domain.Dorm;
 import com.lyb.dms.domain.DormStudent;
+import com.lyb.dms.domain.Student;
 import com.lyb.dms.serviceImpl.DormServiceImpl;
 import com.lyb.dms.serviceImpl.DormStudentServiceImpl;
 import com.lyb.dms.serviceImpl.StudentServiceImpl;
@@ -241,21 +242,86 @@ public class DormStudentController {
 	public String distribute(HttpServletRequest request,HttpServletResponse response){
 		String studentNum= request.getParameter("studentNum");
 		
-		DormStudent dormStudent = new DormStudent();
-		String dorm_Id = request.getParameter("dormId");
-		if(StringUtils.isNotBlank(dorm_Id)){
-			dormStudent.setDormId(Integer.parseInt(dorm_Id));
+		Student studentByStudentNum = studentServiceImpl.queryStudentByStudentNum(studentNum);
+		
+		if(studentByStudentNum==null){
+			Map<String, Object> dataMap =  new Hashtable<>();
+			dataMap.put("msg_distribute", "该学生不存在！");
+			dataMap.put("success", "0");
+			JSONObject jsonObject = new JSONObject();
+			jsonObject.putAll(dataMap);
+			try {
+				response.getWriter().write(jsonObject.toString());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}else{
+			Integer student_id = studentByStudentNum.getStudentId();
+			if(dormStudentServiceImpl.queryDormStudentByStudentId(student_id)!=null){
+				Map<String, Object> dataMap =  new Hashtable<>();
+				dataMap.put("msg_distribute", "该学生已经分配了宿舍");
+				dataMap.put("success", "0");
+				JSONObject jsonObject = new JSONObject();
+				jsonObject.putAll(dataMap);
+				try {
+					response.getWriter().write(jsonObject.toString());
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}else{ 
+				DormStudent dormStudent = new DormStudent();
+				String dorm_Id = request.getParameter("dormId");
+				Integer dormId=   Integer.parseInt(dorm_Id);
+				Integer capacity = dormServiceImpl.queryCapicityByDormId(dormId);
+				Integer countNow = dormStudentServiceImpl.queryCountNowByDormId(dormId);
+				if(countNow>=capacity){
+					
+					Map<String, Object> dataMap =  new Hashtable<>();
+					dataMap.put("msg_distribute", "宿舍已经达到最大人数");
+					dataMap.put("success", "0");
+					JSONObject jsonObject = new JSONObject();
+					jsonObject.putAll(dataMap);
+					try {
+						response.getWriter().write(jsonObject.toString());
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+			}else{
+/*				DormStudent dormStudent = new DormStudent();
+				String dorm_Id = request.getParameter("dormId");*/
+/*				if(StringUtils.isNotBlank(dorm_Id)){
+					dormStudent.setDormId(Integer.parseInt(dorm_Id));
+				}*/
+				dormStudent.setDormId(Integer.parseInt(dorm_Id));
+				String joinTime = request.getParameter("joinTime");
+				String remark = request.getParameter("remark");
+				
+				Integer studentId = studentServiceImpl.queryStudentByStudentNum(studentNum).getStudentId();
+			
+				dormStudent.setStudentId(studentId);
+				dormStudent.setJoinTime(joinTime);
+				dormStudent.setRemark(remark);
+				dormStudentServiceImpl.insertDormStudent(dormStudent);
+				
+				
+				
+				Map<String, Object> dataMap =  new Hashtable<>();
+				dataMap.put("msg_distribute", "分配成功");
+				dataMap.put("success", "1");
+				JSONObject jsonObject = new JSONObject();
+				jsonObject.putAll(dataMap);
+				try {
+					response.getWriter().write(jsonObject.toString());
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
 		}
 		
-		String joinTime = request.getParameter("joinTime");
-		String remark = request.getParameter("remark");
 		
-		Integer studentId = studentServiceImpl.queryStudentByStudentNum(studentNum).getStudentId();
-	
-		dormStudent.setStudentId(studentId);
-		dormStudent.setJoinTime(joinTime);
-		dormStudent.setRemark(remark);
-		dormStudentServiceImpl.insertDormStudent(dormStudent);
+		
+		
 		return null;
 	}
 	
@@ -274,4 +340,10 @@ public class DormStudentController {
 	
 		return null;
 	}
+	
+	
+	
+	
+	
+	
 }

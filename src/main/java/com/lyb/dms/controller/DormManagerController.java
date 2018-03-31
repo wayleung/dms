@@ -32,6 +32,7 @@ public class DormManagerController {
 	
 	@RequestMapping(value="/insertDormManager",method=RequestMethod.POST)
 	public String insertDormManager(HttpServletRequest request,HttpServletResponse response){
+		
 		String dmNum = request.getParameter("dmNum");
 		String password = request.getParameter("password");
 		String name = request.getParameter("name");
@@ -48,7 +49,34 @@ public class DormManagerController {
 		dormManager.setPhone(phone);
 		dormManager.setRemark(remark);
 		
-		dormManagerServiceImpl.insertDormManager(dormManager);
+
+		if(dormManagerServiceImpl.queryDormManagerByDmNum(dmNum)!=null){
+			Map<String, Object> dataMap =  new Hashtable<>();
+			dataMap.put("msg_insert", "该工号已经存在！");
+			dataMap.put("success", "0");
+			JSONObject jsonObject = new JSONObject();
+			jsonObject.putAll(dataMap);
+			try {
+				response.getWriter().write(jsonObject.toString());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}else{
+			Map<String, Object> dataMap =  new Hashtable<>();
+			dataMap.put("msg_insert", "增加成功！");
+			dataMap.put("success", "1");
+			JSONObject jsonObject = new JSONObject();
+			jsonObject.putAll(dataMap);
+			try {
+				response.getWriter().write(jsonObject.toString());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			dormManagerServiceImpl.insertDormManager(dormManager);
+		}
+		
+		
+
 		return null;
 	}
 	
@@ -130,4 +158,28 @@ public class DormManagerController {
 		return null;
 	}
 	
+	
+	
+	@RequestMapping(value="/queryDormManagerByDmNum",method=RequestMethod.POST)
+	public String queryDormManagerByDmNum(HttpServletRequest request,HttpServletResponse response){
+		String dmNum = request.getParameter("dmNum");
+		if(dmNum!=null){
+			DormManager dormManager =  dormManagerServiceImpl.queryDormManagerByDmNum(dmNum);
+			Map<String, Object> dataMap =  new Hashtable<>();
+			if(dormManager!=null){
+				dataMap.put("dormManager", dormManager);
+			}else{
+				dataMap.put("msg", "请输入正确工号！");
+			}
+
+			JSONObject jsonObject = new JSONObject();
+			jsonObject.putAll(dataMap);
+			try {
+				response.getWriter().write(jsonObject.toString());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
 }

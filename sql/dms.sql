@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50626
 File Encoding         : 65001
 
-Date: 2018-03-18 16:05:49
+Date: 2018-03-31 19:07:42
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -48,16 +48,16 @@ CREATE TABLE `dorm` (
   `score` varchar(255) DEFAULT NULL COMMENT '宿舍评分',
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`dorm_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of dorm
 -- ----------------------------
-INSERT INTO `dorm` VALUES ('1', '613', '男生宿舍', '4', '123456', null, '02/19/2018', '100', '好评宿舍');
+INSERT INTO `dorm` VALUES ('1', '613', '男生宿舍', '4', '123456', '12', '02/19/2018', '100', '好评宿舍');
 INSERT INTO `dorm` VALUES ('2', '614', '男生宿舍', '4', '123456', null, '01/25/2018', '59', '差评宿舍');
 INSERT INTO `dorm` VALUES ('3', '1', '男生宿舍', '1', '1', null, '02/19/2018', '1', '1');
 INSERT INTO `dorm` VALUES ('4', '615', '男生宿舍', '1', '1', null, '03/14/2018', '1', '1');
-INSERT INTO `dorm` VALUES ('6', '1', '男生宿舍', '1', '1', null, '03/01/2018', '1', '1');
+INSERT INTO `dorm` VALUES ('7', '618', '男生宿舍', '', '', null, '', '', '');
 
 -- ----------------------------
 -- Table structure for dorm_manager
@@ -73,13 +73,14 @@ CREATE TABLE `dorm_manager` (
   `phone` varchar(255) DEFAULT NULL,
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`dm_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of dorm_manager
 -- ----------------------------
 INSERT INTO `dorm_manager` VALUES ('1', '1', '1', '1', '1', '女', '1', '1');
 INSERT INTO `dorm_manager` VALUES ('3', '1111', '11111', '小明', '小明', '女', '小明', '小明');
+INSERT INTO `dorm_manager` VALUES ('4', '123', '123', '', '', '男', '', '');
 
 -- ----------------------------
 -- Table structure for dorm_student
@@ -95,13 +96,39 @@ CREATE TABLE `dorm_student` (
   `create_time` varchar(255) DEFAULT NULL COMMENT '学生分配宿舍关系创建时间',
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`ds_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of dorm_student
 -- ----------------------------
-INSERT INTO `dorm_student` VALUES ('5', '10', '2', '888', null, null, null, '888');
 INSERT INTO `dorm_student` VALUES ('6', '11', '1', '1', null, null, null, '1');
+INSERT INTO `dorm_student` VALUES ('7', '12', '1', '02/28/2018', null, null, null, '11');
+INSERT INTO `dorm_student` VALUES ('8', '10', '1', '03/06/2018', null, null, null, '141');
+INSERT INTO `dorm_student` VALUES ('9', '13', '1', '03/06/2018', null, null, null, '1');
+
+-- ----------------------------
+-- Table structure for fee
+-- ----------------------------
+DROP TABLE IF EXISTS `fee`;
+CREATE TABLE `fee` (
+  `f_id` int(11) NOT NULL AUTO_INCREMENT,
+  `dorm_num` varchar(255) DEFAULT NULL,
+  `electricity_fee` varchar(255) DEFAULT NULL,
+  `water_fee` varchar(255) DEFAULT NULL,
+  `create_time` varchar(255) DEFAULT NULL,
+  `pay_time` varchar(255) DEFAULT NULL,
+  `end_time` varchar(255) DEFAULT NULL,
+  `status` varchar(255) DEFAULT NULL,
+  `remark` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`f_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of fee
+-- ----------------------------
+INSERT INTO `fee` VALUES ('1', '613', '1', '1', null, '03/07/2018', '02/27/2018', '已缴费', '1');
+INSERT INTO `fee` VALUES ('3', '614', '11', '111', null, '', '', '未缴费', '');
+INSERT INTO `fee` VALUES ('4', '613', '111', '1111', null, '', '', '未缴费', '');
 
 -- ----------------------------
 -- Table structure for student
@@ -127,7 +154,7 @@ CREATE TABLE `student` (
   `emergency_phone` varchar(255) DEFAULT NULL COMMENT '紧急联系人电话',
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`student_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of student
@@ -135,3 +162,5 @@ CREATE TABLE `student` (
 INSERT INTO `student` VALUES ('1', '1405551201', '12345678', 'WayLeung', '1994-11-13', '男', '注册', '肇庆', '15521608979', '外包142班', '计算机科学与技术', '09:00', '00:30', '电影、音乐', '运动', 'WayLeung', '15521608979', '优秀学生');
 INSERT INTO `student` VALUES ('10', '888', '888', '88', '88', '男', '8', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1');
 INSERT INTO `student` VALUES ('11', '1', '1', '1', '1', '男', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1');
+INSERT INTO `student` VALUES ('12', '123', '123', '', '', '男', '', '', '', '', '', '', '', '', '', '', '', '');
+INSERT INTO `student` VALUES ('13', '222', '', '', '', '男', '', '', '', '', '', '', '', '', '', '', '', '');

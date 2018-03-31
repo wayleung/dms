@@ -81,7 +81,9 @@
 									<div class="ibox-title">
 										<h5>所有学生</h5>
 										<div class="ibox-tools">
-											<a class=""> <i class="fa fa-search green font16"></i>
+										学号
+											<input id="studentNumInput" type="text" /> 
+											<a onclick="queryStudentByStudentNum()" class=""> <i class="fa fa-search green font16"></i>
 											</a> <a class="collapse-link"> <i
 												class="fa fa-chevron-up  font16"></i>
 											</a>
@@ -143,6 +145,7 @@
 														<th>操作</th>
 													</tr>
 												</thead>
+												<p id="msg" style="color: red;"></p>
 												<tbody id="result">
 													
 												</tbody>
@@ -386,7 +389,7 @@
 												id="remark" name="remark">
 										</div>
 									</div>
-
+									<p id="msg_insert" style="color: red;"></p>
 
 
 									<div class="hr-line-dashed"></div>
@@ -651,6 +654,16 @@
 	<script src="lib/bootstrap-datepicker.js"></script>
 
 	<script type="text/javascript">
+	
+	function deleteAll(id){
+		$('#'+id).empty();
+	}
+	
+	function addMsg(id,msg){
+		$('#'+id).text(msg);
+	}
+	
+	
 		$('#data_1 .input-group.date').datepicker({
 			todayBtn : "linked",
 			keyboardNavigation : false,
@@ -758,10 +771,22 @@
 					type : "post",
 					async : true,
 					data : json,
+					success : function(datas) {
+						var map_json = jQuery.parseJSON(datas);
+						//alert(map_json);
+						if(map_json.success==0){
+							deleteAll('msg_insert');
+							addMsg('msg_insert',map_json.msg_insert);
+							}
+						else{
+							window.location.reload();
+						}
+						}
 				});
+			}else{
+				addMsg('msg_insert','学号不能为空');
 			}
 
-			window.location.reload();
 		}
 
 		function fillUpdateForm(id, studentNum, password, name, birthDate,sex,state,location,phone,studentClass,major, getupTime,sleepTime,hobby,habit,emergencyContact,emergencyPhone,remark) {
@@ -869,6 +894,134 @@
 				data : json,
 			});
 			window.location.reload();
+		}
+		
+		
+		
+		
+		function queryStudentByStudentNum(){
+			var studentNum = $('#studentNumInput').val();
+			console.log(studentNum);
+			var url = rootPath + "queryStudentByStudentNum";
+			$
+			.ajax({
+				url : url,
+				type : "post",
+				async : true,
+				dataType : "json",
+				data: {'studentNum':studentNum},
+				//异步   注意数据的获取
+				success : function(map_json) {
+					console.log(map_json);
+					//alert(map_json);
+					var student = map_json.student;
+					if(student!=null){
+						deleteAll('result');
+						deleteAll('msg');
+						var ul;
+						
+						ul += "<tr>"
+							+ "<td>"
+							+ student.studentNum
+							+ "</td>"
+							+ "<td>"
+							+ student.name
+							+ "</td>"
+							+ "<td>"
+							+ student.birthDate
+							+ "</td>"
+							+ "<td>"
+							+ student.sex
+							+ "</td>"
+							+ "<td>"
+							+ student.state
+							+ "</td>"
+							+ "<td>"
+							+ student.location
+							+ "</td>"
+							+ "<td>"
+							+ student.phone
+							+ "</td>"
+							+ "<td>"
+							+ student.studentClass
+							+ "</td>"
+							+ "<td>"
+							+ student.major
+							+ "</td>"
+							+ "<td>"
+							+ student.getupTime
+							+ "</td>"
+							+ "<td>"
+							+ student.sleepTime
+							+ "</td>"
+							+ "<td>"
+							+ student.hobby
+							+ "</td>"
+							+ "<td>"
+							+ student.habit
+							+ "</td>"
+							+ "<td>"
+							+ student.emergencyContact
+							+ "</td>"
+							+ "<td>"
+							+ student.emergencyPhone
+							+ "</td>"
+							+ "<td>"
+							+ student.remark
+							+ "</td>"
+							+ "<td><a href='#' data-toggle='modal' data-target='#updateModal' onclick='fillUpdateForm(\""
+							+ student.studentId
+							+ "\",\""
+							+ student.studentNum
+							+ "\",\""
+							+ student.password
+							+ "\",\""
+							+ student.name
+							+ "\",\""
+							+ student.birthDate
+							+ "\",\""
+							+ student.sex
+							+ "\",\""
+							+ student.state
+							+ "\",\""
+							+ student.location
+							+ "\",\""
+							+ student.phone
+							+ "\",\""
+							+ student.studentClass
+							+ "\",\""
+							+ student.major
+							+ "\",\""
+							+ student.getupTime
+							+ "\",\""
+							+ student.sleepTime
+							+ "\",\""
+							+ student.hobby
+							+ "\",\""
+							+ student.habit
+							+ "\",\""
+							+ student.emergencyContact
+							+ "\",\""
+							+ student.emergencyPhone
+							+ "\",\""
+							+ student.remark
+							+ "\")'>更新</a>&nbsp;&nbsp;&nbsp;<a href='#' onclick='deleteStudentById("
+							+ student.studentId
+							+ ")'>删除</a></td>"
+							+ "</tr>";
+					
+											
+											
+									
+						//ul+="</ul>"; 
+						$('#result').append(ul);
+					}else{
+						deleteAll('result');
+						addMsg('msg',map_json.msg)
+					}
+					
+				}
+			});
 		}
 
 

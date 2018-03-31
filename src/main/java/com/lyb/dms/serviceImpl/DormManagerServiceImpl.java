@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.lyb.dms.domain.DormManager;
 import com.lyb.dms.domain.DormManagerExample;
+import com.lyb.dms.domain.DormManagerExample.Criteria;
 import com.lyb.dms.mapper.DormManagerMapper;
 import com.lyb.dms.service.IDormManagerService;
 
@@ -46,6 +47,24 @@ public class DormManagerServiceImpl implements IDormManagerService {
 	@Override
 	public DormManager queryDormManagerById(Integer dm_id) {
 		return dormManagerMapper.selectByPrimaryKey(dm_id);
+		// TODO Auto-generated method stub
+
+	}
+	
+	
+	
+	@Override
+	public DormManager queryDormManagerByDmNum(String dm_num) {
+		
+		DormManagerExample example = new DormManagerExample();
+		Criteria criteria = example.createCriteria();
+		criteria.andDmNumEqualTo(dm_num);
+		List<DormManager> list = dormManagerMapper.selectByExample(example);
+		if(list!=null&&list.size()>0){
+			return list.get(0);
+		}else{
+			return null;
+		}
 		// TODO Auto-generated method stub
 
 	}

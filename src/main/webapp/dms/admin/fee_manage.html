@@ -65,10 +65,10 @@
 				<div class="col-lg-12">
 					<div class="row wrapper border-bottom white-bg page-heading">
 						<div class="col-lg-10">
-							<h2>宿舍管理人员管理</h2>
+							<h2>宿舍管理</h2>
 							<ol class="breadcrumb">
 								<li><a href="index.html">首页</a></li>
-								<li class="active"><strong>宿舍管理人员管理</strong></li>
+								<li class="active"><strong>宿舍水电费缴费管理</strong></li>
 							</ol>
 						</div>
 						<div class="col-lg-2"></div>
@@ -79,16 +79,18 @@
 							<div class="col-lg-12">
 								<div class="ibox float-e-margins">
 									<div class="ibox-title">
-										<h5>所有宿舍管理人员</h5>
+										<h5>所有水电费缴费号</h5>
 										
 										<div class="ibox-tools">
-										工号
-											<input id="dmNumInput" type="text" /> 
-											<a onclick="queryDormManagerByDmNum()" class="">   <i class="fa fa-search green font16"></i>
+											宿舍号
+											<input id="feeInput" type="text" /><a onclick="queryFeeByDormNum()" class=""> <i class="fa fa-search green font16"></i>
 											</a> <a class="collapse-link"> <i
 												class="fa fa-chevron-up  font16"></i>
 											</a>
 										</div>
+										<!-- <span class="label label-primary pull-right">NEW<i class="fa fa-plus"></i></span>
+                            <button type="button" class="btn btn-md btn-primary"><i class="fa fa-plus"></i></button> -->
+									</div>
 
 									<div class="ibox-content" style="display: block;">
 										<div class="row">
@@ -99,6 +101,8 @@
 															data-toggle="modal" data-target="#addModal">
 															<i class="fa fa-plus"></i>增加
 														</button>
+														
+														
 													</span>
 												</div>
 											</div>
@@ -124,16 +128,20 @@
 											<table class="table table-striped">
 												<thead>
 													<tr>
-														<th>工号</th>
-														<th>姓名</th>
-														<th>生日</th>
-														<th>性别</th>
-														<th>电话</th>
+														<th>水电费编号</th>
+														<th>宿舍号</th>
+														<th>应缴电费</th>
+														<th>应缴水费</th>
+														<th>创建时间</th>
+														<th>缴费时间</th>
+														<th>截止时间</th>
+														<th>状态</th>
 														<th>备注</th>
 														<th>操作</th>
 													</tr>
 												</thead>
 												<p id="msg" style="color: red;"></p>
+												
 												<tbody id="result">
 													
 												</tbody>
@@ -184,52 +192,78 @@
 						<div class="ibox float-e-margins">
 							<div class="ibox-content">
 								<form id="add_form" method="post" class="form-horizontal">
+
+								
 									<div class="form-group">
-										<label class="col-sm-2 control-label">工号</label>
+										<label class="col-sm-2 control-label">宿舍号</label>
 
                                     	<div class="col-sm-10">
 											<input type="text" class="form-control"
-												id="dmNum" name="dmNum">
+												id="dormNum" name="dormNum">
 										</div>
 									</div>
 									
-									<div class="form-group">
-										<label class="col-sm-2 control-label">密码</label>
 
-                                    	<div class="col-sm-10">
-											<input type="password" class="form-control"
-												id="password" name="password">
-										</div>
-									</div>
 									
 									
 									<div class="form-group">
-										<label class="col-sm-2 control-label">姓名</label>
+										<label class="col-sm-2 control-label">应缴电费</label>
 
                                     	<div class="col-sm-10">
 											<input type="text" class="form-control"
-												id="name" name="name">
+												id="electricityFee" name="electricityFee">
 										</div>
 									</div>
 									
 									
 									<div class="form-group">
-										<label class="col-sm-2 control-label">生日</label>
+										<label class="col-sm-2 control-label">应缴水费</label>
 
                                     	<div class="col-sm-10">
 											<input type="text" class="form-control"
-												id="birthDate" name="birthDate">
+												id="waterFee" name="waterFee">
 										</div>
 									</div>
 									
 									
-									<div class="form-group">
-										<label class="col-sm-2 control-label">性别</label>
+
+									
+									
+									<div class="form-group" id="data_1">
+										<label class="col-sm-2 control-label">截止时间</label>
 
 										<div class="col-sm-10">
-											<select class="form-control" id="sex" name="sex">
-                                        	<option value="男">男</option>
-                                        	<option value="女">女</option>
+											<div class="input-group date">
+												<span class="input-group-addon"><i
+													class="fa fa-calendar"></i></span><input type="text"
+													class="form-control" id="endTime" name="endTime">
+											</div>
+										</div>
+									</div>
+									
+									
+									
+										<div class="form-group" id="data_2">
+										<label class="col-sm-2 control-label">缴费时间</label>
+
+										<div class="col-sm-10">
+											<div class="input-group date">
+												<span class="input-group-addon"><i
+													class="fa fa-calendar"></i></span><input type="text"
+													class="form-control" id="payTime" name="payTime">
+											</div>
+										</div>
+									</div>
+									
+																		
+									<div class="form-group">
+										<label class="col-sm-2 control-label">状态</label>
+
+										<div class="col-sm-10">
+											<select class="form-control" id="status" name="status">
+                                        	<option value="未缴费">未缴费</option>
+                                        	<option value="已缴费">已缴费</option>
+                                        	<!-- <option value="0">delete</option> -->
                                     		</select>
 										</div>
 									</div>
@@ -237,39 +271,6 @@
 									
 
 									
-									
-									<div class="form-group">
-										<label class="col-sm-2 control-label">电话</label>
-
-                                    	<div class="col-sm-10">
-											<input type="text" class="form-control"
-												id="phone" name="phone">
-										</div>
-									</div>
-									
-
-
-<!-- 									
-									<div class="form-group" id="data_2">
-										<label class="col-sm-2 control-label">创建时间</label>
-
-										<div class="col-sm-10">
-											<div class="input-group date">
-												<span class="input-group-addon"><i
-													class="fa fa-calendar"></i></span><input type="text"
-													class="form-control" id="createTime" name="createTime">
-											</div>
-										</div>
-									</div>
-									 -->
-									
-
-
-																											
-
-
-
-
 									<div class="form-group">
 										<label class="col-sm-2 control-label">备注</label>
 
@@ -281,6 +282,8 @@
 
 									<p id="msg_insert" style="color: red;"></p>
 
+									
+
 									<div class="hr-line-dashed"></div>
 									<div class="form-group">
 									<div class="col-sm-1 col-sm-offset-1"></div>
@@ -288,8 +291,9 @@
 											<button class="btn btn-white" type="button"
 												data-dismiss="modal">取消</button>
 											<button class="btn btn-primary" type="button"
-												onclick="insertDormManager()">保存</button>
+												onclick="insertFee()">保存</button>
 										</div>
+										
 									</div>
 								</form>
 							</div>
@@ -313,54 +317,87 @@
 						<div class="ibox float-e-margins">
 							<div class="ibox-content">
 								<form id="update_form" method="post" class="form-horizontal">
-									<input type="hidden" id="id_update" name="id_update">
 
 									<div class="form-group">
-										<label class="col-sm-2 control-label">工号</label>
-
-                                    	<div class="col-sm-10">
-											<input type="text" class="form-control"
-												id="dmNum_update" name="dmNum_update">
-										</div>
-									</div>
-									
-									<div class="form-group">
-										<label class="col-sm-2 control-label">密码</label>
-
-                                    	<div class="col-sm-10">
-											<input type="password" class="form-control"
-												id="password_update" name="password_update">
-										</div>
-									</div>
-									
-									
-									<div class="form-group">
-										<label class="col-sm-2 control-label">姓名</label>
+										<label class="col-sm-2 control-label">水电费编号</label>
 
                                     	<div class="col-sm-10">
 											<input type="text" class="form-control"
-												id="name_update" name="name_update">
+												id="fId_update" name="fId_update">
 										</div>
 									</div>
-									
-									
+								
+								
 									<div class="form-group">
-										<label class="col-sm-2 control-label">生日</label>
+										<label class="col-sm-2 control-label">宿舍号</label>
 
                                     	<div class="col-sm-10">
 											<input type="text" class="form-control"
-												id="birthDate_update" name="birthDate_update">
+												id="dormNum_update" name="dormNum_update">
+										</div>
+									</div>
+									
+
+									
+									
+									<div class="form-group">
+										<label class="col-sm-2 control-label">应缴电费</label>
+
+                                    	<div class="col-sm-10">
+											<input type="text" class="form-control"
+												id="electricityFee_update" name="electricityFee_update">
 										</div>
 									</div>
 									
 									
 									<div class="form-group">
-										<label class="col-sm-2 control-label">性别</label>
+										<label class="col-sm-2 control-label">应缴水费</label>
+
+                                    	<div class="col-sm-10">
+											<input type="text" class="form-control"
+												id="waterFee_update" name="waterFee_update">
+										</div>
+									</div>
+									
+									
+
+									
+									
+									<div class="form-group" id="data_1">
+										<label class="col-sm-2 control-label">截止时间</label>
 
 										<div class="col-sm-10">
-											<select class="form-control" id="sex_update" name="sex_update">
-                                        	<option value="男">男</option>
-                                        	<option value="女">女</option>
+											<div class="input-group date">
+												<span class="input-group-addon"><i
+													class="fa fa-calendar"></i></span><input type="text"
+													class="form-control" id="endTime_update" name="endTime_update">
+											</div>
+										</div>
+									</div>
+									
+									
+									
+										<div class="form-group" id="data_2">
+										<label class="col-sm-2 control-label">缴费时间</label>
+
+										<div class="col-sm-10">
+											<div class="input-group date">
+												<span class="input-group-addon"><i
+													class="fa fa-calendar"></i></span><input type="text"
+													class="form-control" id="payTime_update" name="payTime_update">
+											</div>
+										</div>
+									</div>
+									
+																		
+									<div class="form-group">
+										<label class="col-sm-2 control-label">状态</label>
+
+										<div class="col-sm-10">
+											<select class="form-control" id="status_update" name="status_update">
+                                        	<option value="未缴费">未缴费</option>
+                                        	<option value="已缴费">已缴费</option>
+                                        	<!-- <option value="0">delete</option> -->
                                     		</select>
 										</div>
 									</div>
@@ -368,41 +405,6 @@
 									
 
 									
-
-									
-									<div class="form-group">
-										<label class="col-sm-2 control-label">电话</label>
-
-                                    	<div class="col-sm-10">
-											<input type="text" class="form-control"
-												id="phone_update" name="phone_update">
-										</div>
-									</div>
-									
-
-									
-
-<!-- 									
-									<div class="form-group" id="data_2">
-										<label class="col-sm-2 control-label">创建时间</label>
-
-										<div class="col-sm-10">
-											<div class="input-group date">
-												<span class="input-group-addon"><i
-													class="fa fa-calendar"></i></span><input type="text"
-													class="form-control" id="createTime" name="createTime">
-											</div>
-										</div>
-									</div>
-									 -->
-									
-
-																											
-
-
-									
-
-
 									<div class="form-group">
 										<label class="col-sm-2 control-label">备注</label>
 
@@ -411,6 +413,7 @@
 												id="remark_update" name="remark_update">
 										</div>
 									</div>
+
 									
 									
 									
@@ -421,7 +424,7 @@
 											<button class="btn btn-white" type="button"
 												data-dismiss="modal">取消</button>
 											<button class="btn btn-primary" type="button"
-												onclick="updateDormManager()">保存更新</button>
+												onclick="updateFee()">保存更新</button>
 										</div>
 									</div>
 								</form>
@@ -448,13 +451,18 @@
 	<script type="text/javascript">
 	
 	
-	function deleteAll(id){
-		$('#'+id).empty();
-	}
-	
-	function addMsg(id,msg){
-		$('#'+id).text(msg);
-	}
+    /*
+     * 删除元素子节点以及内容
+     */
+    function deleteAll(id){
+    	$('#'+id).empty();
+    } 
+     
+     
+    function addMsg(id,msg){
+    	$('#'+id).text(msg);
+    }
+    
 	
 	
 		$('#data_1 .input-group.date').datepicker({
@@ -503,36 +511,38 @@
 		 console.log(rootPath); 
 		 }); */
 
-		function insertDormManager() {
-			var url = rootPath + "insertDormManager";
+		function insertFee() {
+			var url = rootPath + "insertFee";
 
-			var dmNum = $("#dmNum").val();
-			var password = $("#password").val();
-			var name = $("#name").val();
-			var birthDate = $("#birthDate").val();
-			var sex = $("#sex").val();
-			var phone = $("#phone").val();
+
+			var dormNum = $("#dormNum").val();
+			var electricityFee = $("#electricityFee").val();
+			var waterFee = $("#waterFee").val();
+			var payTime = $("#payTime").val();
+			var endTime = $("#endTime").val();
+			var status = $("#status").val();
 			var remark = $("#remark").val();
-		
 			
 
-				if (dmNum != null && dmNum != ""
-					/* && password != null && password != ""
-					&& name != null && name != ""
-					&& birthDate != null && birthDate != ""
-					&& sex != null && sex != ""
-					&& phone != null && phone != "" */) {
+				if (dormNum != null && dormNum != ""
+					/* && dormNum != null && dormNum != ""
+					&& electricityFee != null && electricityFee != ""
+					&& waterFee != null && waterFee != ""
+					&& headId != null && headId != ""
+					&& createTime != null && createTime != ""
+					&& status != null && status != ""
+					&& remark != null && remark != "" */) {
 				var json = {
-					"dmNum" : dmNum,
-					"password" : password,
-					"name" : name,
-					"birthDate" : birthDate,
-					"sex" : sex,
-					"phone" : phone,
+					"dormNum" : dormNum,
+					"electricityFee" : electricityFee,
+					"waterFee" : waterFee,
+					"payTime" : payTime,
+					"endTime" : endTime,
+					"status" : status,
 					"remark" : remark
 				};
 
-				console.log(+url);
+				console.log(url);
 				$.ajax({
 					url : url,
 					type : "post",
@@ -549,58 +559,54 @@
 							window.location.reload();
 						}
 						}
-					
 				});
 			}else{
-				addMsg('msg_insert','工号不能为空');
+				addMsg('msg_insert','宿舍号不能为空');
 			}
 
+				
 		}
 
-		function fillUpdateForm(id, dmNum, password, name, birthDate,sex,phone,remark) {
-			$("#id_update").val(id);
-			$("#dmNum_update").val(dmNum);
-			$("#password_update").val(password);
-			$("#name_update").val(name);
-			$("#birthDate_update").val(birthDate);
-			$("#sex_update").val(sex);
-			
-			$("#phone_update").val(phone);
-			
+		function fillUpdateForm(fId, dormNum, electricityFee,waterFee,payTime,endTime,status,remark) {
+			$("#fId_update").val(fId);
+			$("#dormNum_update").val(dormNum);
+			$("#electricityFee_update").val(electricityFee);
+			$("#waterFee_update").val(waterFee);
+			$("#payTime_update").val(payTime);
+			$("#endTime_update").val(endTime);
+			$("#status_update").val(status);
 			$("#remark_update").val(remark);
 		}
 
-		function updateDormManager() {
-			var url = rootPath + "updateDormManager";
+		function updateFee() {
+			var url = rootPath + "updateFee";
 			
-			
-			var id = $("#id_update").val();
-			var dmNum = $("#dmNum_update").val();
-			var password = $("#password_update").val();
-			var name = $("#name_update").val();
-			var birthDate = $("#birthDate_update").val();
-			var sex = $("#sex_update").val();
-			var phone = $("#phone_update").val();
+			var fId = $("#fId_update").val();
+			var dormNum = $("#dormNum_update").val();
+			var electricityFee = $("#electricityFee_update").val();
+			var waterFee = $("#waterFee_update").val();
+			var payTime_update = $("#payTime_update").val();
+			var endTime_update = $("#endTime_update").val();
+			var status = $("#status_update").val();
 			var remark = $("#remark_update").val();
-		
-			
 
-				if (id != null && id != ""
-					&& dmNum != null && dmNum != ""
-					/* && password != null && password != ""
-					&& name != null && name != ""
-					&& birthDate != null && birthDate != ""
-					&& sex != null && sex != ""
-					&& phone != null && phone != ""
-				*/) {
+				if (fId != null && fId != ""
+					&& dormNum != null && dormNum != ""
+					/*&& electricityFee != null && electricityFee != ""
+					&& waterFee != null && waterFee != ""
+					&& headId != null && headId != ""
+					&& createTime != null && createTime != ""
+					&& status != null && status != ""
+					&& remark != null && remark != "" */) {
+
 				var json = {
-					"id_update" : id,
-					"dmNum_update" : dmNum,
-					"password_update" : password,
-					"name_update" : name,
-					"birthDate_update" : birthDate,
-					"sex_update" : sex,
-					"phone_update" : phone,
+					"fId_update" : fId,
+					"dormNum_update" : dormNum,
+					"electricityFee_update" : electricityFee,
+					"waterFee_update" : waterFee,
+					"payTime_update" : payTime_update,
+					"endTime_update" : endTime_update,
+					"status_update" : status,
 					"remark_update" : remark
 				};
 
@@ -615,8 +621,8 @@
 				window.location.reload();
 		}
 
-		function deleteDormManagerById(id) {
-			var url = rootPath + "deleteDormManager";
+		function deleteFeeById(id) {
+			var url = rootPath + "deleteFee";
 			var json = {
 				"id" : id,
 			};
@@ -630,80 +636,87 @@
 			});
 			window.location.reload();
 		}
-
-
 		
-		function queryDormManagerByDmNum(dmNum){
-			var dmNum = $('#dmNumInput').val();
-			console.log(dmNum);
-			var url = rootPath + "queryDormManagerByDmNum";
+		
+		function queryFeeByDormNum(){
+			var dorm_num = $('#feeInput').val();
+			var url = rootPath + "queryFeeByDormNum";
 			$
 			.ajax({
 				url : url,
 				type : "post",
 				async : true,
 				dataType : "json",
-				data: {'dmNum':dmNum},
+				data: {'dorm_num':dorm_num},
 				//异步   注意数据的获取
 				success : function(map_json) {
-					console.log(map_json);
 					//alert(map_json);
-					var dormmanager = map_json.dormManager;
-					if(dormmanager!=null){
+					var list_json = map_json.feeList;
+					var ul;
+					if(list_json!=null){
 						deleteAll('result');
 						deleteAll('msg');
 						var ul;
-						
-						ul += "<tr>"
-							+ "<td>"
-							+ dormmanager.dmNum
-							+ "</td>"
-							+ "<td>"
-							+ dormmanager.name
-							+ "</td>"
-							+ "<td>"
-							+ dormmanager.birthDate
-							+ "</td>"
-							+ "<td>"
-							+ dormmanager.sex
-							+ "</td>"
-							
-							
-							+ "<td>"
-							+ dormmanager.phone
-							+ "</td>"
-							
-							
-							
-							+ "<td>"
-							+ dormmanager.remark
-							+ "</td>"
-							+ "<td><a href='#' data-toggle='modal' data-target='#updateModal' onclick='fillUpdateForm(\""
-							+ dormmanager.dmId
-							+ "\",\""
-							+ dormmanager.dmNum
-							+ "\",\""
-							+ dormmanager.password
-							+ "\",\""
-							+ dormmanager.name
-							+ "\",\""
-							+ dormmanager.birthDate
-							+ "\",\""
-							+ dormmanager.sex
-							+ "\",\""
-							
-							+ dormmanager.phone
-							+ "\",\""
-							
-							+ dormmanager.remark
-							+ "\")'>更新</a>&nbsp;&nbsp;&nbsp;<a href='#' onclick='deleteDormManagerById("
-							+ dormmanager.dmId
-							+ ")'>删除</a></td>"
-							+ "</tr>";
-					
-					
+						$
+						.each(
+								list_json,
+								function(i, n) {
+									//获取对象中属性为optionsValue的值 
+										ul += "<tr>"
+											+ "<td>"
+											+ list_json[i].fId
+											+ "</td>"
+											+ "<td>"
+											+ list_json[i].dormNum
+											+ "</td>"
+											+ "<td>"
+											+ list_json[i].electricityFee
+											+ "</td>"
+											+ "<td>"
+											+ list_json[i].waterFee
+											+ "</td>"
+
+											+ "<td>"
+											+ list_json[i].createTime
+											+ "</td>"
 											
+											+ "<td>"
+											+ list_json[i].payTime
+											+ "</td>"
 											
+											+ "<td>"
+											+ list_json[i].endTime
+											+ "</td>"
+											
+											+ "<td>"
+											+ list_json[i].status
+											+ "</td>"
+											+ "<td>"
+											+ list_json[i].remark
+											+ "</td>"
+											+ "<td><a href='#' data-toggle='modal' data-target='#updateModal' onclick='fillUpdateForm(\""
+											+ list_json[i].fId
+											+ "\",\""
+											+ list_json[i].dormNum
+											+ "\",\""
+											+ list_json[i].electricityFee
+											+ "\",\""
+											+ list_json[i].waterFee
+											+ "\",\""
+											+ list_json[i].payTime
+											+ "\",\""
+											+ list_json[i].endTime
+											+ "\",\""
+											+ list_json[i].status
+											+ "\",\""
+											+ list_json[i].remark
+											+ "\")'>更新</a>&nbsp;&nbsp;&nbsp;<a href='#' onclick='deleteFeeById("
+											+ list_json[i].feeId
+											+ ")'>删除</a></td>"
+											+ "</tr>";
+									
+									
+								});
 									
 						//ul+="</ul>"; 
 						$('#result').append(ul);
@@ -714,16 +727,14 @@
 					
 				}
 			});
-		
 		}
-		
-		
-		
+
+
 		//function ajax(api,datas) {
 		$(document)
 				.ready(
 						function() {
-							var url = rootPath + "queryAllDormManagers";
+							var url = rootPath + "queryAllFees";
 							console.log(url);
 							$
 									.ajax({
@@ -735,7 +746,7 @@
 										//异步   注意数据的获取
 										success : function(map_json) {
 											//alert(map_json);
-											var list_json = map_json.dormManagerList;
+											var list_json = map_json.feeList;
 											var ul;
 											$
 													.each(
@@ -744,48 +755,58 @@
 																//获取对象中属性为optionsValue的值 
 																	ul += "<tr>"
 																		+ "<td>"
-																		+ list_json[i].dmNum
+																		+ list_json[i].fId
 																		+ "</td>"
 																		+ "<td>"
-																		+ list_json[i].name
+																		+ list_json[i].dormNum
 																		+ "</td>"
 																		+ "<td>"
-																		+ list_json[i].birthDate
+																		+ list_json[i].electricityFee
 																		+ "</td>"
 																		+ "<td>"
-																		+ list_json[i].sex
+																		+ list_json[i].waterFee
 																		+ "</td>"
-																		
+
+																		+ "<td>"
+																		+ list_json[i].createTime
+																		+ "</td>"
 																		
 																		+ "<td>"
-																		+ list_json[i].phone
+																		+ list_json[i].payTime
 																		+ "</td>"
 																		
+																		+ "<td>"
+																		+ list_json[i].endTime
+																		+ "</td>"
 																		
-																		
+																		+ "<td>"
+																		+ list_json[i].status
+																		+ "</td>"
 																		+ "<td>"
 																		+ list_json[i].remark
 																		+ "</td>"
 																		+ "<td><a href='#' data-toggle='modal' data-target='#updateModal' onclick='fillUpdateForm(\""
-																		+ list_json[i].dmId
+																		+ list_json[i].fId
 																		+ "\",\""
-																		+ list_json[i].dmNum
+																		+ list_json[i].dormNum
 																		+ "\",\""
-																		+ list_json[i].password
+																		+ list_json[i].electricityFee
 																		+ "\",\""
-																		+ list_json[i].name
+																		+ list_json[i].waterFee
 																		+ "\",\""
-																		+ list_json[i].birthDate
+
+
+																		+ list_json[i].payTime
 																		+ "\",\""
-																		+ list_json[i].sex
+																		+ list_json[i].endTime
+																		+ "\",\""
+																		+ list_json[i].status
 																		+ "\",\""
 																		
-																		+ list_json[i].phone
-																		+ "\",\""
 																		
 																		+ list_json[i].remark
-																		+ "\")'>更新</a>&nbsp;&nbsp;&nbsp;<a href='#' onclick='deleteDormManagerById("
-																		+ list_json[i].dmId
+																		+ "\")'>更新</a>&nbsp;&nbsp;&nbsp;<a href='#' onclick='deleteFeeById("
+																		+ list_json[i].fId
 																		+ ")'>删除</a></td>"
 																		+ "</tr>";
 																

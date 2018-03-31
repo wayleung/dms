@@ -49,7 +49,31 @@ public class DormController {
 		dorm.setCreateTime(createTime);
 		dorm.setScore(score);
 		dorm.setRemark(remark);
-		dormServiceImpl.insertDorm(dorm);
+		if(dormServiceImpl.queryDormByDormNum(dormNum)!=null){
+			Map<String, Object> dataMap =  new Hashtable<>();
+			dataMap.put("msg_insert", "该宿舍号已经存在！");
+			dataMap.put("success", "0");
+			JSONObject jsonObject = new JSONObject();
+			jsonObject.putAll(dataMap);
+			try {
+				response.getWriter().write(jsonObject.toString());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}else{
+			Map<String, Object> dataMap =  new Hashtable<>();
+			dataMap.put("msg_insert", "增加成功！");
+			dataMap.put("success", "1");
+			JSONObject jsonObject = new JSONObject();
+			jsonObject.putAll(dataMap);
+			try {
+				response.getWriter().write(jsonObject.toString());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			dormServiceImpl.insertDorm(dorm);
+		}
+		
 		return null;
 	}
 	
@@ -132,4 +156,31 @@ public class DormController {
 		}
 		return null;
 	}
+	
+	
+	@RequestMapping(value="/queryDormByDormNum",method=RequestMethod.POST)
+	public String queryDormByDormNum(HttpServletRequest request,HttpServletResponse response){
+		String dorm_num = request.getParameter("dorm_num");
+		if(dorm_num!=null){
+			Dorm dorm =  dormServiceImpl.queryDormByDormNum(dorm_num);
+			Map<String, Object> dataMap =  new Hashtable<>();
+			if(dorm!=null){
+				dataMap.put("dorm", dorm);
+			}else{
+				dataMap.put("msg", "请输入正确宿舍号！");
+			}
+
+			JSONObject jsonObject = new JSONObject();
+			jsonObject.putAll(dataMap);
+			try {
+				response.getWriter().write(jsonObject.toString());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return null;
+	}
+	
+	
+	
 }
