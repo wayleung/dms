@@ -1,6 +1,7 @@
 package com.lyb.dms.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
@@ -10,13 +11,21 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.lyb.dms.domain.Dorm;
+import com.lyb.dms.domain.DormStudent;
+import com.lyb.dms.domain.Fee;
 import com.lyb.dms.domain.Student;
 import com.lyb.dms.service.IStudentService;
+import com.lyb.dms.serviceImpl.DormServiceImpl;
+import com.lyb.dms.serviceImpl.DormStudentServiceImpl;
+import com.lyb.dms.serviceImpl.FeeServiceImpl;
 import com.lyb.dms.serviceImpl.StudentServiceImpl;
+import com.lyb.dms.vo.DormStudentVO;
 
 import net.sf.json.JSONObject;
 
@@ -26,6 +35,16 @@ public class StudentController {
 
 	@Resource
 	private StudentServiceImpl studentServiceImpl;
+	
+	@Resource
+	private DormStudentServiceImpl dormStudentServiceImpl;
+	
+	
+	@Resource
+	private DormServiceImpl dormServiceImpl;
+	
+	@Resource
+	private FeeServiceImpl feeServiceImpl;
 	
 	
 	@RequestMapping(value="/insertStudent",method=RequestMethod.POST)
@@ -127,7 +146,6 @@ public class StudentController {
 		String emergencyContact = request.getParameter("emergencyContact");
 		String emergencyPhone = request.getParameter("emergencyPhone");
 		String remark = request.getParameter("remark");
-		System.out.println(id_string);
 		Student student = new Student();
 		student.setStudentNum(studentNum);
 		student.setPassword(password);
@@ -234,6 +252,160 @@ public class StudentController {
 				e.printStackTrace();
 			}
 		}
+		return null;
+	}
+	
+	
+	
+	
+	
+	@RequestMapping(value="/checkDistribute",method=RequestMethod.POST)
+	public String checkDistribute(HttpServletRequest request,HttpServletResponse response){
+		String stu_id = String.valueOf( request.getSession().getAttribute("studentId"));
+		Integer StudentId = Integer.parseInt(stu_id);
+		DormStudent dormStudentByStudentId = dormStudentServiceImpl.queryDormStudentByStudentId(StudentId );
+		if(dormStudentByStudentId==null){
+			Map<String, Object> dataMap =  new Hashtable<>();
+			dataMap.put("msg","您还没被分配宿舍，请联系宿管！");
+			dataMap.put("success",0);
+			JSONObject jsonObject = new JSONObject();
+			jsonObject.putAll(dataMap);
+			try {
+				response.getWriter().write(jsonObject.toString());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}else{
+			Integer dormId = dormStudentByStudentId.getDormId();
+				List<DormStudent> volist = dormStudentServiceImpl.checkStatus(dormId);
+				List<DormStudentVO>  dormStudentVOList = new ArrayList<>();
+				for (DormStudent dormStudent : volist) {
+					Integer studentId =  dormStudent.getStudentId();
+					
+				    String studentName = studentServiceImpl.queryStudentById(studentId).getName();
+				    
+				    String studentNum = studentServiceImpl.queryStudentById(studentId).getStudentNum();
+				    
+				    
+				    String dormNum =  dormServiceImpl.queryDormById(dormId).getDormNum();
+				    
+				    String capacity =  dormServiceImpl.queryDormById(dormId).getCapacity();
+
+				    Integer headId = dormServiceImpl.queryDormById(dormId).getHeadId();
+				    
+				    DormStudentVO dormStudentVO = new DormStudentVO();
+				    dormStudentVO.setDsId(dormStudent.getDsId());
+				    if(StringUtils.isNotBlank(capacity)){
+				    	dormStudentVO.setCapacity(capacity);
+				    }
+				    
+				    if(StringUtils.isNotBlank(dormStudent.getCreateTime())){
+				    	dormStudentVO.setCreateTime(dormStudent.getCreateTime());
+				    }
+				    
+				    
+				    dormStudentVO.setDormId(dormId);
+				    
+				    if(StringUtils.isNotBlank(dormNum)){
+				    	dormStudentVO.setDormNum(dormNum);
+				    }
+				    
+				    dormStudentVO.setHeadId(headId);
+				    
+				    if(StringUtils.isNotBlank(dormStudent.getJoinTime())){
+				    	dormStudentVO.setJoinTime(dormStudent.getJoinTime());
+				    }
+				    
+				    
+				    
+				    if(StringUtils.isNotBlank(dormStudent.getLeaveReason())){
+				    	dormStudentVO.setLeaveReason(dormStudent.getLeaveReason());
+				    }
+				    
+				    if(StringUtils.isNotBlank(dormStudent.getLeaveTime())){
+				    	dormStudentVO.setLeaveTime(dormStudent.getLeaveTime());
+				    }
+				    if(StringUtils.isNotBlank(dormStudent.getRemark())){
+				    	dormStudentVO.setRemark(dormStudent.getRemark());
+				    }
+				    if(StringUtils.isNotBlank(studentName)){
+				    	dormStudentVO.setStudentName(studentName);
+				    }
+				    dormStudentVO.setStudentNum(studentNum);
+				    
+				    dormStudentVO.setStudentId(studentId);
+				    
+				    dormStudentVOList.add(dormStudentVO);
+				}
+				
+				
+				
+				
+				Map<String, Object> dataMap =  new Hashtable<>();
+				dataMap.put("dormStudentVOList",dormStudentVOList );
+				dataMap.put("msg","查看成功");
+				dataMap.put("success",1);
+				JSONObject jsonObject = new JSONObject();
+				jsonObject.putAll(dataMap);
+				try {
+					response.getWriter().write(jsonObject.toString());
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		
+		
+		
+		return null;
+	}
+	
+	
+	
+	@RequestMapping(value="/checkFee",method=RequestMethod.POST)
+	public String checkFee(HttpServletRequest request,HttpServletResponse response){
+		String stu_id = String.valueOf( request.getSession().getAttribute("studentId"));
+		Integer StudentId = Integer.parseInt(stu_id);
+		DormStudent dormStudent = dormStudentServiceImpl.queryDormStudentByStudentId(StudentId);
+		if(dormStudent==null){
+
+			Map<String, Object> dataMap =  new Hashtable<>();
+			dataMap.put("success", 0);
+			dataMap.put("msg", "您还没分配宿舍，没有水电费缴费消息");
+			JSONObject jsonObject = new JSONObject();
+			jsonObject.putAll(dataMap);
+			try {
+				response.getWriter().write(jsonObject.toString());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}else{
+			Integer dormId = dormStudent.getDormId();
+			Dorm dorm = dormServiceImpl.queryDormById(dormId);
+			String dorm_num = dorm.getDormNum();
+			if(StringUtils.isNotBlank(dorm_num)){
+				List<Fee> list =  feeServiceImpl.queryFeeByDormNum(dorm_num);
+				Map<String, Object> dataMap =  new Hashtable<>();
+				if(list!=null){
+					dataMap.put("success", 1);
+					dataMap.put("msg", "查询成功");
+					dataMap.put("feeList", list);
+				}else{
+					dataMap.put("success", 0);
+					dataMap.put("msg", "没有缴费消息");
+				}
+
+				JSONObject jsonObject = new JSONObject();
+				jsonObject.putAll(dataMap);
+				try {
+					response.getWriter().write(jsonObject.toString());
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		
+		
 		return null;
 	}
 }

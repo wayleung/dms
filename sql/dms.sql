@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50626
 File Encoding         : 65001
 
-Date: 2018-03-31 19:07:42
+Date: 2018-04-01 00:03:45
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -48,7 +48,7 @@ CREATE TABLE `dorm` (
   `score` varchar(255) DEFAULT NULL COMMENT '宿舍评分',
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`dorm_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of dorm
@@ -96,7 +96,7 @@ CREATE TABLE `dorm_student` (
   `create_time` varchar(255) DEFAULT NULL COMMENT '学生分配宿舍关系创建时间',
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`ds_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of dorm_student
@@ -105,6 +105,7 @@ INSERT INTO `dorm_student` VALUES ('6', '11', '1', '1', null, null, null, '1');
 INSERT INTO `dorm_student` VALUES ('7', '12', '1', '02/28/2018', null, null, null, '11');
 INSERT INTO `dorm_student` VALUES ('8', '10', '1', '03/06/2018', null, null, null, '141');
 INSERT INTO `dorm_student` VALUES ('9', '13', '1', '03/06/2018', null, null, null, '1');
+INSERT INTO `dorm_student` VALUES ('10', '14', '2', '04/25/2018', null, null, null, '77');
 
 -- ----------------------------
 -- Table structure for fee
@@ -121,14 +122,16 @@ CREATE TABLE `fee` (
   `status` varchar(255) DEFAULT NULL,
   `remark` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`f_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of fee
 -- ----------------------------
 INSERT INTO `fee` VALUES ('1', '613', '1', '1', null, '03/07/2018', '02/27/2018', '已缴费', '1');
-INSERT INTO `fee` VALUES ('3', '614', '11', '111', null, '', '', '未缴费', '');
 INSERT INTO `fee` VALUES ('4', '613', '111', '1111', null, '', '', '未缴费', '');
+INSERT INTO `fee` VALUES ('5', '613', '11', '111', '03/31/2018', '', '', '未缴费', '11');
+INSERT INTO `fee` VALUES ('6', '613', '11', '11', '03/31/2018', '', '', '未缴费', '');
+INSERT INTO `fee` VALUES ('7', '613', '111', '111', '03/31/2018', '', '', '未缴费', '1111');
 
 -- ----------------------------
 -- Table structure for student
@@ -154,7 +157,7 @@ CREATE TABLE `student` (
   `emergency_phone` varchar(255) DEFAULT NULL COMMENT '紧急联系人电话',
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`student_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of student
@@ -164,3 +167,4 @@ INSERT INTO `student` VALUES ('10', '888', '888', '88', '88', '男', '8', '1', '
 INSERT INTO `student` VALUES ('11', '1', '1', '1', '1', '男', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1');
 INSERT INTO `student` VALUES ('12', '123', '123', '', '', '男', '', '', '', '', '', '', '', '', '', '', '', '');
 INSERT INTO `student` VALUES ('13', '222', '', '', '', '男', '', '', '', '', '', '', '', '', '', '', '', '');
+INSERT INTO `student` VALUES ('14', '77', '77', '', '', '男', '', '', '', '', '', '', '', '', '', '', '', '');
