@@ -289,15 +289,14 @@ public class StudentController {
 				    
 				    String dormNum =  dormServiceImpl.queryDormById(dormId).getDormNum();
 				    
-				    String capacity =  dormServiceImpl.queryDormById(dormId).getCapacity();
+				    Integer capacity =  dormServiceImpl.queryDormById(dormId).getCapacity();
 
 				    Integer headId = dormServiceImpl.queryDormById(dormId).getHeadId();
 				    
 				    DormStudentVO dormStudentVO = new DormStudentVO();
 				    dormStudentVO.setDsId(dormStudent.getDsId());
-				    if(StringUtils.isNotBlank(capacity)){
 				    	dormStudentVO.setCapacity(capacity);
-				    }
+
 				    
 				    if(StringUtils.isNotBlank(dormStudent.getCreateTime())){
 				    	dormStudentVO.setCreateTime(dormStudent.getCreateTime());

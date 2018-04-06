@@ -13,7 +13,7 @@ public class DormStudentVO {
     
     private String dormNum;
     
-    private String capacity;
+    private Integer capacity;
 
     private String joinTime;
 
@@ -75,11 +75,11 @@ public class DormStudentVO {
 		this.dormNum = dormNum;
 	}
 
-	public String getCapacity() {
+	public Integer getCapacity() {
 		return capacity;
 	}
 
-	public void setCapacity(String capacity) {
+	public void setCapacity(Integer capacity) {
 		this.capacity = capacity;
 	}
 

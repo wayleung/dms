@@ -314,62 +314,52 @@ public class DormExample {
             return (Criteria) this;
         }
 
-        public Criteria andCapacityEqualTo(String value) {
+        public Criteria andCapacityEqualTo(Integer value) {
             addCriterion("capacity =", value, "capacity");
             return (Criteria) this;
         }
 
-        public Criteria andCapacityNotEqualTo(String value) {
+        public Criteria andCapacityNotEqualTo(Integer value) {
             addCriterion("capacity <>", value, "capacity");
             return (Criteria) this;
         }
 
-        public Criteria andCapacityGreaterThan(String value) {
+        public Criteria andCapacityGreaterThan(Integer value) {
             addCriterion("capacity >", value, "capacity");
             return (Criteria) this;
         }
 
-        public Criteria andCapacityGreaterThanOrEqualTo(String value) {
+        public Criteria andCapacityGreaterThanOrEqualTo(Integer value) {
             addCriterion("capacity >=", value, "capacity");
             return (Criteria) this;
         }
 
-        public Criteria andCapacityLessThan(String value) {
+        public Criteria andCapacityLessThan(Integer value) {
             addCriterion("capacity <", value, "capacity");
             return (Criteria) this;
         }
 
-        public Criteria andCapacityLessThanOrEqualTo(String value) {
+        public Criteria andCapacityLessThanOrEqualTo(Integer value) {
             addCriterion("capacity <=", value, "capacity");
             return (Criteria) this;
         }
 
-        public Criteria andCapacityLike(String value) {
-            addCriterion("capacity like", value, "capacity");
-            return (Criteria) this;
-        }
-
-        public Criteria andCapacityNotLike(String value) {
-            addCriterion("capacity not like", value, "capacity");
-            return (Criteria) this;
-        }
-
-        public Criteria andCapacityIn(List<String> values) {
+        public Criteria andCapacityIn(List<Integer> values) {
             addCriterion("capacity in", values, "capacity");
             return (Criteria) this;
         }
 
-        public Criteria andCapacityNotIn(List<String> values) {
+        public Criteria andCapacityNotIn(List<Integer> values) {
             addCriterion("capacity not in", values, "capacity");
             return (Criteria) this;
         }
 
-        public Criteria andCapacityBetween(String value1, String value2) {
+        public Criteria andCapacityBetween(Integer value1, Integer value2) {
             addCriterion("capacity between", value1, value2, "capacity");
             return (Criteria) this;
         }
 
-        public Criteria andCapacityNotBetween(String value1, String value2) {
+        public Criteria andCapacityNotBetween(Integer value1, Integer value2) {
             addCriterion("capacity not between", value1, value2, "capacity");
             return (Criteria) this;
         }

@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50626
 File Encoding         : 65001
 
-Date: 2018-04-01 00:03:45
+Date: 2018-04-06 14:39:58
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -41,23 +41,24 @@ CREATE TABLE `dorm` (
   `dorm_id` int(11) NOT NULL AUTO_INCREMENT,
   `dorm_num` varchar(255) DEFAULT NULL,
   `type` varchar(255) DEFAULT NULL COMMENT '宿舍类型：如是男生宿舍还是女生宿舍或者本科宿舍 研究生宿舍',
-  `capacity` varchar(255) DEFAULT NULL COMMENT '宿舍容纳人数',
+  `capacity` int(255) DEFAULT NULL COMMENT '宿舍容纳人数',
   `telephone` varchar(255) DEFAULT NULL,
   `head_id` int(11) DEFAULT NULL COMMENT '宿舍长的学生id',
   `create_time` varchar(255) DEFAULT NULL COMMENT '宿舍创建时间',
   `score` varchar(255) DEFAULT NULL COMMENT '宿舍评分',
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`dorm_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of dorm
 -- ----------------------------
-INSERT INTO `dorm` VALUES ('1', '613', '男生宿舍', '4', '123456', '12', '02/19/2018', '100', '好评宿舍');
-INSERT INTO `dorm` VALUES ('2', '614', '男生宿舍', '4', '123456', null, '01/25/2018', '59', '差评宿舍');
-INSERT INTO `dorm` VALUES ('3', '1', '男生宿舍', '1', '1', null, '02/19/2018', '1', '1');
-INSERT INTO `dorm` VALUES ('4', '615', '男生宿舍', '1', '1', null, '03/14/2018', '1', '1');
-INSERT INTO `dorm` VALUES ('7', '618', '男生宿舍', '', '', null, '', '', '');
+INSERT INTO `dorm` VALUES ('1', '613', '男生宿舍', '9', '123456', '12', '02/19/2018', '100', '好评宿舍');
+INSERT INTO `dorm` VALUES ('2', '614', '男生宿舍', '9', '123456', null, '01/25/2018', '59', '差评宿舍');
+INSERT INTO `dorm` VALUES ('3', '1', '男生宿舍', '9', '1', null, '02/19/2018', '1', '1');
+INSERT INTO `dorm` VALUES ('4', '615', '男生宿舍', '9', '1', null, '03/14/2018', '1', '1');
+INSERT INTO `dorm` VALUES ('7', '618', '男生宿舍', '9', '', null, '', '', '');
+INSERT INTO `dorm` VALUES ('8', '620', '男生宿舍', '5', '15521608979', null, '', '', '');
 
 -- ----------------------------
 -- Table structure for dorm_manager
@@ -96,7 +97,7 @@ CREATE TABLE `dorm_student` (
   `create_time` varchar(255) DEFAULT NULL COMMENT '学生分配宿舍关系创建时间',
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`ds_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=277 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of dorm_student
@@ -106,6 +107,28 @@ INSERT INTO `dorm_student` VALUES ('7', '12', '1', '02/28/2018', null, null, nul
 INSERT INTO `dorm_student` VALUES ('8', '10', '1', '03/06/2018', null, null, null, '141');
 INSERT INTO `dorm_student` VALUES ('9', '13', '1', '03/06/2018', null, null, null, '1');
 INSERT INTO `dorm_student` VALUES ('10', '14', '2', '04/25/2018', null, null, null, '77');
+INSERT INTO `dorm_student` VALUES ('255', '19', '1', null, null, null, 'Fri Apr 06 14:35:58 CST 2018', '自动分配');
+INSERT INTO `dorm_student` VALUES ('256', '20', '1', null, null, null, 'Fri Apr 06 14:35:58 CST 2018', '自动分配');
+INSERT INTO `dorm_student` VALUES ('257', '31', '1', null, null, null, 'Fri Apr 06 14:35:58 CST 2018', '自动分配');
+INSERT INTO `dorm_student` VALUES ('258', '30', '1', null, null, null, 'Fri Apr 06 14:35:58 CST 2018', '自动分配');
+INSERT INTO `dorm_student` VALUES ('259', '15', '2', null, null, null, 'Fri Apr 06 14:35:58 CST 2018', '自动分配');
+INSERT INTO `dorm_student` VALUES ('260', '21', '2', null, null, null, 'Fri Apr 06 14:35:58 CST 2018', '自动分配');
+INSERT INTO `dorm_student` VALUES ('261', '27', '2', null, null, null, 'Fri Apr 06 14:35:58 CST 2018', '自动分配');
+INSERT INTO `dorm_student` VALUES ('262', '26', '2', null, null, null, 'Fri Apr 06 14:35:58 CST 2018', '自动分配');
+INSERT INTO `dorm_student` VALUES ('263', '23', '2', null, null, null, 'Fri Apr 06 14:35:58 CST 2018', '自动分配');
+INSERT INTO `dorm_student` VALUES ('264', '22', '2', null, null, null, 'Fri Apr 06 14:35:58 CST 2018', '自动分配');
+INSERT INTO `dorm_student` VALUES ('265', '16', '2', null, null, null, 'Fri Apr 06 14:35:58 CST 2018', '自动分配');
+INSERT INTO `dorm_student` VALUES ('266', '31', '2', null, null, null, 'Fri Apr 06 14:35:58 CST 2018', '自动分配');
+INSERT INTO `dorm_student` VALUES ('267', '1', '3', null, null, null, 'Fri Apr 06 14:35:58 CST 2018', '自动分配');
+INSERT INTO `dorm_student` VALUES ('268', '32', '3', null, null, null, 'Fri Apr 06 14:35:58 CST 2018', '自动分配');
+INSERT INTO `dorm_student` VALUES ('269', '18', '3', null, null, null, 'Fri Apr 06 14:35:58 CST 2018', '自动分配');
+INSERT INTO `dorm_student` VALUES ('270', '21', '3', null, null, null, 'Fri Apr 06 14:35:58 CST 2018', '自动分配');
+INSERT INTO `dorm_student` VALUES ('271', '25', '3', null, null, null, 'Fri Apr 06 14:35:58 CST 2018', '自动分配');
+INSERT INTO `dorm_student` VALUES ('272', '24', '3', null, null, null, 'Fri Apr 06 14:35:58 CST 2018', '自动分配');
+INSERT INTO `dorm_student` VALUES ('273', '29', '3', null, null, null, 'Fri Apr 06 14:35:58 CST 2018', '自动分配');
+INSERT INTO `dorm_student` VALUES ('274', '28', '3', null, null, null, 'Fri Apr 06 14:35:58 CST 2018', '自动分配');
+INSERT INTO `dorm_student` VALUES ('275', '15', '4', null, null, null, 'Fri Apr 06 14:35:59 CST 2018', '自动分配');
+INSERT INTO `dorm_student` VALUES ('276', '17', '4', null, null, null, 'Fri Apr 06 14:35:59 CST 2018', '自动分配');
 
 -- ----------------------------
 -- Table structure for fee
@@ -157,14 +180,32 @@ CREATE TABLE `student` (
   `emergency_phone` varchar(255) DEFAULT NULL COMMENT '紧急联系人电话',
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`student_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of student
 -- ----------------------------
-INSERT INTO `student` VALUES ('1', '1405551201', '12345678', 'WayLeung', '1994-11-13', '男', '注册', '肇庆', '15521608979', '外包142班', '计算机科学与技术', '09:00', '00:30', '电影、音乐', '运动', 'WayLeung', '15521608979', '优秀学生');
-INSERT INTO `student` VALUES ('10', '888', '888', '88', '88', '男', '8', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1');
-INSERT INTO `student` VALUES ('11', '1', '1', '1', '1', '男', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1');
-INSERT INTO `student` VALUES ('12', '123', '123', '', '', '男', '', '', '', '', '', '', '', '', '', '', '', '');
-INSERT INTO `student` VALUES ('13', '222', '', '', '', '男', '', '', '', '', '', '', '', '', '', '', '', '');
-INSERT INTO `student` VALUES ('14', '77', '77', '', '', '男', '', '', '', '', '', '', '', '', '', '', '', '');
+INSERT INTO `student` VALUES ('1', '1405551201', '12345678', 'WayLeung', '1994-11-12', '男', '注册', '肇庆', '15521608979', '外包142班', '计算机科学与技术', '09:00', '00:30', '电影、音乐 美剧', '1', 'WayLeung', '15521608979', '优秀学生');
+INSERT INTO `student` VALUES ('10', '888', '888', '88', '1994-11-12', '男', '8', '1', '1', '1', '1', '1', '1', '打鼓 阅读 读书', '1', '1', '1', '1');
+INSERT INTO `student` VALUES ('11', '1', '1', '1', '1994-11-12', '男', '1', '1', '1', '1', '1', '1', '1', '乒乓球', '1', '1', '1', '1');
+INSERT INTO `student` VALUES ('12', '123', '123', '123', '1994-11-12', '男', '', '', '', '', '', '', '', '芭蕾舞 摄影 照相 ', '1', '', '', '');
+INSERT INTO `student` VALUES ('13', '222222', '22222', '22222', '1994-11-12', '男', '', '', '', '', '', '', '', '摄影 照相 ', '1', '', '', '');
+INSERT INTO `student` VALUES ('14', '77', '77', '77', '1994-11-12', '男', '', '', '', '', '', '', '', '看电影 电视 电影', '1', '', '', '');
+INSERT INTO `student` VALUES ('15', '100', 'aaa', 'aaa', '1994-11-12', '男', '注册', '肇庆', '15521608979', '外包142班', '计算机科学与技术', '09:00', '00:30', '电影、音乐 篮球', '1', 'WayLeung', '15521608979', '优秀学生');
+INSERT INTO `student` VALUES ('16', '101', 'bbb', 'bbb', '1994-11-12', '男', '注册', '肇庆', '15521608979', '外包142班', '计算机科学与技术', '09:00', '00:30', '钢琴、音乐', '1', 'WayLeung', '15521608979', '优秀学生');
+INSERT INTO `student` VALUES ('17', '102', 'ccc', 'ccc', '1994-11-12', '男', '注册', '肇庆', '15521608979', '外包142班', '计算机科学与技术', '09:00', '00:30', '运动 篮球 跑步、', '1', 'WayLeung', '15521608979', '优秀学生');
+INSERT INTO `student` VALUES ('18', '103', 'ddd', 'ddd', '1994-11-12', '男', '注册', '肇庆', '15521608979', '外包142班', '计算机科学与技术', '09:00', '00:30', '足球 排球、', '1', 'WayLeung', '15521608979', '优秀学生');
+INSERT INTO `student` VALUES ('19', '104', 'eee', 'eee', '1994-11-12', '男', '注册', '肇庆', '15521608979', '外包142班', '计算机科学与技术', '09:00', '00:30', ' 动漫 日漫 日剧', '1', 'WayLeung', '15521608979', '优秀学生');
+INSERT INTO `student` VALUES ('20', '105', 'fff', 'fff', '1994-11-12', '男', '注册', '肇庆', '15521608979', '外包142班', '计算机科学与技术', '09:00', '00:30', ' 动漫 日漫 日剧、音乐', '1', 'WayLeung', '15521608979', '优秀学生');
+INSERT INTO `student` VALUES ('21', '106', 'ggg', 'ggg', '1994-11-12', '男', '注册', '肇庆', '15521608979', '外包142班', '计算机科学与技术', '09:00', '00:30', '电影 足球、音乐', '1', 'WayLeung', '15521608979', '优秀学生');
+INSERT INTO `student` VALUES ('22', '107', 'hhh', 'hhh', '1994-11-12', '男', '注册', '肇庆', '15521608979', '外包142班', '计算机科学与技术', '09:00', '00:30', '艺术 画画', '1', 'WayLeung', '15521608979', '优秀学生');
+INSERT INTO `student` VALUES ('23', '108', 'iii', 'iii', '1994-11-12', '男', '注册', '肇庆', '15521608979', '外包142班', '计算机科学与技术', '09:00', '00:30', ' 睡觉、画画', '1', 'WayLeung', '15521608979', '优秀学生');
+INSERT INTO `student` VALUES ('24', '109', 'jjj', 'jjj', '1994-11-12', '男', '注册', '肇庆', '15521608979', '外包142班', '计算机科学与技术', '09:00', '00:30', ' 爬山 郊游', '1', 'WayLeung', '15521608979', '优秀学生');
+INSERT INTO `student` VALUES ('25', '110', 'kkk', 'kkk', '1994-11-12', '男', '注册', '肇庆', '15521608979', '外包142班', '计算机科学与技术', '09:00', '00:30', '旅游 爬山', '1', 'WayLeung', '15521608979', '优秀学生');
+INSERT INTO `student` VALUES ('26', '111', 'lll', 'lll', '1994-11-12', '男', '注册', '肇庆', '15521608979', '外包142班', '计算机科学与技术', '09:00', '00:30', '舞蹈  霹雳舞、音乐', '1', 'WayLeung', '15521608979', '优秀学生');
+INSERT INTO `student` VALUES ('27', '112', 'ooo', 'ooo', '1994-11-12', '男', '注册', '肇庆', '15521608979', '外包142班', '计算机科学与技术', '09:00', '00:30', '舞蹈 街舞 霹雳舞', '1', 'WayLeung', '15521608979', '优秀学生');
+INSERT INTO `student` VALUES ('28', '113', 'ppp', 'ppp', '1994-11-12', '男', '注册', '肇庆', '15521608979', '外包142班', '计算机科学与技术', '09:00', '00:30', '电影、绝地求生 手游', '1', 'WayLeung', '15521608979', '优秀学生');
+INSERT INTO `student` VALUES ('29', '114', 'qqq', 'qqq', '1994-11-12', '男', '注册', '肇庆', '15521608979', '外包142班', '计算机科学与技术', '09:00', '00:30', '手游 王者荣耀', '1', 'WayLeung', '15521608979', '优秀学生');
+INSERT INTO `student` VALUES ('30', '115', 'rrr', 'rrr', '1994-11-12', '男', '注册', '肇庆', '15521608979', '外包142班', '计算机科学与技术', '09:00', '00:30', '电影、阅读 读书', '1', 'WayLeung', '15521608979', '优秀学生');
+INSERT INTO `student` VALUES ('31', '116', 'sss', 'sss', '1994-11-12', '男', '注册', '肇庆', '15521608979', '外包142班', '计算机科学与技术', '09:00', '00:30', '阅读 读书、音乐', '1', 'WayLeung', '15521608979', '优秀学生');
+INSERT INTO `student` VALUES ('32', '117', 'ttt', 'ttt', '1994-11-12', '男', '注册', '肇庆', '15521608979', '外包142班', '计算机科学与技术', '09:00', '00:30', '美剧 韩剧 日剧', '1', 'WayLeung', '15521608979', '优秀学生');

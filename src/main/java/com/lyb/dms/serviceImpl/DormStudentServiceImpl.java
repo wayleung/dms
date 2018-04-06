@@ -1,15 +1,22 @@
 package com.lyb.dms.serviceImpl;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.lyb.dms.domain.Dorm;
+import com.lyb.dms.domain.DormExample;
 import com.lyb.dms.domain.DormManager;
 import com.lyb.dms.domain.DormStudent;
 import com.lyb.dms.domain.DormStudentExample;
 import com.lyb.dms.domain.DormStudentExample.Criteria;
+import com.lyb.dms.domain.Student;
+import com.lyb.dms.mapper.DormMapper;
 import com.lyb.dms.mapper.DormStudentMapper;
 import com.lyb.dms.service.IDormStudentService;
 
@@ -17,6 +24,9 @@ import com.lyb.dms.service.IDormStudentService;
 public class DormStudentServiceImpl implements IDormStudentService {
 	@Resource
 	DormStudentMapper dormStudentMapper;
+	
+	@Resource
+	DormMapper dormMapper;
 	
 	@Override
 	public void insertDormStudent(DormStudent dormStudent) {
@@ -114,6 +124,49 @@ public class DormStudentServiceImpl implements IDormStudentService {
 		criteria.andDormIdEqualTo(dm_id);
 		return dormStudentMapper.selectByExample(example);
 	}
+
+	@Override
+	public Integer distributeByTwoStudent(Integer StudentId1, Integer StudentId2, Integer dormId) {
+		// TODO Auto-generated method stub
+		DormStudent dormStudent1 = new DormStudent();
+		dormStudent1.setDormId(dormId);
+		dormStudent1.setStudentId(StudentId1);
+		dormStudent1.setCreateTime(new Date().toString());
+		dormStudent1.setRemark("自动分配");
+		int st1 = dormStudentMapper.insertSelective(dormStudent1 );
+		
+		
+		
+		
+		DormStudent dormStudent2 = new DormStudent();
+		dormStudent2.setDormId(dormId);
+		dormStudent2.setStudentId(StudentId2);
+		dormStudent2.setCreateTime(new Date().toString());
+		dormStudent2.setRemark("自动分配");
+		int st2 = dormStudentMapper.insertSelective(dormStudent2 );
+		
+		
+		if(st1==1&&st2==0){
+			
+			//只插入学生1
+			return 1;
+		}else if(st1==0&&st2==1){
+			
+			//只插入学生2
+			return 2;
+		}else if(st1==1&&st2==1){
+			//插入学生1 2
+			return 12;
+		}else{
+			
+			//插入失败
+			return 0;
+		}
+	}
+
+
+
+
 
 	
 	

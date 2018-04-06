@@ -1,6 +1,7 @@
 package com.lyb.dms.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.lyb.dms.domain.Dorm;
 
@@ -18,5 +19,7 @@ public interface IDormService {
 	Dorm queryDormByDormNum(String dorm_num);
 
 	Integer queryCapicityByDormId(Integer dormId);
+	
+	List<Dorm> queryDormsCapicityOverTwo();
 	
 }

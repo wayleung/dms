@@ -40,7 +40,7 @@ public class DormController {
 		Dorm dorm = new Dorm();
 		dorm.setDormNum(dormNum);
 		dorm.setType(type);
-		dorm.setCapacity(capacity);
+		dorm.setCapacity(Integer.valueOf(capacity));
 		dorm.setTelephone(telephone);
 		if(headId!=null&&!headId.equals("")){
 			Integer head_id = Integer.parseInt(headId);
@@ -103,7 +103,7 @@ public class DormController {
 		Dorm dorm = new Dorm();
 		dorm.setDormNum(dormNum);
 		dorm.setType(type);
-		dorm.setCapacity(capacity);
+		dorm.setCapacity(Integer.valueOf(capacity));
 		dorm.setTelephone(telephone);
 		if(id_string!=null&&!id_string.equals("")){
 			Integer id = Integer.parseInt(id_string);

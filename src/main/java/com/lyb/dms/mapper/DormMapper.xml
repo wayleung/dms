@@ -5,7 +5,7 @@
     <id column="dorm_id" property="dormId" jdbcType="INTEGER" />
     <result column="dorm_num" property="dormNum" jdbcType="VARCHAR" />
     <result column="type" property="type" jdbcType="VARCHAR" />
-    <result column="capacity" property="capacity" jdbcType="VARCHAR" />
+    <result column="capacity" property="capacity" jdbcType="INTEGER" />
     <result column="telephone" property="telephone" jdbcType="VARCHAR" />
     <result column="head_id" property="headId" jdbcType="INTEGER" />
     <result column="create_time" property="createTime" jdbcType="VARCHAR" />
@@ -109,7 +109,7 @@
       create_time, score, remark
       )
     values (#{dormId,jdbcType=INTEGER}, #{dormNum,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
-      #{capacity,jdbcType=VARCHAR}, #{telephone,jdbcType=VARCHAR}, #{headId,jdbcType=INTEGER}, 
+      #{capacity,jdbcType=INTEGER}, #{telephone,jdbcType=VARCHAR}, #{headId,jdbcType=INTEGER}, 
       #{createTime,jdbcType=VARCHAR}, #{score,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}
       )
   </insert>
@@ -155,7 +155,7 @@
         #{type,jdbcType=VARCHAR},
       </if>
       <if test="capacity != null" >
-        #{capacity,jdbcType=VARCHAR},
+        #{capacity,jdbcType=INTEGER},
       </if>
       <if test="telephone != null" >
         #{telephone,jdbcType=VARCHAR},
@@ -193,7 +193,7 @@
         type = #{record.type,jdbcType=VARCHAR},
       </if>
       <if test="record.capacity != null" >
-        capacity = #{record.capacity,jdbcType=VARCHAR},
+        capacity = #{record.capacity,jdbcType=INTEGER},
       </if>
       <if test="record.telephone != null" >
         telephone = #{record.telephone,jdbcType=VARCHAR},
@@ -220,7 +220,7 @@
     set dorm_id = #{record.dormId,jdbcType=INTEGER},
       dorm_num = #{record.dormNum,jdbcType=VARCHAR},
       type = #{record.type,jdbcType=VARCHAR},
-      capacity = #{record.capacity,jdbcType=VARCHAR},
+      capacity = #{record.capacity,jdbcType=INTEGER},
       telephone = #{record.telephone,jdbcType=VARCHAR},
       head_id = #{record.headId,jdbcType=INTEGER},
       create_time = #{record.createTime,jdbcType=VARCHAR},
@@ -240,7 +240,7 @@
         type = #{type,jdbcType=VARCHAR},
       </if>
       <if test="capacity != null" >
-        capacity = #{capacity,jdbcType=VARCHAR},
+        capacity = #{capacity,jdbcType=INTEGER},
       </if>
       <if test="telephone != null" >
         telephone = #{telephone,jdbcType=VARCHAR},
@@ -264,7 +264,7 @@
     update dorm
     set dorm_num = #{dormNum,jdbcType=VARCHAR},
       type = #{type,jdbcType=VARCHAR},
-      capacity = #{capacity,jdbcType=VARCHAR},
+      capacity = #{capacity,jdbcType=INTEGER},
       telephone = #{telephone,jdbcType=VARCHAR},
       head_id = #{headId,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=VARCHAR},

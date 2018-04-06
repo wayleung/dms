@@ -7,7 +7,7 @@ public class Dorm {
 
     private String type;
 
-    private String capacity;
+    private Integer capacity;
 
     private String telephone;
 
@@ -43,12 +43,12 @@ public class Dorm {
         this.type = type == null ? null : type.trim();
     }
 
-    public String getCapacity() {
+    public Integer getCapacity() {
         return capacity;
     }
 
-    public void setCapacity(String capacity) {
-        this.capacity = capacity == null ? null : capacity.trim();
+    public void setCapacity(Integer capacity) {
+        this.capacity = capacity;
     }
 
     public String getTelephone() {

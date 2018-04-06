@@ -98,10 +98,10 @@
 											<div class="col-sm-3">
 												<div class="input-group pull-right">
 													<span class="input-group-btn">
-														<!-- <button type="button" class="btn btn-sm btn-primary"
-															data-toggle="modal" data-target="#addModal">
+														<button type="button" onclick="distributeAuto()" class="btn btn-sm btn-primary"
+															data-toggle="modal">
 															</i>自动分配
-														</button> -->
+														</button>
 													</span>
 												</div>
 											</div>
@@ -570,6 +570,49 @@
 			});
 			window.location.reload();
 		}
+		
+		
+		/*
+		自动分配
+		*/
+		function distributeAuto(){
+			var url = rootPath + "distributeByTwoStudent";
+			console.log(url);
+			$.ajax({
+				url : url,
+				type : "post",
+				async : false,
+				success : function(datas) {
+					console.log(datas);
+					
+					try
+					  {
+						var data = jQuery.parseJSON(datas)
+						if(data.success==0){
+							alert(data.msg_distribute);
+						}
+					  }
+					catch(err)
+					  {
+						
+					  }
+					
+					
+					
+					
+					
+					
+				},
+				
+				beforeSend: function(){
+					console.log('正在自动分配，请稍等！');
+				},
+				complete: function () {
+					alert('自动分配完成');
+					}, 
+			});
+		}
+		
 		
 		
 		

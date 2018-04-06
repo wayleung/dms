@@ -1,6 +1,7 @@
 package com.lyb.dms.serviceImpl;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -80,8 +81,7 @@ public class DormServiceImpl implements IDormService {
 		// TODO Auto-generated method stub
 		List<Dorm> list = dormMapper.selectByExample(example );
 		if(list!=null&&list.size()>0){
-			String capacity = list.get(0).getCapacity();
-			Integer capacity_int = Integer.parseInt(capacity);
+			Integer capacity_int = list.get(0).getCapacity();
 			if(capacity_int>=0){
 				return capacity_int;
 			}else{
@@ -91,6 +91,15 @@ public class DormServiceImpl implements IDormService {
 			return 0;
 		}
 		
+	}
+
+	@Override
+	public List<Dorm>  queryDormsCapicityOverTwo() {
+		DormExample example = new DormExample();
+		Criteria criteria = example.createCriteria();
+		criteria.andCapacityGreaterThan(2);
+		// TODO Auto-generated method stub
+		return dormMapper.selectByExample(example );
 	}
 	
 	
