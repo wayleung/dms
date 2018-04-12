@@ -93,11 +93,21 @@
     </dependency>
 
     <!-- mybatis分页插件坐标 -->
-    <dependency>
+<!--     <dependency>
       <groupId>com.github.pagehelper</groupId>
       <artifactId>pagehelper</artifactId>
       <version>3.4.2-fix</version>
-    </dependency>
+    </dependency> -->
+    
+    <!-- https://mvnrepository.com/artifact/com.github.pagehelper/pagehelper -->
+<dependency>
+    <groupId>com.github.pagehelper</groupId>
+    <artifactId>pagehelper</artifactId>
+    <version>5.1.2</version>
+</dependency>
+    
+    
+    
     <!--logback-->
     <!-- https://mvnrepository.com/artifact/ch.qos.logback/logback-classic -->
     <dependency>
