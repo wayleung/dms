@@ -127,13 +127,24 @@ public class DormStudentServiceImpl implements IDormStudentService {
 
 	@Override
 	public Integer distributeByTwoStudent(Integer StudentId1, Integer StudentId2, Integer dormId) {
+		
+		System.out.println(StudentId1+"--------"+StudentId2);
 		// TODO Auto-generated method stub
 		DormStudent dormStudent1 = new DormStudent();
 		dormStudent1.setDormId(dormId);
 		dormStudent1.setStudentId(StudentId1);
 		dormStudent1.setCreateTime(new Date().toString());
 		dormStudent1.setRemark("自动分配");
-		int st1 = dormStudentMapper.insertSelective(dormStudent1 );
+		
+		int st1 = 0 ;
+		DormStudent dormStudent_select1 = queryDormStudentByStudentId(StudentId1);
+		if(dormStudent_select1!=null){
+			st1 = 0 ;
+		}else{
+			 st1 = dormStudentMapper.insertSelective(dormStudent1 );
+		}
+		
+		
 		
 		
 		
@@ -143,7 +154,17 @@ public class DormStudentServiceImpl implements IDormStudentService {
 		dormStudent2.setStudentId(StudentId2);
 		dormStudent2.setCreateTime(new Date().toString());
 		dormStudent2.setRemark("自动分配");
-		int st2 = dormStudentMapper.insertSelective(dormStudent2 );
+		
+		
+		int st2 = 0 ;
+		DormStudent dormStudent_select2 = queryDormStudentByStudentId(StudentId2);
+		if(dormStudent_select2!=null){
+			st2 = 0 ;
+		}else{
+			st2 = dormStudentMapper.insertSelective(dormStudent2 );
+		}
+		
+
 		
 		
 		if(st1==1&&st2==0){

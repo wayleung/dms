@@ -44,6 +44,25 @@ public class StudentServiceImpl implements IStudentService {
 		StudentExample example = new StudentExample();
 		return studentMapper.selectByExample(example );
 	}
+	
+	@Override
+	public List<Student> queryAllBoyStudents() {
+		StudentExample example = new StudentExample();
+		Criteria criteria = example.createCriteria();
+		criteria.andSexEqualTo("男");
+		return studentMapper.selectByExample(example);
+	}
+	
+	
+	@Override
+	public List<Student> queryAllGirlStudents() {
+		StudentExample example = new StudentExample();
+		Criteria criteria = example.createCriteria();
+		criteria.andSexEqualTo("女");
+		return studentMapper.selectByExample(example );
+	}
+	
+	
 
 	@Override
 	public Student queryStudentById(Integer student_id) {

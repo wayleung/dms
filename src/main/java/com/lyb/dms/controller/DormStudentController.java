@@ -506,7 +506,389 @@ public class DormStudentController {
 		return null;
 	}
 	
-	@RequestMapping(value = "/queryDormsCanCotainsTwoStudents", method = RequestMethod.POST)
+	
+	
+	//自动分配男生
+	@RequestMapping(value = "/distributeByTwoBoyStudent", method = RequestMethod.POST)
+	public String distributeByTwoBoyStudent(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		
+		List<Student> studentsWithoutDorm = queryAllBoyStudentsWithoutDorm();
+		Map<Integer,String> map  = new HashMap<>();
+		
+		if(studentsWithoutDorm==null){
+			Map<String, Object> dataMap = new Hashtable<>();
+			dataMap.put("msg_distribute", "所有学生已经分配宿舍！");
+			dataMap.put("success", "0");
+			JSONObject jsonObject = new JSONObject();
+			jsonObject.putAll(dataMap);
+			try {
+				response.getWriter().write(jsonObject.toString());
+				//跳出循环
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}else{
+			for (Student student : studentsWithoutDorm) {
+				map.put(student.getStudentId(), student.getHobby());
+			}
+		
+			
+			Map<String, Double> sortStudent = IKMainUtil.sortStudent(map);
+			
+			
+			
+			
+			System.out.println("经过余弦相似度以及分词分析，每两位学生匹配后，得到的爱好相似程度排序后："+sortStudent);
+			
+			for (Map.Entry<String, Double> entry : sortStudent.entrySet()) { 
+				String[] twoStudentId = entry.getKey().split("-");
+				
+				
+				 System.out.println("学生1学号为 ： " +twoStudentId[0]+"学生2学号为 ： " +twoStudentId[1] ); 
+				  
+				String stId1 = twoStudentId[0];
+				String stId2 = twoStudentId[1];
+				
+				
+				Integer studentId1 = Integer.valueOf(stId1);
+				Integer studentId2 = Integer.valueOf(stId2);
+				
+				
+				String studentNum1 = request.getParameter("studentNum1");
+				String studentNum2 = request.getParameter("studentNum2");
+
+				Student studentByStudentNum1 = studentServiceImpl.queryStudentById(studentId1);
+				Student studentByStudentNum2 = studentServiceImpl.queryStudentById(studentId2);
+				
+				
+				
+				Dorm dorm = queryDormCanCotainsTwoStudents();
+
+				if (dorm == null) {
+					Map<String, Object> dataMap = new Hashtable<>();
+					dataMap.put("msg_distribute", "不存在能分配两个学生的宿舍，请先增加一些能容纳两个学生的宿舍！");
+					dataMap.put("success", "0");
+					JSONObject jsonObject = new JSONObject();
+					jsonObject.putAll(dataMap);
+					try {
+						response.getWriter().write(jsonObject.toString());
+						//跳出循环
+						break;
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				} else {
+					if (studentByStudentNum1 == null || studentByStudentNum2 == null) {
+						Map<String, Object> dataMap = new Hashtable<>();
+						dataMap.put("msg_distribute", "学生不存在！");
+						dataMap.put("success", "0");
+						JSONObject jsonObject = new JSONObject();
+						jsonObject.putAll(dataMap);
+						try {
+							response.getWriter().write(jsonObject.toString());
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+					} else {
+						Integer dormId = dorm.getDormId();
+						Integer capacity = dormServiceImpl.queryCapicityByDormId(dormId);
+						Integer countNow = dormStudentServiceImpl.queryCountNowByDormId(dormId);
+						if (countNow + 2 > capacity) {
+
+							Map<String, Object> dataMap = new Hashtable<>();
+							dataMap.put("msg_distribute", "宿舍已经达到最大人数或宿舍容量不足两个人");
+							dataMap.put("success", "0");
+							JSONObject jsonObject = new JSONObject();
+							jsonObject.putAll(dataMap);
+							try {
+								response.getWriter().write(jsonObject.toString());
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+						} else {
+
+							Integer student_id1 = studentByStudentNum1.getStudentId();
+							Integer student_id2 = studentByStudentNum2.getStudentId();
+							if (dormStudentServiceImpl.queryDormStudentByStudentId(student_id1) != null
+									&& dormStudentServiceImpl.queryDormStudentByStudentId(student_id2) != null) {
+								Map<String, Object> dataMap = new Hashtable<>();
+								dataMap.put("msg_distribute", "两个都学生已经分配了宿舍");
+								dataMap.put("success", "1");
+								JSONObject jsonObject = new JSONObject();
+								jsonObject.putAll(dataMap);
+								try {
+									response.getWriter().write(jsonObject.toString());
+								} catch (IOException e) {
+									e.printStackTrace();
+								}
+							} else {
+
+								int result = dormStudentServiceImpl.distributeByTwoStudent(student_id1, student_id2, dormId);
+								if (result == 1) {
+									Map<String, Object> dataMap = new Hashtable<>();
+									dataMap.put("msg_distribute", "学生1分配成功");
+									dataMap.put("success", "1");
+									JSONObject jsonObject = new JSONObject();
+									jsonObject.putAll(dataMap);
+									try {
+										response.getWriter().write(jsonObject.toString());
+									} catch (IOException e) {
+										e.printStackTrace();
+									}
+								} else if (result == 2) {
+									Map<String, Object> dataMap = new Hashtable<>();
+									dataMap.put("msg_distribute", "学生2分配成功");
+									dataMap.put("success", "1");
+									JSONObject jsonObject = new JSONObject();
+									jsonObject.putAll(dataMap);
+									try {
+										response.getWriter().write(jsonObject.toString());
+									} catch (IOException e) {
+										e.printStackTrace();
+									}
+								} else if (result == 12) {
+									Map<String, Object> dataMap = new Hashtable<>();
+									dataMap.put("msg_distribute", "两位学生都分配成功");
+									dataMap.put("success", "1");
+									JSONObject jsonObject = new JSONObject();
+									jsonObject.putAll(dataMap);
+									try {
+										response.getWriter().write(jsonObject.toString());
+									} catch (IOException e) {
+										e.printStackTrace();
+									}
+								} else {
+									Map<String, Object> dataMap = new Hashtable<>();
+									dataMap.put("msg_distribute", "分配失败");
+									dataMap.put("success", "0");
+									JSONObject jsonObject = new JSONObject();
+									jsonObject.putAll(dataMap);
+									try {
+										response.getWriter().write(jsonObject.toString());
+									} catch (IOException e) {
+										e.printStackTrace();
+									}
+								}
+
+							}
+
+						}
+
+					}
+				}
+				
+			}
+		}
+		
+
+		
+		
+		
+
+		return null;
+	}
+	
+	
+	
+	
+	//自动分配女生
+		@RequestMapping(value = "/distributeByTwoGirlStudent", method = RequestMethod.POST)
+		public String distributeByTwoGirlStudent(HttpServletRequest request, HttpServletResponse response) throws IOException {
+			
+			List<Student> studentsWithoutDorm = queryAllGirlStudentsWithoutDorm();
+			Map<Integer,String> map  = new HashMap<>();
+			
+			if(studentsWithoutDorm==null){
+				Map<String, Object> dataMap = new Hashtable<>();
+				dataMap.put("msg_distribute", "所有学生已经分配宿舍！");
+				dataMap.put("success", "0");
+				JSONObject jsonObject = new JSONObject();
+				jsonObject.putAll(dataMap);
+				try {
+					response.getWriter().write(jsonObject.toString());
+					//跳出循环
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}else{
+				for (Student student : studentsWithoutDorm) {
+					map.put(student.getStudentId(), student.getHobby());
+				}
+			
+				
+				Map<String, Double> sortStudent = IKMainUtil.sortStudent(map);
+				
+				
+				
+				
+				System.out.println("经过余弦相似度以及分词分析，每两位学生匹配后，得到的爱好相似程度排序后："+sortStudent);
+				
+				for (Map.Entry<String, Double> entry : sortStudent.entrySet()) { 
+					String[] twoStudentId = entry.getKey().split("-");
+					System.out.println("学生1学号为 ： " +twoStudentId[0]+"学生2学号为 ： " +twoStudentId[1] ); 
+					  
+					String stId1 = twoStudentId[0];
+					String stId2 = twoStudentId[1];
+					
+					
+					Integer studentId1 = Integer.valueOf(stId1);
+					Integer studentId2 = Integer.valueOf(stId2);
+					
+					
+					String studentNum1 = request.getParameter("studentNum1");
+					String studentNum2 = request.getParameter("studentNum2");
+
+					Student studentByStudentNum1 = studentServiceImpl.queryStudentById(studentId1);
+					Student studentByStudentNum2 = studentServiceImpl.queryStudentById(studentId2);
+					
+					
+					Dorm girldorm = queryGirlDormCanCotainsTwoStudents();
+					
+					
+					if (girldorm == null) {
+						Map<String, Object> dataMap = new Hashtable<>();
+						dataMap.put("msg_distribute", "不存在能分配两个学生的宿舍，请先增加一些能容纳两个学生的宿舍！");
+						dataMap.put("success", "0");
+						JSONObject jsonObject = new JSONObject();
+						jsonObject.putAll(dataMap);
+						try {
+							response.getWriter().write(jsonObject.toString());
+							//跳出循环
+							break;
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+					} else {
+						if (studentByStudentNum1 == null || studentByStudentNum2 == null) {
+							Map<String, Object> dataMap = new Hashtable<>();
+							dataMap.put("msg_distribute", "学生不存在！");
+							dataMap.put("success", "0");
+							JSONObject jsonObject = new JSONObject();
+							jsonObject.putAll(dataMap);
+							try {
+								response.getWriter().write(jsonObject.toString());
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
+						} else {
+							Integer dormId = girldorm.getDormId();
+							Integer capacity = dormServiceImpl.queryCapicityByDormId(dormId);
+							Integer countNow = dormStudentServiceImpl.queryCountNowByDormId(dormId);
+							if (countNow + 2 > capacity) {
+
+								Map<String, Object> dataMap = new Hashtable<>();
+								dataMap.put("msg_distribute", "宿舍已经达到最大人数或宿舍容量不足两个人");
+								dataMap.put("success", "0");
+								JSONObject jsonObject = new JSONObject();
+								jsonObject.putAll(dataMap);
+								try {
+									response.getWriter().write(jsonObject.toString());
+								} catch (IOException e) {
+									e.printStackTrace();
+								}
+							} else {
+
+								Integer student_id1 = studentByStudentNum1.getStudentId();
+								Integer student_id2 = studentByStudentNum2.getStudentId();
+								if (dormStudentServiceImpl.queryDormStudentByStudentId(student_id1) != null
+										&& dormStudentServiceImpl.queryDormStudentByStudentId(student_id2) != null) {
+									Map<String, Object> dataMap = new Hashtable<>();
+									dataMap.put("msg_distribute", "两个都学生已经分配了宿舍");
+									dataMap.put("success", "1");
+									JSONObject jsonObject = new JSONObject();
+									jsonObject.putAll(dataMap);
+									try {
+										response.getWriter().write(jsonObject.toString());
+									} catch (IOException e) {
+										e.printStackTrace();
+									}
+								} else {
+
+									int result = dormStudentServiceImpl.distributeByTwoStudent(student_id1, student_id2, dormId);
+									if (result == 1) {
+										Map<String, Object> dataMap = new Hashtable<>();
+										dataMap.put("msg_distribute", "学生1分配成功");
+										dataMap.put("success", "1");
+										JSONObject jsonObject = new JSONObject();
+										jsonObject.putAll(dataMap);
+										try {
+											response.getWriter().write(jsonObject.toString());
+										} catch (IOException e) {
+											e.printStackTrace();
+										}
+									} else if (result == 2) {
+										Map<String, Object> dataMap = new Hashtable<>();
+										dataMap.put("msg_distribute", "学生2分配成功");
+										dataMap.put("success", "1");
+										JSONObject jsonObject = new JSONObject();
+										jsonObject.putAll(dataMap);
+										try {
+											response.getWriter().write(jsonObject.toString());
+										} catch (IOException e) {
+											e.printStackTrace();
+										}
+									} else if (result == 12) {
+										Map<String, Object> dataMap = new Hashtable<>();
+										dataMap.put("msg_distribute", "两位学生都分配成功");
+										dataMap.put("success", "1");
+										JSONObject jsonObject = new JSONObject();
+										jsonObject.putAll(dataMap);
+										try {
+											response.getWriter().write(jsonObject.toString());
+										} catch (IOException e) {
+											e.printStackTrace();
+										}
+									} else {
+										Map<String, Object> dataMap = new Hashtable<>();
+										dataMap.put("msg_distribute", "分配失败");
+										dataMap.put("success", "0");
+										JSONObject jsonObject = new JSONObject();
+										jsonObject.putAll(dataMap);
+										try {
+											response.getWriter().write(jsonObject.toString());
+										} catch (IOException e) {
+											e.printStackTrace();
+										}
+									}
+
+								}
+
+							}
+
+						}
+					}
+					
+
+				}
+
+			}
+			return null;
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		@RequestMapping(value = "/distributeByBothStudent", method = RequestMethod.POST)
+		public void distributeByBothStudent(HttpServletRequest request, HttpServletResponse response) throws IOException {
+			distributeByTwoBoyStudent(request, response);
+			distributeByTwoGirlStudent(request, response);
+			
+			
+		}
+		
+	
+	
+	
+	
+
+	
+	
+	
+	@RequestMapping(value = "/queryDormCanCotainsTwoStudents", method = RequestMethod.POST)
 	@ResponseBody
 	public Dorm queryDormCanCotainsTwoStudents() {
 		List<Dorm> list = dormServiceImpl.queryDormsCapicityOverTwo();
@@ -537,8 +919,103 @@ public class DormStudentController {
 	
 	
 	
+	@RequestMapping(value = "/queryBoyDormCanCotainsTwoStudents", method = RequestMethod.POST)
+	@ResponseBody
+	public Dorm queryBoyDormCanCotainsTwoStudents() {
+		List<Dorm> list = dormServiceImpl.queryBoyDormsCapicityOverTwo();
+		//Map<Dorm, Integer> map = new HashMap<Dorm, Integer>();
+		List<Dorm> returnlist = new ArrayList<>();
+		for (Dorm dorm : list) {
+			Integer dormId = dorm.getDormId();
+			Integer capacity = dormServiceImpl.queryCapicityByDormId(dormId);
+			Integer countNow = dormStudentServiceImpl.queryCountNowByDormId(dormId);
+			if (capacity >= countNow && capacity - countNow >= 2) {
+				/*map.put(dorm, capacity - countNow);*/
+				returnlist.add(dorm);
+			}
+		}
+		/*if(map!=null&&map.size()>0){
+		return map;
+		}else{
+			return null;
+		}*/
+		
+		if(returnlist!=null&&returnlist.size()>0){
+			return returnlist.get(0);
+			}else{
+				return null;
+			}
+		
+	}
+	
+	@RequestMapping(value = "/queryGirlDormCanCotainsTwoStudents", method = RequestMethod.POST)
+	@ResponseBody
+	public Dorm queryGirlDormCanCotainsTwoStudents() {
+		List<Dorm> list = dormServiceImpl.queryGirlDormsCapicityOverTwo();
+		//Map<Dorm, Integer> map = new HashMap<Dorm, Integer>();
+		List<Dorm> returnlist = new ArrayList<>();
+		for (Dorm dorm : list) {
+			Integer dormId = dorm.getDormId();
+			Integer capacity = dormServiceImpl.queryCapicityByDormId(dormId);
+			Integer countNow = dormStudentServiceImpl.queryCountNowByDormId(dormId);
+			if (capacity >= countNow && capacity - countNow >= 2) {
+				/*map.put(dorm, capacity - countNow);*/
+				returnlist.add(dorm);
+			}
+		}
+		/*if(map!=null&&map.size()>0){
+		return map;
+		}else{
+			return null;
+		}*/
+		
+		if(returnlist!=null&&returnlist.size()>0){
+			return returnlist.get(0);
+			}else{
+				return null;
+			}
+		
+	}
+	
+	
+	
 	List<Student> queryAllStudentsWithoutDorm(){
 		List<Student> students = studentServiceImpl.queryAllStudents();
+		List<Student> studentsWithoutDorm = new ArrayList<>(); 
+		for (Student student : students) {
+			if(dormStudentServiceImpl.queryDormStudentByStudentId(student.getStudentId())==null){
+				studentsWithoutDorm.add(student);
+			}
+		}
+		
+		if(studentsWithoutDorm!=null&&studentsWithoutDorm.size()>0){
+			return studentsWithoutDorm;
+		}else{
+			return null;
+		}
+	}
+	
+	
+	
+	List<Student> queryAllBoyStudentsWithoutDorm(){
+		List<Student> students = studentServiceImpl.queryAllBoyStudents();
+		List<Student> studentsWithoutDorm = new ArrayList<>(); 
+		for (Student student : students) {
+			if(dormStudentServiceImpl.queryDormStudentByStudentId(student.getStudentId())==null){
+				studentsWithoutDorm.add(student);
+			}
+		}
+		
+		if(studentsWithoutDorm!=null&&studentsWithoutDorm.size()>0){
+			return studentsWithoutDorm;
+		}else{
+			return null;
+		}
+	}
+	
+	
+	List<Student> queryAllGirlStudentsWithoutDorm(){
+		List<Student> students = studentServiceImpl.queryAllGirlStudents();
 		List<Student> studentsWithoutDorm = new ArrayList<>(); 
 		for (Student student : students) {
 			if(dormStudentServiceImpl.queryDormStudentByStudentId(student.getStudentId())==null){

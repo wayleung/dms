@@ -22,4 +22,8 @@ public interface IDormService {
 	
 	List<Dorm> queryDormsCapicityOverTwo();
 	
+	List<Dorm>  queryBoyDormsCapicityOverTwo();
+	
+	List<Dorm>  queryGirlDormsCapicityOverTwo();
+	
 }

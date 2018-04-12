@@ -103,7 +103,26 @@ public class DormServiceImpl implements IDormService {
 	}
 	
 	
+	@Override
+	public List<Dorm>  queryBoyDormsCapicityOverTwo() {
+		DormExample example = new DormExample();
+		Criteria criteria = example.createCriteria();
+		criteria.andCapacityGreaterThan(2);
+		criteria.andTypeEqualTo("男生宿舍");
+		// TODO Auto-generated method stub
+		return dormMapper.selectByExample(example );
+	}
 	
+	
+	@Override
+	public List<Dorm>  queryGirlDormsCapicityOverTwo() {
+		DormExample example = new DormExample();
+		Criteria criteria = example.createCriteria();
+		criteria.andCapacityGreaterThan(2);
+		criteria.andTypeEqualTo("女生宿舍");
+		// TODO Auto-generated method stub
+		return dormMapper.selectByExample(example );
+	}
 	
 
 }

@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50626
 File Encoding         : 65001
 
-Date: 2018-04-06 14:39:58
+Date: 2018-04-13 00:03:19
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -48,7 +48,7 @@ CREATE TABLE `dorm` (
   `score` varchar(255) DEFAULT NULL COMMENT '宿舍评分',
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`dorm_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of dorm
@@ -59,6 +59,8 @@ INSERT INTO `dorm` VALUES ('3', '1', '男生宿舍', '9', '1', null, '02/19/2018
 INSERT INTO `dorm` VALUES ('4', '615', '男生宿舍', '9', '1', null, '03/14/2018', '1', '1');
 INSERT INTO `dorm` VALUES ('7', '618', '男生宿舍', '9', '', null, '', '', '');
 INSERT INTO `dorm` VALUES ('8', '620', '男生宿舍', '5', '15521608979', null, '', '', '');
+INSERT INTO `dorm` VALUES ('9', '621', '女生宿舍', '5', '15521608979', null, '', '', '');
+INSERT INTO `dorm` VALUES ('10', '622', '女生宿舍', '5', '15521608979', null, '', '', '');
 
 -- ----------------------------
 -- Table structure for dorm_manager
@@ -97,7 +99,7 @@ CREATE TABLE `dorm_student` (
   `create_time` varchar(255) DEFAULT NULL COMMENT '学生分配宿舍关系创建时间',
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`ds_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=277 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=429 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of dorm_student
@@ -107,28 +109,25 @@ INSERT INTO `dorm_student` VALUES ('7', '12', '1', '02/28/2018', null, null, nul
 INSERT INTO `dorm_student` VALUES ('8', '10', '1', '03/06/2018', null, null, null, '141');
 INSERT INTO `dorm_student` VALUES ('9', '13', '1', '03/06/2018', null, null, null, '1');
 INSERT INTO `dorm_student` VALUES ('10', '14', '2', '04/25/2018', null, null, null, '77');
-INSERT INTO `dorm_student` VALUES ('255', '19', '1', null, null, null, 'Fri Apr 06 14:35:58 CST 2018', '自动分配');
-INSERT INTO `dorm_student` VALUES ('256', '20', '1', null, null, null, 'Fri Apr 06 14:35:58 CST 2018', '自动分配');
-INSERT INTO `dorm_student` VALUES ('257', '31', '1', null, null, null, 'Fri Apr 06 14:35:58 CST 2018', '自动分配');
-INSERT INTO `dorm_student` VALUES ('258', '30', '1', null, null, null, 'Fri Apr 06 14:35:58 CST 2018', '自动分配');
-INSERT INTO `dorm_student` VALUES ('259', '15', '2', null, null, null, 'Fri Apr 06 14:35:58 CST 2018', '自动分配');
-INSERT INTO `dorm_student` VALUES ('260', '21', '2', null, null, null, 'Fri Apr 06 14:35:58 CST 2018', '自动分配');
-INSERT INTO `dorm_student` VALUES ('261', '27', '2', null, null, null, 'Fri Apr 06 14:35:58 CST 2018', '自动分配');
-INSERT INTO `dorm_student` VALUES ('262', '26', '2', null, null, null, 'Fri Apr 06 14:35:58 CST 2018', '自动分配');
-INSERT INTO `dorm_student` VALUES ('263', '23', '2', null, null, null, 'Fri Apr 06 14:35:58 CST 2018', '自动分配');
-INSERT INTO `dorm_student` VALUES ('264', '22', '2', null, null, null, 'Fri Apr 06 14:35:58 CST 2018', '自动分配');
-INSERT INTO `dorm_student` VALUES ('265', '16', '2', null, null, null, 'Fri Apr 06 14:35:58 CST 2018', '自动分配');
-INSERT INTO `dorm_student` VALUES ('266', '31', '2', null, null, null, 'Fri Apr 06 14:35:58 CST 2018', '自动分配');
-INSERT INTO `dorm_student` VALUES ('267', '1', '3', null, null, null, 'Fri Apr 06 14:35:58 CST 2018', '自动分配');
-INSERT INTO `dorm_student` VALUES ('268', '32', '3', null, null, null, 'Fri Apr 06 14:35:58 CST 2018', '自动分配');
-INSERT INTO `dorm_student` VALUES ('269', '18', '3', null, null, null, 'Fri Apr 06 14:35:58 CST 2018', '自动分配');
-INSERT INTO `dorm_student` VALUES ('270', '21', '3', null, null, null, 'Fri Apr 06 14:35:58 CST 2018', '自动分配');
-INSERT INTO `dorm_student` VALUES ('271', '25', '3', null, null, null, 'Fri Apr 06 14:35:58 CST 2018', '自动分配');
-INSERT INTO `dorm_student` VALUES ('272', '24', '3', null, null, null, 'Fri Apr 06 14:35:58 CST 2018', '自动分配');
-INSERT INTO `dorm_student` VALUES ('273', '29', '3', null, null, null, 'Fri Apr 06 14:35:58 CST 2018', '自动分配');
-INSERT INTO `dorm_student` VALUES ('274', '28', '3', null, null, null, 'Fri Apr 06 14:35:58 CST 2018', '自动分配');
-INSERT INTO `dorm_student` VALUES ('275', '15', '4', null, null, null, 'Fri Apr 06 14:35:59 CST 2018', '自动分配');
-INSERT INTO `dorm_student` VALUES ('276', '17', '4', null, null, null, 'Fri Apr 06 14:35:59 CST 2018', '自动分配');
+INSERT INTO `dorm_student` VALUES ('410', '19', '1', null, null, null, 'Thu Apr 12 23:59:38 CST 2018', '自动分配');
+INSERT INTO `dorm_student` VALUES ('411', '20', '1', null, null, null, 'Thu Apr 12 23:59:38 CST 2018', '自动分配');
+INSERT INTO `dorm_student` VALUES ('412', '15', '1', null, null, null, 'Thu Apr 12 23:59:38 CST 2018', '自动分配');
+INSERT INTO `dorm_student` VALUES ('413', '21', '1', null, null, null, 'Thu Apr 12 23:59:38 CST 2018', '自动分配');
+INSERT INTO `dorm_student` VALUES ('414', '27', '2', null, null, null, 'Thu Apr 12 23:59:38 CST 2018', '自动分配');
+INSERT INTO `dorm_student` VALUES ('415', '26', '2', null, null, null, 'Thu Apr 12 23:59:38 CST 2018', '自动分配');
+INSERT INTO `dorm_student` VALUES ('416', '23', '2', null, null, null, 'Thu Apr 12 23:59:38 CST 2018', '自动分配');
+INSERT INTO `dorm_student` VALUES ('417', '22', '2', null, null, null, 'Thu Apr 12 23:59:38 CST 2018', '自动分配');
+INSERT INTO `dorm_student` VALUES ('418', '18', '2', null, null, null, 'Thu Apr 12 23:59:38 CST 2018', '自动分配');
+INSERT INTO `dorm_student` VALUES ('419', '1', '2', null, null, null, 'Thu Apr 12 23:59:38 CST 2018', '自动分配');
+INSERT INTO `dorm_student` VALUES ('420', '25', '2', null, null, null, 'Thu Apr 12 23:59:38 CST 2018', '自动分配');
+INSERT INTO `dorm_student` VALUES ('421', '24', '2', null, null, null, 'Thu Apr 12 23:59:38 CST 2018', '自动分配');
+INSERT INTO `dorm_student` VALUES ('422', '16', '3', null, null, null, 'Thu Apr 12 23:59:38 CST 2018', '自动分配');
+INSERT INTO `dorm_student` VALUES ('423', '29', '3', null, null, null, 'Thu Apr 12 23:59:38 CST 2018', '自动分配');
+INSERT INTO `dorm_student` VALUES ('424', '28', '3', null, null, null, 'Thu Apr 12 23:59:38 CST 2018', '自动分配');
+INSERT INTO `dorm_student` VALUES ('425', '30', '3', null, null, null, 'Thu Apr 12 23:59:39 CST 2018', '自动分配');
+INSERT INTO `dorm_student` VALUES ('426', '17', '3', null, null, null, 'Thu Apr 12 23:59:39 CST 2018', '自动分配');
+INSERT INTO `dorm_student` VALUES ('427', '32', '9', null, null, null, 'Thu Apr 12 23:59:43 CST 2018', '自动分配');
+INSERT INTO `dorm_student` VALUES ('428', '31', '9', null, null, null, 'Thu Apr 12 23:59:43 CST 2018', '自动分配');
 
 -- ----------------------------
 -- Table structure for fee
@@ -207,5 +206,5 @@ INSERT INTO `student` VALUES ('27', '112', 'ooo', 'ooo', '1994-11-12', '男', '�
 INSERT INTO `student` VALUES ('28', '113', 'ppp', 'ppp', '1994-11-12', '男', '注册', '肇庆', '15521608979', '外包142班', '计算机科学与技术', '09:00', '00:30', '电影、绝地求生 手游', '1', 'WayLeung', '15521608979', '优秀学生');
 INSERT INTO `student` VALUES ('29', '114', 'qqq', 'qqq', '1994-11-12', '男', '注册', '肇庆', '15521608979', '外包142班', '计算机科学与技术', '09:00', '00:30', '手游 王者荣耀', '1', 'WayLeung', '15521608979', '优秀学生');
 INSERT INTO `student` VALUES ('30', '115', 'rrr', 'rrr', '1994-11-12', '男', '注册', '肇庆', '15521608979', '外包142班', '计算机科学与技术', '09:00', '00:30', '电影、阅读 读书', '1', 'WayLeung', '15521608979', '优秀学生');
-INSERT INTO `student` VALUES ('31', '116', 'sss', 'sss', '1994-11-12', '男', '注册', '肇庆', '15521608979', '外包142班', '计算机科学与技术', '09:00', '00:30', '阅读 读书、音乐', '1', 'WayLeung', '15521608979', '优秀学生');
-INSERT INTO `student` VALUES ('32', '117', 'ttt', 'ttt', '1994-11-12', '男', '注册', '肇庆', '15521608979', '外包142班', '计算机科学与技术', '09:00', '00:30', '美剧 韩剧 日剧', '1', 'WayLeung', '15521608979', '优秀学生');
+INSERT INTO `student` VALUES ('31', '116', 'sss', 'sss', '1994-11-12', '女', '注册', '肇庆', '15521608979', '外包142班', '计算机科学与技术', '09:00', '00:30', '阅读 读书、音乐', '1', 'WayLeung', '15521608979', '优秀学生');
+INSERT INTO `student` VALUES ('32', '117', 'ttt', 'ttt', '1994-11-12', '女', '注册', '肇庆', '15521608979', '外包142班', '计算机科学与技术', '09:00', '00:30', '美剧 韩剧 日剧', '1', 'WayLeung', '15521608979', '优秀学生');

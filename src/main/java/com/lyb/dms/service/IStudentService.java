@@ -16,6 +16,9 @@ public interface IStudentService {
 	
 	List<Student> queryAllStudents();
 	
+	List<Student> queryAllBoyStudents();
+		
+	List<Student> queryAllGirlStudents();
 	
 	
 	Student queryStudentById(Integer student_id);

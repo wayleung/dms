@@ -94,7 +94,7 @@
 									</div>
 
 									<div class="ibox-content" style="display: block;">
-										<div class="row">
+										<!-- <div class="row">
 											<div class="col-sm-3">
 												<div class="input-group pull-right">
 													<span class="input-group-btn">
@@ -103,9 +103,58 @@
 															</i>自动分配
 														</button>
 													</span>
+													
+													<span class="input-group-btn">
+														<button type="button" onclick="distributeBoyAuto()" class="btn btn-sm btn-primary"
+															data-toggle="modal">
+															</i>自动分配男生
+														</button>
+													</span>
+																								
 												</div>
+				
+												
 											</div>
 										</div>
+										
+										
+																				<div class="row">
+											<div class="col-sm-3">
+												<div class="input-group pull-right">
+													<span class="input-group-btn">
+														<button type="button" onclick="distributeGirlAuto()" class="btn btn-sm btn-primary"
+															data-toggle="modal">
+															</i>自动分配女生
+														</button>
+													</span>
+										
+												</div>
+
+											</div>
+										</div> -->
+										
+									<div class="row">
+											<div class="col-sm-3">
+												<div class="input-group pull-right">
+													<span class="input-group-btn">
+														<button type="button" onclick="distributeByBothStudent()" class="btn btn-sm btn-primary"
+															data-toggle="modal">
+															</i>自动分配
+														</button>
+													</span>
+													<br/>
+													
+													
+													
+												</div>
+												
+												
+												
+											</div>
+										</div>
+										
+										
+										
 										<div class="table-responsive">
 											<div class="sk-spinner sk-spinner-fading-circle"
 												style="display: none">
@@ -612,6 +661,153 @@
 					}, 
 			});
 		}
+		
+		
+		
+		
+		
+		
+		
+		/*
+		自动分配男生
+		*/
+		function distributeBoyAuto(){
+			var url = rootPath + "distributeByTwoBoyStudent";
+			console.log(url);
+			$.ajax({
+				url : url,
+				type : "post",
+				async : false,
+				success : function(datas) {
+					console.log(datas);
+					
+					try
+					  {
+						var data = jQuery.parseJSON(datas)
+						if(data.success==0){
+							alert(data.msg_distribute);
+						}
+					  }
+					catch(err)
+					  {
+						
+					  }
+					
+					
+					
+					
+					
+					
+				},
+				
+				beforeSend: function(){
+					console.log('正在自动分配，请稍等！');
+				},
+				complete: function () {
+					alert('自动分配完成');
+					}, 
+			});
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		/*
+		自动分配女生
+		*/
+		function distributeGirlAuto(){
+			
+			var url = rootPath + "distributeByTwoGirlStudent";
+			console.log(url);
+			$.ajax({
+				url : url,
+				type : "post",
+				async : false,
+				success : function(datas) {
+					console.log(datas);
+					
+					try
+					  {
+						var data = jQuery.parseJSON(datas)
+						if(data.success==0){
+							alert(data.msg_distribute);
+						}
+					  }
+					catch(err)
+					  {
+						
+					  }
+					
+					
+					
+					
+					
+					
+				},
+				
+				beforeSend: function(){
+					console.log('正在自动分配，请稍等！');
+				},
+				complete: function () {
+					alert('自动分配完成');
+					}, 
+			});
+		}
+		
+		
+		
+		
+		/*
+		自动分配男女生
+		*/
+		function distributeByBothStudent(){
+			
+			var url = rootPath + "distributeByBothStudent";
+			console.log(url);
+			$.ajax({
+				url : url,
+				type : "post",
+				async : false,
+				success : function(datas) {
+					console.log(datas);
+					
+					try
+					  {
+						var data = jQuery.parseJSON(datas)
+						if(data.success==0){
+							alert(data.msg_distribute);
+						}
+					  }
+					catch(err)
+					  {
+						
+					  }
+					
+					
+					
+					
+					
+					
+				},
+				
+				beforeSend: function(){
+					console.log('正在自动分配，请稍等！');
+				},
+				complete: function () {
+					alert('自动分配完成');
+					}, 
+			});
+		}
+		
+		
+		
+		
+		
+		
 		
 		
 		
