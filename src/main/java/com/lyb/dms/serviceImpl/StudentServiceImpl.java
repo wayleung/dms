@@ -9,11 +9,16 @@ import javax.annotation.Resource;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.lyb.dms.domain.DormStudent;
+import com.lyb.dms.domain.DormStudentExample;
 import com.lyb.dms.domain.Student;
 import com.lyb.dms.domain.StudentExample;
 import com.lyb.dms.domain.StudentExample.Criteria;
 import com.lyb.dms.mapper.StudentMapper;
 import com.lyb.dms.service.IStudentService;
+import com.lyb.dms.vo.QueryByPageObject;
 
 @Service
 public class StudentServiceImpl implements IStudentService {
@@ -117,6 +122,17 @@ public class StudentServiceImpl implements IStudentService {
 			return dataMap;
 		}
 	
+	}
+
+	@Override
+	public PageInfo<Student> queryAllStudentsByPage(QueryByPageObject queryObject) {
+		// TODO Auto-generated method stub
+		StudentExample example = new StudentExample();
+		PageHelper.startPage(queryObject.getCurrentPage(), queryObject.getPageSize());
+		//pagehelper不是内存分页是物理分页 PageHelper只对紧跟着的第一个SQL语句起作用
+		List<Student> list = studentMapper.selectByExample(example);
+		PageInfo<Student> pageInfo = new PageInfo<>(list);
+		return pageInfo;
 	}
 
 

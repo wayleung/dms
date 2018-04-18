@@ -14,8 +14,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.github.pagehelper.PageInfo;
 import com.lyb.dms.domain.Dorm;
 import com.lyb.dms.serviceImpl.DormServiceImpl;
+import com.lyb.dms.vo.QueryByPageObject;
 
 import net.sf.json.JSONObject;
 
@@ -122,7 +124,7 @@ public class DormController {
 		return null;
 	}
 	
-	@RequestMapping(value="/queryAllDorms",method=RequestMethod.POST)
+/*	@RequestMapping(value="/queryAllDorms",method=RequestMethod.POST)
 	public String queryAllDorms(HttpServletRequest request,HttpServletResponse response){
 		List<Dorm> list =  dormServiceImpl.queryAllDorms();
 		Map<String, List<Dorm>> dataMap =  new HashMap<>();
@@ -136,7 +138,27 @@ public class DormController {
 			e.printStackTrace();
 		}
 		return null;
+	}*/
+	
+	
+	@RequestMapping(value="/queryAllDorms",method=RequestMethod.GET)
+	public String queryAllDorms(HttpServletRequest request,HttpServletResponse response,QueryByPageObject queryObject){
+		//List<Dorm> list =  dormServiceImpl.queryAllDorms();
+		PageInfo<Dorm> list = dormServiceImpl.queryAllDormsByPage(queryObject);
+		//Map<String, List<Dorm>> dataMap =  new HashMap<>();
+		Map<String,PageInfo<Dorm>> dataMap =  new HashMap<>();
+		dataMap.put("dormList", list);
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.putAll(dataMap);
+		try {
+			response.getWriter().write(jsonObject.toString());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
+	
 	
 	@RequestMapping(value="/queryDormById",method=RequestMethod.POST)
 	public String queryDormById(HttpServletRequest request,HttpServletResponse response){

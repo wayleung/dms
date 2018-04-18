@@ -14,11 +14,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.github.pagehelper.PageInfo;
 import com.lyb.dms.domain.Dorm;
 import com.lyb.dms.domain.DormManager;
 import com.lyb.dms.domain.Student;
 import com.lyb.dms.serviceImpl.DormManagerServiceImpl;
 import com.lyb.dms.serviceImpl.DormServiceImpl;
+import com.lyb.dms.vo.QueryByPageObject;
 
 import net.sf.json.JSONObject;
 
@@ -123,7 +125,7 @@ public class DormManagerController {
 	
 	
 	
-	@RequestMapping(value="/queryAllDormManagers",method=RequestMethod.POST)
+/*	@RequestMapping(value="/queryAllDormManagers",method=RequestMethod.POST)
 	public String queryAllDormManagers(HttpServletRequest request,HttpServletResponse response){
 		List<DormManager> list =  dormManagerServiceImpl.queryAllDormManagers();
 		Map<String, List<DormManager>> dataMap =  new HashMap<>();
@@ -137,7 +139,27 @@ public class DormManagerController {
 			e.printStackTrace();
 		}
 		return null;
+	}*/
+	
+	
+	@RequestMapping(value="/queryAllDormManagers",method=RequestMethod.GET)
+	public String queryAllDormManagers(HttpServletRequest request,HttpServletResponse response,QueryByPageObject queryObject){
+		PageInfo<DormManager> list = dormManagerServiceImpl.queryAllDormManagersByPage(queryObject);
+		Map<String, PageInfo<DormManager>> dataMap =  new HashMap<>();
+		dataMap.put("dormManagerList", list);
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.putAll(dataMap);
+		try {
+			response.getWriter().write(jsonObject.toString());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
+	
+	
+	
 	
 	@RequestMapping(value="/queryDormManagerById",method=RequestMethod.POST)
 	public String queryDormManagerById(HttpServletRequest request,HttpServletResponse response){

@@ -9,11 +9,16 @@ import javax.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.lyb.dms.domain.Fee;
 import com.lyb.dms.domain.FeeExample;
+import com.lyb.dms.domain.Student;
+import com.lyb.dms.domain.StudentExample;
 import com.lyb.dms.domain.FeeExample.Criteria;
 import com.lyb.dms.mapper.FeeMapper;
 import com.lyb.dms.service.IFeeService;
+import com.lyb.dms.vo.QueryByPageObject;
 
 @Service
 public class FeeServiceImpl implements IFeeService {
@@ -72,6 +77,17 @@ public class FeeServiceImpl implements IFeeService {
 		}
 
 		
+	}
+
+	@Override
+	public PageInfo<Fee> queryAllFeesByPage(QueryByPageObject queryObject) {
+		// TODO Auto-generated method stub
+		FeeExample example = new FeeExample();
+		PageHelper.startPage(queryObject.getCurrentPage(), queryObject.getPageSize());
+		//pagehelper不是内存分页是物理分页 PageHelper只对紧跟着的第一个SQL语句起作用
+		List<Fee> list = feeMapper.selectByExample(example);
+		PageInfo<Fee> pageInfo = new PageInfo<>(list);
+		return pageInfo;
 	}
 
 }

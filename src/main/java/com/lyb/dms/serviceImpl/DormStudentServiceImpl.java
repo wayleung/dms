@@ -9,9 +9,12 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.lyb.dms.domain.Dorm;
 import com.lyb.dms.domain.DormExample;
 import com.lyb.dms.domain.DormManager;
+import com.lyb.dms.domain.DormManagerExample;
 import com.lyb.dms.domain.DormStudent;
 import com.lyb.dms.domain.DormStudentExample;
 import com.lyb.dms.domain.DormStudentExample.Criteria;
@@ -19,6 +22,7 @@ import com.lyb.dms.domain.Student;
 import com.lyb.dms.mapper.DormMapper;
 import com.lyb.dms.mapper.DormStudentMapper;
 import com.lyb.dms.service.IDormStudentService;
+import com.lyb.dms.vo.QueryByPageObject;
 
 @Service
 public class DormStudentServiceImpl implements IDormStudentService {
@@ -183,6 +187,17 @@ public class DormStudentServiceImpl implements IDormStudentService {
 			//插入失败
 			return 0;
 		}
+	}
+
+	@Override
+	public PageInfo<DormStudent> queryAllDormStudentsByPage(QueryByPageObject queryObject) {
+		// TODO Auto-generated method stub
+		DormStudentExample example = new DormStudentExample();
+		PageHelper.startPage(queryObject.getCurrentPage(), queryObject.getPageSize());
+		//pagehelper不是内存分页是物理分页 PageHelper只对紧跟着的第一个SQL语句起作用
+		List<DormStudent> list = dormStudentMapper.selectByExample(example);
+		PageInfo<DormStudent> pageInfo = new PageInfo<>(list);
+		return pageInfo;
 	}
 
 

@@ -195,20 +195,20 @@
 											</table>
 											
 											
-											<!-- <div class="pull-right">
+											<div class="pull-right">
 												<ul class="pagination">
-													<li><a href="#">上一页</a></li>
-													<li><a href="#">1</a></li>
-													<li><a href="#">/</a></li>
-													<li><a href="#">3</a></li>
-													<li><a href="#">下一页</a></li>
+													<li><span id="prevPage" onclick="prevPage()" >上一页</span></li>
+													<li><span id="pageNum" ></span></li>
+													<li><span href="#">/</span></li>
+													<li><span id="pages" ></span></li>
+													<li><span id="nextPage" onclick="nextPage()">下一页</span></li>
 
-													<li><input type="text" class="pg-input">
+													<!-- <li><input type="text" class="pg-input">
 													<li>
 													<li><button type="button"
-															class="btn btn-sm btn-primary pg-go-btn">转到</button></li>
+															class="btn btn-sm btn-primary pg-go-btn">转到</button></li> -->
 												</ul>
-											</div> -->
+											</div>
 										</div>
 
 									</div>
@@ -338,6 +338,10 @@
 													
 												</tbody>
 											</table>
+											
+											
+											
+											
 								<div class="form-group">
 									<div class="col-sm-1 col-sm-offset-1"></div>
 										<div class="col-sm-6 col-sm-offset-2">
@@ -891,25 +895,45 @@
 			});
 		}
 
+		
+		//返回地址栏参数
+		function GetQueryString(name)
+		{
+	     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+	     var r = window.location.search.substr(1).match(reg);
+	     if(r!=null)return  unescape(r[2]); return null;
+		}
 
 
 		//function ajax(api,datas) {
 		$(document)
 				.ready(
 						function() {
-							var url = rootPath + "queryAllDorms";
-							console.log(url);
+							var currentPage = GetQueryString('currentPage');
+							
+							console.log(currentPage);
+							if(currentPage!=null&&currentPage!=''){
+								var url = rootPath + "queryAllDorms?currentPage="+currentPage;
+							}else{
+								var url = rootPath + "queryAllDorms";
+							}
+							
+							
+							
+							console.log(url); 
+							
+							
 							$
 									.ajax({
 										url : url,
-										type : "post",
+										type : "get",
 										async : true,
 										dataType : "json",
 										//data: datas,
 										//异步   注意数据的获取
 										success : function(map_json) {
 											//alert(map_json);
-											var list_json = map_json.dormList;
+											var list_json = map_json.dormList.list;
 											var ul;
 											$
 													.each(
@@ -951,10 +975,102 @@
 															});
 											//ul+="</ul>"; 
 											$('#result').append(ul);
+											
+											
+											//分页
+											$('#pageNum').text(map_json.dormList.pageNum);
+											$('#pages').text(map_json.dormList.pages);
+											
 										}
 									});
 						});
 		//}
+		
+		
+		
+//分页
+		
+		
+		
+		
+		
+		function nextPage(){
+			
+			var currentPage = GetQueryString('currentPage');
+			
+			console.log(currentPage);
+			if(currentPage!=null&&currentPage!=''){
+				var url = rootPath + "queryAllDorms?currentPage="+currentPage;
+			}else{
+				var url = rootPath + "queryAllDorms";
+			}
+			
+			
+			console.log(url);
+			$.ajax({
+						url : url,
+						type : "get",
+						async : true,
+						dataType : "json",
+						//data: datas,
+						//异步   注意数据的获取
+						success : function(data) {
+							/* user_vm.datas=data.datas; */
+							//总页数
+							var pages = data.dormList.pages;
+							//现在页码
+							var pageNum = data.dormList.pageNum;
+							console.log('pages'+pages+' pageNum'+pageNum);
+							if(currentPage+1>0&&pageNum<pages){
+								
+								window.location.replace(rootPath + "admin/dorm_manage.html?currentPage="+(pageNum+1)); 
+							
+								
+							}
+							
+							
+						}
+				 	}); 
+		}
+		
+		function prevPage(){
+			var currentPage = GetQueryString('currentPage');
+			
+			console.log(currentPage);
+			if(currentPage!=null&&currentPage!=''){
+				var url = rootPath + "queryAllDorms?currentPage="+currentPage;
+			}else{
+				var url = rootPath + "queryAllDorms";
+			}
+			console.log(url);
+			$.ajax({
+						url : url,
+						type : "get",
+						async : true,
+						dataType : "json",
+						//data: datas,
+						//异步   注意数据的获取
+						success : function(data) {
+							/* user_vm.datas=data.datas; */
+							//总页数
+							var pages = data.dormList.pages;
+							//现在页码
+							var pageNum = data.dormList.pageNum;
+							console.log('pages'+pages+' pageNum'+pageNum);
+							if((pageNum-1)>=1&&pageNum<=pages){
+								
+								window.location.replace(rootPath + "admin/dorm_manage.html?currentPage="+(pageNum-1));
+							
+								
+							}
+							
+							
+						}
+				 	}); 
+		}
+		
+
+		
 		
 		
 		

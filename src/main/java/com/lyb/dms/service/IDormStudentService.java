@@ -3,9 +3,11 @@ package com.lyb.dms.service;
 import java.util.List;
 import java.util.Map;
 
+import com.github.pagehelper.PageInfo;
 import com.lyb.dms.domain.Dorm;
 import com.lyb.dms.domain.DormStudent;
 import com.lyb.dms.domain.Student;
+import com.lyb.dms.vo.QueryByPageObject;
 
 public interface IDormStudentService {
 	void insertDormStudent(DormStudent dormStudent);
@@ -15,6 +17,9 @@ public interface IDormStudentService {
 	void updateDormStudent(DormStudent dormStudent);
 	
 	List<DormStudent> queryAllDormStudents();
+	
+	PageInfo<DormStudent> queryAllDormStudentsByPage(QueryByPageObject queryObject);
+	
 	
 	DormStudent queryDormStudentById(Integer ds_id);
 	

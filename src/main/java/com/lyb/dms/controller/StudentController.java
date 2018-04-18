@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.github.pagehelper.PageInfo;
 import com.lyb.dms.domain.Dorm;
 import com.lyb.dms.domain.DormStudent;
 import com.lyb.dms.domain.Fee;
@@ -26,6 +27,7 @@ import com.lyb.dms.serviceImpl.DormStudentServiceImpl;
 import com.lyb.dms.serviceImpl.FeeServiceImpl;
 import com.lyb.dms.serviceImpl.StudentServiceImpl;
 import com.lyb.dms.vo.DormStudentVO;
+import com.lyb.dms.vo.QueryByPageObject;
 
 import net.sf.json.JSONObject;
 
@@ -173,10 +175,30 @@ public class StudentController {
 		return null;
 	}
 	
-	@RequestMapping(value="/queryAllStudents",method=RequestMethod.POST)
+/*	@RequestMapping(value="/queryAllStudents",method=RequestMethod.POST)
 	public String queryAllStudents(HttpServletRequest request,HttpServletResponse response){
 		List<Student> list =  studentServiceImpl.queryAllStudents();
 		Map<String, List<Student>> dataMap =  new HashMap<>();
+		dataMap.put("studentList", list);
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.putAll(dataMap);
+		try {
+			response.getWriter().write(jsonObject.toString());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}*/
+	
+	
+	@RequestMapping(value="/queryAllStudents",method=RequestMethod.GET)
+	public String queryAllStudents(HttpServletRequest request,HttpServletResponse response,QueryByPageObject queryObject){
+		
+		//List<Student> list =  studentServiceImpl.queryAllStudents();
+		PageInfo<Student> list = studentServiceImpl.queryAllStudentsByPage(queryObject);
+		//Map<String, List<Student>> dataMap =  new HashMap<>();
+		Map<String, PageInfo<Student>> dataMap =  new HashMap<>();
 		dataMap.put("studentList", list);
 		JSONObject jsonObject = new JSONObject();
 		jsonObject.putAll(dataMap);

@@ -8,11 +8,15 @@ import javax.annotation.Resource;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.lyb.dms.domain.Dorm;
 import com.lyb.dms.domain.DormExample;
 import com.lyb.dms.domain.DormExample.Criteria;
 import com.lyb.dms.mapper.DormMapper;
 import com.lyb.dms.service.IDormService;
+import com.lyb.dms.vo.QueryByPageObject;
+
 
 @Service
 public class DormServiceImpl implements IDormService {
@@ -122,6 +126,18 @@ public class DormServiceImpl implements IDormService {
 		criteria.andTypeEqualTo("女生宿舍");
 		// TODO Auto-generated method stub
 		return dormMapper.selectByExample(example );
+	}
+
+	@Override
+	public PageInfo<Dorm> queryAllDormsByPage(QueryByPageObject queryObject) {
+		// TODO Auto-generated method stub
+		DormExample example = new DormExample();
+		PageHelper.startPage(queryObject.getCurrentPage(), queryObject.getPageSize());
+		//pagehelper不是内存分页是物理分页 PageHelper只对紧跟着的第一个SQL语句起作用
+		// TODO Auto-generated method stub
+		List<Dorm> list = dormMapper.selectByExample(example );
+		PageInfo<Dorm> pageInfo = new PageInfo<>(list);
+		return pageInfo;
 	}
 	
 

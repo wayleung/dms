@@ -6,11 +6,15 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.lyb.dms.domain.Dorm;
 import com.lyb.dms.domain.DormManager;
 import com.lyb.dms.domain.DormManagerExample;
 import com.lyb.dms.domain.DormManagerExample.Criteria;
 import com.lyb.dms.mapper.DormManagerMapper;
 import com.lyb.dms.service.IDormManagerService;
+import com.lyb.dms.vo.QueryByPageObject;
 
 @Service
 public class DormManagerServiceImpl implements IDormManagerService {
@@ -67,6 +71,19 @@ public class DormManagerServiceImpl implements IDormManagerService {
 		}
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public PageInfo<DormManager> queryAllDormManagersByPage(QueryByPageObject queryObject) {
+		// TODO Auto-generated method stub
+		
+		
+		DormManagerExample example = new DormManagerExample();
+		PageHelper.startPage(queryObject.getCurrentPage(), queryObject.getPageSize());
+		//pagehelper不是内存分页是物理分页 PageHelper只对紧跟着的第一个SQL语句起作用
+		List<DormManager> list = dormManagerMapper.selectByExample(example );
+		PageInfo<DormManager> pageInfo = new PageInfo<>(list);
+		return pageInfo;
 	}
 
 }

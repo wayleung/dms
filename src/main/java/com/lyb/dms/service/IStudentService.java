@@ -5,7 +5,9 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Update;
 
+import com.github.pagehelper.PageInfo;
 import com.lyb.dms.domain.Student;
+import com.lyb.dms.vo.QueryByPageObject;
 
 public interface IStudentService {
 	void insertStudent(Student student);
@@ -15,6 +17,8 @@ public interface IStudentService {
 	void updateStudent(Student student);
 	
 	List<Student> queryAllStudents();
+	
+	PageInfo<Student> queryAllStudentsByPage(QueryByPageObject queryObject);
 	
 	List<Student> queryAllBoyStudents();
 		

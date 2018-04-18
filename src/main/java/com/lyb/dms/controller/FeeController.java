@@ -14,9 +14,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.github.pagehelper.PageInfo;
 import com.lyb.dms.domain.Fee;
 import com.lyb.dms.serviceImpl.DormServiceImpl;
 import com.lyb.dms.serviceImpl.FeeServiceImpl;
+import com.lyb.dms.vo.QueryByPageObject;
 
 import net.sf.json.JSONObject;
 
@@ -128,7 +130,7 @@ public class FeeController {
 		return null;
 	}
 	
-	@RequestMapping(value="/queryAllFees",method=RequestMethod.POST)
+/*	@RequestMapping(value="/queryAllFees",method=RequestMethod.POST)
 	public String queryAllFees(HttpServletRequest request,HttpServletResponse response){
 		List<Fee> list =  feeServiceImpl.queryAllFees();
 		Map<String, List<Fee>> dataMap =  new HashMap<>();
@@ -142,7 +144,27 @@ public class FeeController {
 			e.printStackTrace();
 		}
 		return null;
+	}*/
+	
+	
+	@RequestMapping(value="/queryAllFees",method=RequestMethod.GET)
+	public String queryAllFees(HttpServletRequest request,HttpServletResponse response,QueryByPageObject queryObject){
+		
+		PageInfo<Fee> list = feeServiceImpl.queryAllFeesByPage(queryObject);
+		
+		Map<String, PageInfo<Fee>> dataMap =  new HashMap<>();
+		dataMap.put("feeList", list);
+		JSONObject jsonObject = new JSONObject();
+		jsonObject.putAll(dataMap);
+		try {
+			response.getWriter().write(jsonObject.toString());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
+	
 	
 	@RequestMapping(value="/queryFeeById",method=RequestMethod.POST)
 	public String queryFeeById(HttpServletRequest request,HttpServletResponse response){
